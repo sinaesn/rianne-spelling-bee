@@ -1552,7 +1552,7 @@ function afterFill(){
     setTimeout(checkAnswer, 260);
   }
 }
-function popSlot(i, ok){
+function popSlot(i){          /* 칸이 채워질 때 살짝 튀는 느낌 */
   const el = $("#slots").children[i];
   if(!el) return;
   el.classList.add("pop");
@@ -1572,7 +1572,7 @@ function tapTile(id){
   soundTap();
   drawSlots();
   drawTiles();
-  popSlot(slot, String(t.ch).toLowerCase() === String(Q.w[slot]).toLowerCase());
+  popSlot(slot);
   afterFill();
 }
 function tapKey(ch){
@@ -1585,7 +1585,7 @@ function tapKey(ch){
   if(Q.cursor === undefined) Q.cursor = null;
   soundTap();
   drawSlots();
-  popSlot(slot, String(ch).toLowerCase() === String(Q.w[slot]).toLowerCase());
+  popSlot(slot);
   afterFill();
 }
 /* 🧽 지우기 : 마지막에 채운 칸 하나만 뒤로 지워요 (한 번 더 누르면 그 전 칸도) */
@@ -1614,15 +1614,6 @@ function checkAnswer(){
   if(guess === Q.w.toLowerCase()) onCorrect();
   else onWrong();
 }
-function clearFills(){
-  Q.order.forEach(function(i){ Q.fill[i] = null; });
-  Q.tiles.forEach(function(t){ t.used = false; });
-  Q.entry = [];
-  Q.cursor = null;
-  drawSlots();
-  drawTiles();
-}
-
 function onWrong(){
   Q.mistakes++;
   G.mistakes++;
