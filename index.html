@@ -6,8 +6,10 @@
 <meta name="theme-color" content="#FFD9EC">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<link id="favIcon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='32' fill='%23FFE4F0'/%3E%3Cellipse cx='46' cy='46' rx='18' ry='12' transform='rotate(-25 46 46)' fill='%23FFF' stroke='%23E2719F' stroke-width='3'/%3E%3Cellipse cx='82' cy='46' rx='18' ry='12' transform='rotate(25 82 46)' fill='%23FFF' stroke='%23E2719F' stroke-width='3'/%3E%3Cellipse cx='64' cy='76' rx='30' ry='24' fill='%23FF9EC4' stroke='%233E1F4A' stroke-width='4'/%3E%3Cpath d='M42 68 Q64 74 86 68 M40 80 Q64 86 88 80' stroke='%233E1F4A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='53' cy='68' r='4' fill='%233E1F4A'/%3E%3Ccircle cx='75' cy='68' r='4' fill='%233E1F4A'/%3E%3Cpath d='M48 30 L56 42 L64 26 L72 42 L80 30 L82 46 L46 46 Z' fill='%23F0CE72' stroke='%23C89A2E' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link id="touchIcon" rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='32' fill='%23FFE4F0'/%3E%3Cellipse cx='46' cy='46' rx='18' ry='12' transform='rotate(-25 46 46)' fill='%23FFF' stroke='%23E2719F' stroke-width='3'/%3E%3Cellipse cx='82' cy='46' rx='18' ry='12' transform='rotate(25 82 46)' fill='%23FFF' stroke='%23E2719F' stroke-width='3'/%3E%3Cellipse cx='64' cy='76' rx='30' ry='24' fill='%23FF9EC4' stroke='%233E1F4A' stroke-width='4'/%3E%3Cpath d='M42 68 Q64 74 86 68 M40 80 Q64 86 88 80' stroke='%233E1F4A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='53' cy='68' r='4' fill='%233E1F4A'/%3E%3Ccircle cx='75' cy='68' r='4' fill='%233E1F4A'/%3E%3Cpath d='M48 30 L56 42 L64 26 L72 42 L80 30 L82 46 L46 46 Z' fill='%23F0CE72' stroke='%23C89A2E' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<link id="favIcon" rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link id="touchIcon" rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
 <title>👑 Rianne's Spelling Bee</title>
 <style>
   :root{
@@ -485,7 +487,7 @@
         <li><b>🎧 듣고 쓰기(실전)</b> — 철자가 안 보여요. 소리를 듣고 A~Z 키로 직접 써요. 선생님이 읽어주는 시험 연습!</li>
         <li><b>🔊 듣기</b> — 단어를 다시 들려줘요. <b>🐢 천천히</b>는 아주 천천히 들려줘요.</li>
         <li><b>영어 뜻</b> — 그림 아래 짧은 영어 설명이 나와요. 뜻 옆 <b>🔊</b>를 누르면 뜻을 읽어줘요.</li>
-        <li><b>💡 소리 힌트</b> — 다음 빈칸에 들어갈 글자의 <b>소리만</b> 들려줘요. 글자는 알려주지 않아요! 단모음(애)과 장모음(에이)을 단어에 맞게 구분해서 들려줘요.</li>
+        <li><b>💡 소리 힌트</b> — 다음 빈칸에 들어갈 글자의 <b>소리만</b> 사람 목소리로 또박또박 들려줘요. 글자는 알려주지 않아요! 단모음(애)과 장모음(에이)을 단어에 맞게 구분해서 들려줘요.</li>
         <li><b>💛 틀린 단어</b> — 틀렸던 단어만 모아서 다시 풀 수 있어요.</li>
         <li><b>👑 파이널 리뷰</b> — 100개 단어 전체를 랜덤 순서로. 중간에 멈춰도 이어서 할 수 있어요.</li>
       </ul>
@@ -747,54 +749,25 @@ const PHONO = {
   transportation:"t=t r=r a=a_s n=n s=s p=p o=schwa r=r t=t a=a_l t=sh i=silent o=schwa n=n"
 };
 
-/* 소리 정의 : k = 종류, f = 포만트(입 모양), d = 길이 */
+/* 소리 목록 : k = 소리 종류, ipa = 국제음성기호 (실제로 들려줄 말은 아래 PH_TTS) */
 const PH = {
   /* --- 모음 --- */
-  a_s:{k:"v", ipa:"æ", f:[860,1900,2650], d:.30},
-  a_l:{k:"g", ipa:"eɪ", f:[600,1850,2500], f1:[350,2300,2900], d:.38},
-  e_s:{k:"v", ipa:"ɛ", f:[720,1850,2550], d:.30},
-  e_l:{k:"v", ipa:"iː", f:[330,2350,3000], d:.34},
-  i_s:{k:"v", ipa:"ɪ", f:[420,1950,2600], d:.28},
-  i_l:{k:"g", ipa:"aɪ", f:[760,1250,2500], f1:[350,2250,2900], d:.40},
-  o_s:{k:"v", ipa:"ɑ", f:[740,1120,2500], d:.32},
-  o_l:{k:"g", ipa:"oʊ", f:[560,900,2400], f1:[350,760,2300], d:.38},
-  u_s:{k:"v", ipa:"ʌ", f:[660,1200,2500], d:.30},
-  u_l:{k:"g", ipa:"juː", f:[300,2200,2800], f1:[340,780,2300], d:.44},
-  u_oo:{k:"v", ipa:"uː", f:[330,800,2400], d:.34},
-  schwa:{k:"v", ipa:"ə", f:[600,1250,2500], d:.26},
-  er:{k:"v", ipa:"ɜr", f:[520,1350,1680], d:.34},
-  ar:{k:"v", ipa:"ɑr", f:[720,1050,1520], d:.36},
-  or:{k:"v", ipa:"ɔr", f:[560,860,1600], d:.36},
-  eer:{k:"v", ipa:"ɪr", f:[420,1900,1950], d:.34},
-  aw:{k:"v", ipa:"ɔː", f:[620,900,2400], d:.34},
-  ow:{k:"g", ipa:"aʊ", f:[760,1180,2500], f1:[380,850,2300], d:.40},
+  a_s:{k:"v", ipa:"æ"}, a_l:{k:"g", ipa:"eɪ"}, e_s:{k:"v", ipa:"ɛ"}, e_l:{k:"v", ipa:"iː"},
+  i_s:{k:"v", ipa:"ɪ"}, i_l:{k:"g", ipa:"aɪ"}, o_s:{k:"v", ipa:"ɑ"}, o_l:{k:"g", ipa:"oʊ"},
+  u_s:{k:"v", ipa:"ʌ"}, u_l:{k:"g", ipa:"juː"}, u_oo:{k:"v", ipa:"uː"}, schwa:{k:"v", ipa:"ə"},
+  er:{k:"v", ipa:"ɜr"}, ar:{k:"v", ipa:"ɑr"}, or:{k:"v", ipa:"ɔr"}, eer:{k:"v", ipa:"ɪr"},
+  aw:{k:"v", ipa:"ɔː"}, ow:{k:"g", ipa:"aʊ"},
   /* --- 자음 --- */
-  b:{k:"stop", voiced:true, bfs:900, d:.18},
-  d:{k:"stop", voiced:true, bfs:3200, d:.18},
-  g:{k:"stop", voiced:true, bfs:1600, d:.18},
-  p:{k:"stop", voiced:false, bfs:1000, d:.18},
-  t:{k:"stop", voiced:false, bfs:4200, d:.18},
-  k:{k:"stop", voiced:false, bfs:1900, d:.18},
-  f:{k:"fric", voiced:false, bf:3400, bq:.8, gn:.20, d:.26},
-  v:{k:"fric", voiced:true, bf:3400, bq:.8, gn:.18, d:.26},
-  s:{k:"fric", voiced:false, bf:6200, bq:1.0, gn:.22, d:.30},
-  z:{k:"fric", voiced:true, bf:6200, bq:1.0, gn:.20, d:.30},
-  sh:{k:"fric", voiced:false, bf:3000, bq:1.8, gn:.24, d:.30},
-  zh:{k:"fric", voiced:true, bf:3000, bq:1.6, gn:.20, d:.26},
-  th:{k:"fric", voiced:false, bf:5200, bq:.7, gn:.13, d:.22},
-  th_v:{k:"fric", voiced:true, bf:5200, bq:.7, gn:.14, d:.22},
-  h:{k:"fric", voiced:false, bf:1300, bq:.6, gn:.13, d:.18},
-  m:{k:"nasal", f:[280,1000,2200], d:.28},
-  n:{k:"nasal", f:[280,1600,2600], d:.28},
-  ng:{k:"nasal", f:[280,2000,2600], d:.28},
-  l:{k:"liq", f:[380,1050,2700], d:.26},
-  r:{k:"liq", f:[420,900,1450], d:.26},
-  w:{k:"g", ipa:"w", f:[320,700,2300], f1:[400,900,2400], d:.20},
-  y:{k:"g", ipa:"j", f:[280,2100,2900], f1:[340,2350,3000], d:.20},
-  ch:{k:"affr", voiced:false, bf:4000, nf:3000, nq:1.6, d:.26},
-  j:{k:"affr", voiced:true, bf:2600, nf:3000, nq:1.4, d:.26},
-  ks:{k:"ks", d:.44},
-  kw:{k:"kw", d:.44}
+  b:{k:"stop", ipa:"b"}, d:{k:"stop", ipa:"d"}, g:{k:"stop", ipa:"g"},
+  p:{k:"stop", ipa:"p"}, t:{k:"stop", ipa:"t"}, k:{k:"stop", ipa:"k"},
+  f:{k:"fric", ipa:"f"}, v:{k:"fric", ipa:"v"}, s:{k:"fric", ipa:"s"}, z:{k:"fric", ipa:"z"},
+  sh:{k:"fric", ipa:"ʃ"}, zh:{k:"fric", ipa:"ʒ"}, th:{k:"fric", ipa:"θ"}, th_v:{k:"fric", ipa:"ð"},
+  h:{k:"fric", ipa:"h"},
+  m:{k:"nasal", ipa:"m"}, n:{k:"nasal", ipa:"n"}, ng:{k:"nasal", ipa:"ŋ"},
+  l:{k:"liq", ipa:"l"}, r:{k:"liq", ipa:"r"},
+  w:{k:"g", ipa:"w"}, y:{k:"g", ipa:"j"},
+  ch:{k:"affr", ipa:"tʃ"}, j:{k:"affr", ipa:"dʒ"},
+  ks:{k:"ks", ipa:"ks"}, kw:{k:"kw", ipa:"kw"}
 };
 
 /* =========================================================
@@ -892,8 +865,14 @@ function phCheck(){
     if(m.length !== w.length || m.indexOf(undefined) >= 0){ bad.push(w + " (길이/빈칸)"); }
   });
   const extra = Object.keys(PHONO).filter(function(k){ return !seen[k]; });
-  return {ok:!bad.length && !missing.length && !unknown.length && !extra.length,
-          words:WORDS.length, bad:bad, missing:missing, unknown:unknown, extra:extra};
+  /* 소리 목록(PH) ↔ 실제로 들려줄 말(PH_TTS) 이 하나도 빠짐없이 이어졌는지 */
+  const ttsMissing = Object.keys(PH).filter(function(k){ return !PH_TTS[k] || !PH_TTS[k].t; });
+  const ttsExtra = Object.keys(PH_TTS).filter(function(k){ return !PH[k]; });
+  return {ok:!bad.length && !missing.length && !unknown.length && !extra.length &&
+             !ttsMissing.length && !ttsExtra.length,
+          words:WORDS.length, bad:bad, missing:missing, unknown:unknown, extra:extra,
+          ph:Object.keys(PH).length, tts:Object.keys(PH_TTS).length,
+          ttsMissing:ttsMissing, ttsExtra:ttsExtra};
 }
 
 /* =========================================================
@@ -914,13 +893,19 @@ function speechNotice(){
   warnedSpeech = true;
   toast("이 기기에선 영어 소리가 안 나올 수 있어요. 부모님이 확인해 주세요 🙏", 2600);
 }
-function makeUtter(text, rate, pitch){
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US"; u.rate = rate || 0.82; u.pitch = pitch || 1.05; u.volume = 1;
+/* lang 에 맞는 목소리 고르기 (없으면 null → 브라우저 기본 목소리) */
+function pickVoice(lang){
   if(!voices.length) loadVoices();
-  let v = voices.filter(function(x){ return /^en/i.test(x.lang); });
-  v = v.filter(function(x){ return /google|us english|samantha|zira|siri|female/i.test(x.name); }).concat(v);
-  if(v.length) u.voice = v[0];
+  const pre = String(lang || "en-US").slice(0,2).toLowerCase();
+  let v = voices.filter(function(x){ return x.lang && x.lang.toLowerCase().indexOf(pre) === 0; });
+  v = v.filter(function(x){ return /google|us english|samantha|zira|siri|natural|female/i.test(x.name); }).concat(v);
+  return v[0] || null;
+}
+function makeUtter(text, rate, pitch, lang){
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang || "en-US"; u.rate = rate || 0.82; u.pitch = pitch || 1.05; u.volume = 1;
+  const v = pickVoice(u.lang);
+  if(v) u.voice = v;
   return u;
 }
 /* after : 단어 소리가 끝난 뒤 이어서 읽어 줄 (예: "Yay!") — 겹치지 않고 줄서서 재생돼요 */
@@ -1007,151 +992,52 @@ function soundSoft(){
 }
 
 /* =========================================================
-   파닉스 소리 합성 (Web Audio)
+   소리 힌트 발음 (사람 목소리 TTS)
    ========================================================= */
-function noiseFor(c){
-  if(c.__nb && c.__nb.sampleRate === c.sampleRate) return c.__nb;
-  const len = Math.max(1024, Math.round(c.sampleRate * 0.5));
-  const buf = c.createBuffer(1, len, c.sampleRate);
-  const d = buf.getChannelData(0);
-  for(let i=0;i<len;i++) d[i] = Math.random() * 2 - 1;
-  c.__nb = buf;
-  return buf;
-}
-/* 성대 진동(톱니) + 포만트 밴드패스 = 사람 목소리 비슷한 모음 */
-function pulseFor(c, f0){
-  c.__pb = c.__pb || {};
-  const key = Math.round(f0);
-  if(c.__pb[key]) return c.__pb[key];
-  const N = Math.max(8, Math.round(c.sampleRate / f0));
-  const buf = c.createBuffer(1, N, c.sampleRate);
-  const d = buf.getChannelData(0);
-  const w = 4;                       /* 짧은 펄스 = 고른 스펙트럼 */
-  for(let i=0;i<w && i<N;i++) d[i] = Math.sin(Math.PI * (i + 0.5) / w);
-  c.__pb[key] = buf;
-  return buf;
-}
-const VOICE_GAIN = 5.0;
-function phVoice(c, at, dur, f, f1, vol){
-  try{
-    const src = c.createBufferSource();
-    src.buffer = pulseFor(c, 190);
-    src.loop = true;
-    let lfo = null, lg = null;
-    if(dur > 0.18){
-      lfo = c.createOscillator(); lfo.frequency.value = 5.1;
-      lg = c.createGain(); lg.gain.value = 0.012;
-      lfo.connect(lg); lg.connect(src.playbackRate);
-    }
-    const out = c.createGain();
-    const v = vol * VOICE_GAIN;
-    out.gain.setValueAtTime(0.0001, at);
-    out.gain.exponentialRampToValueAtTime(v, at + Math.min(0.03, dur * 0.4));
-    out.gain.setValueAtTime(v, at + dur * 0.8);
-    out.gain.exponentialRampToValueAtTime(0.0001, at + dur);
-    out.connect(c.destination);
-    for(let i=0;i<3;i++){
-      const bp = c.createBiquadFilter();
-      bp.type = "bandpass"; bp.Q.value = [8, 10, 12][i];
-      bp.frequency.setValueAtTime(Math.max(80, f[i]), at);
-      if(f1) bp.frequency.exponentialRampToValueAtTime(Math.max(80, f1[i]), at + dur * 0.85);
-      const g = c.createGain(); g.gain.value = [1, 0.78, 0.46][i];
-      src.connect(bp); bp.connect(g); g.connect(out);
-    }
-    src.start(at);
-    if(lfo) lfo.start(at);
-    src.stop(at + dur + 0.02);
-    if(lfo) lfo.stop(at + dur + 0.02);
-  }catch(e){}
-}
-/* 숨소리(마찰음) */
-function phNoise(c, at, dur, freq, q, vol){
-  try{
-    const src = c.createBufferSource();
-    src.buffer = noiseFor(c);
-    src.loop = true;
-    const bp = c.createBiquadFilter();
-    bp.type = "bandpass"; bp.frequency.setValueAtTime(freq, at); bp.Q.value = q || 1;
-    const g = c.createGain();
-    g.gain.setValueAtTime(0.0001, at);
-    g.gain.exponentialRampToValueAtTime(vol, at + 0.012);
-    g.gain.setValueAtTime(vol, at + Math.max(0.02, dur * 0.75));
-    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
-    src.connect(bp); bp.connect(g); g.connect(c.destination);
-    src.start(at); src.stop(at + dur + 0.02);
-  }catch(e){}
-}
-/* 소리 하나를 시간축(at)에 그려요. 끝난 시각을 돌려줘요. */
-function phSchedule(c, def, at){
-  if(!def) return at;
-  const k = def.k;
-  if(k === "v" || k === "g"){
-    phVoice(c, at, def.d, def.f, def.f1, 0.30);
-    return at + def.d;
-  }
-  if(k === "stop"){
-    phNoise(c, at, 0.045, def.bfs, 1.1, 0.30);
-    if(def.voiced) phVoice(c, at, 0.05, [280, 950, 2300], null, 0.10);
-    phVoice(c, at + 0.05, 0.12, [640, 1180, 2500], null, 0.26);   /* "부" 하고 끝나는 짧은 모음 */
-    return at + 0.19;
-  }
-  if(k === "fric"){
-    phNoise(c, at, def.d, def.bf, def.bq, def.gn);
-    if(def.voiced) phVoice(c, at, def.d * 0.85, [300, 1150, 2400], null, 0.07);
-    return at + def.d;
-  }
-  if(k === "nasal" || k === "liq"){
-    phVoice(c, at, def.d, def.f, null, 0.34);
-    return at + def.d;
-  }
-  if(k === "affr"){
-    phNoise(c, at, 0.04, def.bf, 1.1, 0.28);
-    phNoise(c, at + 0.035, 0.20, def.nf, def.nq, 0.30);
-    if(def.voiced) phVoice(c, at + 0.035, 0.19, [300, 1500, 2500], null, 0.08);
-    return at + 0.24;
-  }
-  if(k === "ks"){
-    phSchedule(c, PH.k, at);
-    phSchedule(c, PH.s, at + 0.14);
-    return at + 0.46;
-  }
-  if(k === "kw"){
-    phSchedule(c, PH.k, at);
-    phSchedule(c, PH.w, at + 0.14);
-    return at + 0.38;
-  }
-  return at;
-}
-/* Web Audio 를 못 쓰는 브라우저에서만 쓰는 TTS 대체 발음 */
+/* PH 의 소리 하나하나를 '그 소리만' 나도록 적은 TTS 음절.
+   · 영어 TTS 가 알파벳 이름(L → "엘")을 읽지 않도록 소리 나는 대로 적었어요.
+   · a_s(애)는 영어 TTS 가 "a"를 "에이"로 읽어서 한국어 음성으로 읽고,
+     한국어 음성이 없는 기기에서는 영어 "ah" 로 대신해요. */
 const PH_TTS = {
-  a_s:"aah", a_l:"ay", e_s:"eh", e_l:"ee", i_s:"ih", i_l:"eye", o_s:"ah", o_l:"oh",
-  u_s:"uh", u_l:"you", u_oo:"oo", schwa:"uh", er:"er", ar:"ar", or:"or", eer:"eer",
-  aw:"aw", ow:"ow", b:"buh", d:"duh", f:"fff", g:"guh", h:"huh", j:"juh", k:"kuh",
-  l:"lll", m:"mmm", n:"nnn", p:"puh", r:"rrr", s:"sss", t:"tuh", v:"vvv", w:"wuh",
-  y:"yuh", z:"zzz", sh:"shh", ch:"ch", th:"th", th_v:"th", zh:"zh", ks:"ks", kw:"kwuh", ng:"ng"
+  /* --- 모음 --- */
+  a_s:{t:"애", lang:"ko-KR", alt:"ah"},
+  a_l:{t:"ay"}, e_s:{t:"eh"}, e_l:{t:"ee"}, i_s:{t:"ih"}, i_l:{t:"eye"},
+  o_s:{t:"ah"}, o_l:{t:"oh"}, u_s:{t:"uh"}, u_l:{t:"you"}, u_oo:{t:"oo"},
+  schwa:{t:"uh"}, er:{t:"er"}, ar:{t:"ar"}, or:{t:"or"}, eer:{t:"ear"},
+  aw:{t:"aw"}, ow:{t:"ow"},
+  /* --- 자음 --- */
+  b:{t:"buh"}, ch:{t:"chuh"}, d:{t:"duh"}, f:{t:"fuh"}, g:{t:"guh"},
+  h:{t:"huh"}, j:{t:"juh"}, k:{t:"kuh"}, ks:{t:"ks"}, kw:{t:"kwuh"},
+  l:{t:"luh"}, m:{t:"muh"}, n:{t:"nuh"}, ng:{t:"ung"}, p:{t:"puh"},
+  r:{t:"ruh"}, s:{t:"suh"}, sh:{t:"shh"}, t:{t:"tuh"}, th:{t:"thuh"},
+  th_v:{t:"thuh"}, v:{t:"vuh"}, w:{t:"wuh"}, y:{t:"yuh"}, z:{t:"zuh"},
+  zh:{t:"zhuh"}
 };
+/* 소리 하나 → 실제로 읽을 말과 언어 (그 언어 목소리가 없으면 alt 로 대신) */
+function ttsFor(id){
+  const e = PH_TTS[id];
+  if(!e || !e.t) return null;
+  const lang = e.lang || "en-US";
+  if(lang !== "en-US" && e.alt && !pickVoice(lang)) return {text:e.alt, lang:"en-US"};
+  return {text:e.t, lang:lang};
+}
 let lastHintAt = 0;
-/* 소리 힌트 재생 (한 번 + 조금 쉬고 한 번 더) */
+/* 소리 힌트 : 사람 목소리로 파닉스 소리를 또박또박 두 번 */
 function playPhoneme(id){
   if(id === "silent"){
     notes([587.33], "sine", 0.05);
     return true;
   }
-  const def = PH[id];
-  if(!def) return false;
+  if(!PH[id]) return false;
   if(!save.sound){ toast("🔇 소리가 꺼져 있어요", 1400); return false; }
-  const c = ac();
-  if(!c){
-    if(PH_TTS[id] && hasTTS){
-      try{ speechSynthesis.cancel(); speechSynthesis.speak(makeUtter(PH_TTS[id], 0.6, 1.05)); }catch(e){ return false; }
-      return true;
-    }
-    return false;
-  }
-  try{ speechSynthesis.cancel(); }catch(e){}
-  const t = c.currentTime + 0.05;
-  const end = phSchedule(c, def, t);
-  phSchedule(c, def, end + 0.26);
+  if(!hasTTS) return false;
+  const snd = ttsFor(id);
+  if(!snd) return false;
+  try{
+    speechSynthesis.cancel();
+    speechSynthesis.speak(makeUtter(snd.text, 0.78, 1.05, snd.lang));
+    speechSynthesis.speak(makeUtter(snd.text, 0.78, 1.05, snd.lang));
+  }catch(e){ speechNotice(); return false; }
   return true;
 }
 
@@ -1770,6 +1656,8 @@ $("#btnHint").addEventListener("click", function(){
   }
   if(playPhoneme(pid)){
     toast("🔊 소리 힌트! 잘 듣고 골라 봐요", 1500);
+  } else {
+    toast("이 기기에서는 소리 힌트가 안 나와요 🙏", 2200);
   }
 });
 $("#btnClear").addEventListener("click", function(){
@@ -1929,7 +1817,8 @@ if(window.matchMedia){
 /* 검증용 손잡이 (앱 동작에는 영향 없음) */
 window.PHONICS_DEBUG = {
   PH:PH, PHONO:PHONO, map:phMap, units:phUnits, check:phCheck,
-  play:playPhoneme, schedule:phSchedule, layout:function(){ return Q ? Q.layout : null; },
+  play:playPhoneme, tts:PH_TTS, ttsFor:ttsFor, utterance:makeUtter,
+  layout:function(){ return Q ? Q.layout : null; },
   state:function(){ return Q; }, G:function(){ return G; }, load:function(){ loadQuestion(); }
 };
 
