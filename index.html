@@ -74,9 +74,6 @@
   .crest .crown{position:absolute; top:-14px; font-size:23px; filter:drop-shadow(0 2px 0 rgba(200,154,46,.35));}
   h1{font-size:clamp(24px,7.4vw,31px); margin:6px 0 0; letter-spacing:-.8px; color:var(--plum);}
   .sub{margin:3px 0 0; font-size:13.5px; color:var(--plum2); font-weight:800;}
-  .totals{margin-top:7px; display:inline-flex; align-items:center; gap:6px; background:#fff;
-    border:3px solid var(--gold); border-radius:999px; padding:5px 16px; font-weight:900; font-size:16px;
-    box-shadow:var(--shadow-gold); color:var(--plum);}
 
   .days{flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
     display:grid; grid-template-columns:1fr 1fr; gap:9px; padding:9px 14px 6px; align-content:start;}
@@ -93,7 +90,6 @@
   .dtop{display:flex; align-items:center; justify-content:space-between; gap:4px;}
   .dnum{font-size:12.5px; font-weight:900; color:#B0568A; letter-spacing:.3px;
     background:var(--rose-l); border-radius:999px; padding:2px 9px;}
-  .dstars{font-size:13px; letter-spacing:1px; color:var(--gold-d);}
   .dname{font-size:clamp(14.5px,4vw,16.5px); font-weight:900; line-height:1.2; margin-top:1px;}
   .dcount{font-size:12px; font-weight:800; color:var(--plum2);}
   .dbar{width:100%; height:6px; border-radius:99px; background:#FBE3EE; overflow:hidden; margin-top:3px;}
@@ -134,15 +130,25 @@
     background:linear-gradient(90deg,#F9B8D6,#E2719F); transition:width .35s ease;}
   .gcount{font-weight:900; font-size:15px; color:#B0568A; min-width:44px; text-align:center;}
 
-  .wordcard{display:flex; flex-direction:column; align-items:center; gap:1px; padding:6px 18px 2px; text-align:center;}
-  .wemoji{font-size:clamp(44px,7.6vh,74px); line-height:1.05;}
-  .wko{font-size:clamp(23px,3.5vh,34px); font-weight:900; letter-spacing:-.4px; line-height:1.15; color:var(--plum);}
-  .wex{font-size:clamp(12.5px,1.75vh,16px); color:var(--plum2); font-weight:800; margin-top:2px;}
-  .wordcard.noex .wex{display:none;}
-  .speak{margin-top:7px; display:inline-flex; align-items:center; gap:7px; background:linear-gradient(180deg,#FFF3C8,#FFE4A6);
-    border:2.5px solid var(--gold); border-radius:999px; padding:8px 22px; font-weight:900;
-    font-size:clamp(16px,2.3vh,19px); box-shadow:0 4px 0 #E4C069; color:var(--plum);}
+  .wordcard{display:flex; flex-direction:column; align-items:center; gap:2px; padding:6px 12px 2px; text-align:center; flex:0 0 auto;}
+  .wemoji{font-size:clamp(38px,6.2vh,62px); line-height:1.05;}
+  .wmean{display:flex; align-items:center; justify-content:center; gap:7px; max-width:100%; padding:0 2px;}
+  .wmtxt{font-size:clamp(13px,1.95vh,17px); font-weight:800; color:var(--plum2); line-height:1.22;}
+  .msay{flex:0 0 auto; width:31px; height:31px; border-radius:50%; background:#fff; border:2px solid var(--rose);
+    box-shadow:0 3px 0 #EFC9DC; font-size:14px; display:flex; align-items:center; justify-content:center; padding:0;}
+  .msay:active{transform:translateY(2px); box-shadow:none;}
+  .speakwrap{display:flex; flex-direction:column; gap:5px; align-items:center; margin-top:6px;}
+  .speak{display:inline-flex; align-items:center; justify-content:center; gap:7px; background:linear-gradient(180deg,#FFF3C8,#FFE4A6);
+    border:2.5px solid var(--gold); border-radius:999px; padding:7px 20px; font-weight:900;
+    font-size:clamp(15px,2.1vh,18px); box-shadow:0 4px 0 #E4C069; color:var(--plum);}
   .speak:active{transform:translateY(3px); box-shadow:none;}
+  .speak.slow{background:linear-gradient(180deg,#EAFBF2,#CFEFE0); border-color:#8FD6B2; box-shadow:0 4px 0 #86C9A6; color:#1F6B4C;}
+  .speak.slow:active{box-shadow:none;}
+
+  /* 게임 본문 : 세로=위아래, 가로=좌우 2단 */
+  .gmain{flex:1; min-height:0; display:flex; flex-direction:column;}
+  .gleft{display:flex; flex-direction:column; min-height:0; flex:0 0 auto;}
+  .gright{display:flex; flex-direction:column; flex:1 1 auto; min-height:0;}
 
   .slots{display:grid; justify-content:center; align-content:center; gap:6px; padding:8px 14px 2px; min-height:58px;}
   .slot{display:flex; align-items:center; justify-content:center; font-weight:900; line-height:1;
@@ -156,7 +162,7 @@
     60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
   .slots.good .slot.blank{border-color:var(--mint); background:#EBFBF1; box-shadow:0 3px 0 #B6E7C9; color:#25714A;}
 
-  .tiles{flex:1; min-height:0; display:grid; justify-content:center; align-content:end; gap:9px;
+  .tiles{flex:1; min-height:0; display:grid; justify-content:center; align-content:center; gap:9px;
     padding:6px 12px 12px; overflow-y:auto;}
   .tile{border-radius:18px; background:#FFFDF8; border:3px solid #F3B7D1; box-shadow:0 5px 0 #E9A6C4;
     font-weight:900; color:var(--plum); display:flex; align-items:center; justify-content:center;
@@ -183,11 +189,9 @@
     .crest .crown{font-size:17px; top:-11px;}
     h1{font-size:22px; margin-top:3px;}
     .sub{font-size:12px;}
-    .totals{margin-top:4px; padding:3px 12px; font-size:14px;}
     .bunting i{border-top-width:11px; border-left-width:6px; border-right-width:6px;}
     .daycard{min-height:64px; padding:7px 11px;}
     .dnum{font-size:11px;}
-    .dstars{font-size:11px;}
     .finalcard{padding:8px 13px;}
     .finalcard .ficon{font-size:24px;}
     .finalcard .ftitle{font-size:16px;}
@@ -195,23 +199,99 @@
     .foot .mini{min-height:38px; font-size:11.5px;}
   }
   @media (max-height:720px){
-    .wemoji{font-size:40px;}
-    .wex{display:none;}
-    .wko{font-size:22px;}
-    .speak{padding:5px 16px; font-size:15px; margin-top:4px;}
+    .wemoji{font-size:38px;}
+    .wmtxt{font-size:13px;}
+    .msay{width:27px; height:27px; font-size:13px;}
+    .speak{padding:5px 15px; font-size:14.5px;}
+    .speakwrap{margin-top:4px; gap:4px;}
     .slots{min-height:50px; padding-top:6px;}
     .toolbtn{min-height:50px; font-size:15px;}
     .tip{font-size:12px;}
   }
-  @media (max-height:620px){
-    .wemoji{font-size:34px;}
-    .wko{font-size:19px;}
-    .speak{padding:4px 13px; font-size:14px; margin-top:2px;}
+  @media (max-height:640px) and (orientation:portrait){
+    .wemoji{font-size:30px;}
+    .wmtxt{font-size:12px;}
+    .speak{padding:4px 12px; font-size:13px;}
+    .speakwrap{margin-top:3px; gap:3px;}
+    .msay{width:24px; height:24px; font-size:12px;}
     .slots{min-height:44px; padding-top:4px;}
     .tip{display:none;}
     .toolbtn{min-height:46px; font-size:14px;}
     .gbar{padding-top:4px;}
     .iconbtn{width:40px; height:40px; font-size:18px;}
+  }
+
+  /* ---------- 가로(landscape) : 게임은 좌우 2단 ---------- */
+  @media (orientation:landscape){
+    #app{max-width:920px;}
+    .home-top{padding-top:calc(6px + env(safe-area-inset-top));}
+    .days{grid-template-columns:repeat(5,1fr); grid-auto-rows:minmax(0,1fr); align-content:stretch;
+      gap:9px; padding:8px 12px 4px;}
+    .daycard{min-height:0;}
+    .gmain{flex-direction:row; gap:12px; padding:0 12px; align-items:stretch;}
+    .gleft{flex:0 0 44%; min-width:0; min-height:0;}
+    .gright{flex:1 1 56%; min-width:0; min-height:0;}
+    .slots{flex:1; min-height:0; align-content:center; padding:6px 4px;}
+    .tiles{align-content:center; padding:4px 0;}
+    .tip{display:none;}
+    .gfoot{padding:4px 0 calc(4px + env(safe-area-inset-bottom));}
+    .reward{top:50%;}
+  }
+  @media (orientation:landscape) and (max-height:560px){
+    .bunting{display:none;}
+    .home-top{display:flex; align-items:center; justify-content:center; gap:9px; flex-wrap:nowrap;
+      padding:calc(4px + env(safe-area-inset-top)) 12px 2px;}
+    .crest{width:40px; height:40px; border-width:2px; box-shadow:0 3px 0 rgba(200,154,46,.28), inset 0 0 0 3px #fff;}
+    .crest .bee svg{width:26px; height:26px;}
+    .crest .crown{font-size:14px; top:-9px;}
+    h1{font-size:19px; margin:0; letter-spacing:-.5px; white-space:nowrap;}
+    .sub{margin:0; font-size:10.5px; white-space:nowrap;}
+    .days{gap:7px; padding:6px 10px 3px;}
+    .dnum{font-size:10.5px; padding:1px 7px;}
+    .dname{font-size:12.5px;}
+    .dcount{font-size:10.5px;}
+    .dbar{height:4px; margin-top:2px;}
+    .daycard.done::after{font-size:13px; right:6px; bottom:3px;}
+    .finalcard{margin:0 10px 5px; padding:6px 12px; border-radius:16px; gap:8px;}
+    .finalcard .ficon{font-size:20px;}
+    .finalcard .ftitle{font-size:14px;}
+    .finalcard .fsub{font-size:10.5px;}
+    .finalcard .fbar{height:5px; margin-top:2px;}
+    .foot{padding:2px 10px calc(4px + env(safe-area-inset-bottom)); gap:6px;}
+    .foot .mini{min-height:34px; font-size:11px; padding:4px 4px;}
+
+    .gbar{gap:6px; padding:calc(4px + env(safe-area-inset-top)) 10px 2px;}
+    .iconbtn{width:36px; height:36px; font-size:16px; border-radius:12px; box-shadow:0 3px 0 #EFC9DC;}
+    .gprog{height:12px;}
+    .gcount{font-size:12px; min-width:34px;}
+    .gmain{gap:10px; padding:0 10px;}
+    .gleft{flex:0 0 43%;}
+    .wordcard{padding:2px 4px 0; gap:1px;}
+    .wemoji{font-size:clamp(26px,7vh,36px);}
+    .wmtxt{font-size:clamp(11px,2.9vh,13.5px); line-height:1.18;}
+    .wmean{gap:5px;}
+    .msay{width:23px; height:23px; font-size:11px; border-width:1.5px; box-shadow:0 2px 0 #EFC9DC;}
+    .speakwrap{flex-direction:row; gap:6px; margin-top:4px;}
+    .speak{padding:5px 11px; font-size:12.5px; gap:4px; border-width:2px; box-shadow:0 3px 0 #E4C069;}
+    .speak.slow{box-shadow:0 3px 0 #86C9A6;}
+    .slots{padding:4px 4px 2px; gap:5px;}
+    .gfoot{gap:7px;}
+    .toolbtn{min-height:42px; font-size:12.5px; border-width:2px; border-radius:14px; box-shadow:0 3px 0 #E9A6C4;}
+    .tiles{gap:6px; padding:2px 0;}
+    .tile{border-width:2px; border-radius:13px;}
+    .peek{font-size:13px; padding:2px 10px; letter-spacing:1.5px;}
+    .reward{top:50%; padding:8px 18px 9px;}
+    .reward .big{font-size:26px;}
+    .reward .w{font-size:13px;}
+    .toast{bottom:calc(56px + env(safe-area-inset-bottom)); font-size:14px; padding:8px 14px;}
+    .panel{max-width:560px; padding:14px 16px calc(14px + env(safe-area-inset-bottom));}
+    .panel h2{font-size:19px;}
+    .panel .psub{font-size:12.5px; margin-bottom:9px;}
+    .modebtn{padding:9px 12px; margin-bottom:8px; border-radius:16px;}
+    .modebtn .ico{font-size:24px;}
+    .modebtn .t{font-size:15px;}
+    .modebtn .s{font-size:11.5px;}
+    .help-list{font-size:13px;}
   }
 
   .toast{position:absolute; left:50%; bottom:calc(92px + env(safe-area-inset-bottom)); transform:translate(-50%,0) scale(.9);
@@ -221,19 +301,35 @@
   .toast.on{opacity:1; transform:translate(-50%,0) scale(1);}
   .toast.good{background:rgba(37,113,74,.95);}
 
-  /* 보상 */
+  /* 보상 — 정답! + 별 폭죽 */
   #fx{position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:50;}
-  .spark{position:absolute; font-size:26px; animation:spark 1.2s ease-out forwards;}
-  @keyframes spark{0%{transform:translate(0,0) scale(.4); opacity:0;}25%{opacity:1;}
-    100%{transform:translate(var(--dx),var(--dy)) scale(1.2); opacity:0;}}
+  .star{position:absolute; left:50%; top:44%; line-height:1; will-change:transform,opacity;
+    filter:drop-shadow(0 2px 4px rgba(200,154,46,.45));
+    animation:starburst var(--dur,1s) cubic-bezier(.12,.66,.25,1) forwards;}
+  @keyframes starburst{
+    0%{transform:translate(-50%,-50%) scale(.15) rotate(0deg); opacity:0;}
+    10%{opacity:1;}
+    62%{opacity:1;}
+    100%{transform:translate(calc(-50% + var(--tx,0px)), calc(-50% + var(--ty,0px))) scale(1.35) rotate(var(--rot,180deg)); opacity:0;}
+  }
+  .ring{position:absolute; left:50%; top:44%; width:46px; height:46px; margin:-23px 0 0 -23px; border-radius:50%;
+    border:7px solid rgba(255,214,110,.95); animation:ringout .85s ease-out forwards;}
+  @keyframes ringout{0%{transform:scale(.25); opacity:.95;} 100%{transform:scale(7); opacity:0;}}
+  .flash{position:absolute; inset:0; animation:flashout .45s ease-out forwards;
+    background:radial-gradient(circle at 50% 44%, rgba(255,255,255,.98), rgba(255,238,180,.55) 34%, rgba(255,255,255,0) 68%);}
+  @keyframes flashout{0%{opacity:0;} 26%{opacity:.95;} 100%{opacity:0;}}
   .reward{position:absolute; left:50%; top:calc(50% + 46px); transform:translate(-50%,-50%) scale(.6); z-index:55;
     background:linear-gradient(180deg,#FFFFFF,#FFF2F8); border:4px solid var(--gold); border-radius:28px;
-    padding:14px 26px; text-align:center; box-shadow:0 10px 0 rgba(226,177,150,.45), 0 0 0 6px rgba(255,255,255,.6);
-    opacity:0; pointer-events:none; transition:all .25s;}
-  .reward.on{opacity:1; transform:translate(-50%,-50%) scale(1);}
-  .reward .big{font-size:36px; line-height:1.1;}
-  .reward .txt{font-size:20px; font-weight:900; margin-top:2px; color:var(--plum);}
-  .reward .w{font-size:16px; font-weight:900; color:#B0568A; letter-spacing:1px;}
+    padding:12px 26px 13px; text-align:center; box-shadow:0 10px 0 rgba(226,177,150,.45), 0 0 0 6px rgba(255,255,255,.6);
+    opacity:0; pointer-events:none; transition:opacity .2s;}
+  .reward.on{opacity:1; transform:translate(-50%,-50%) scale(1); animation:rewardpop .52s cubic-bezier(.2,1.45,.4,1);}
+  @keyframes rewardpop{0%{transform:translate(-50%,-50%) scale(.4) rotate(-6deg);}
+    60%{transform:translate(-50%,-50%) scale(1.12) rotate(2deg);}
+    100%{transform:translate(-50%,-50%) scale(1) rotate(0);}}
+  .reward .big{font-size:34px; line-height:1.05;}
+  .reward .txt{font-size:clamp(28px,5vh,38px); font-weight:900; margin-top:0; letter-spacing:-1px;
+    color:#D8397B; text-shadow:0 2px 0 #fff, 0 0 12px rgba(255,214,110,.55), 0 3px 6px rgba(226,113,159,.28);}
+  .reward .w{font-size:16px; font-weight:900; color:#B0568A; letter-spacing:1.5px;}
 
   /* ---------- OVERLAYS ---------- */
   .overlay{position:absolute; inset:0; z-index:70; display:none; align-items:flex-end; justify-content:center;
@@ -254,9 +350,6 @@
   .modebtn .t{font-size:17.5px; font-weight:900; line-height:1.2; color:var(--plum);}
   .modebtn .s{font-size:12.5px; font-weight:800; color:var(--plum2);}
 
-  .stars{text-align:center; font-size:40px; letter-spacing:5px; margin:4px 0; color:var(--gold-d);}
-  .stars .off{color:#EADFC8;}
-  #rEmoji{text-align:center; font-size:54px; line-height:1.1;}
   .result-btns{display:flex; flex-direction:column; gap:9px; margin-top:12px;}
   .help-list{margin:8px 0 0; padding-left:0; list-style:none; font-size:14.5px; font-weight:700; line-height:1.5;}
   .help-list li{margin-bottom:9px; padding-left:26px; position:relative;}
@@ -279,7 +372,6 @@
       <div class="crest"><span class="crown">👑</span><span class="bee" style="display:inline-flex;align-items:center;justify-content:center;"><svg width="44" height="44" viewBox="0 0 128 128" aria-hidden="true"><ellipse cx="44" cy="46" rx="20" ry="13" transform="rotate(-25 44 46)" fill="#FFF" stroke="#E2719F" stroke-width="4"/><ellipse cx="84" cy="46" rx="20" ry="13" transform="rotate(25 84 46)" fill="#FFF" stroke="#E2719F" stroke-width="4"/><ellipse cx="64" cy="76" rx="34" ry="26" fill="#FF9EC4" stroke="#3E1F4A" stroke-width="5"/><path d="M38 68 Q64 75 90 68 M36 82 Q64 89 92 82" stroke="#3E1F4A" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="51" cy="66" r="4.5" fill="#3E1F4A"/><circle cx="77" cy="66" r="4.5" fill="#3E1F4A"/><path d="M58 74 Q64 79 70 74" stroke="#3E1F4A" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span></div>
       <h1>Rianne's Spelling Bee</h1>
       <div class="sub" id="ddayChip">🗓 12월 14일 스펠링비</div>
-      <div class="totals"><span>⭐</span><span id="totalStars">0</span><span style="font-size:13px;color:#8A5480">/ 30</span></div>
     </div>
     <div class="days" id="dayGrid"></div>
     <button class="finalcard" id="btnFinal">
@@ -307,21 +399,31 @@
       <button class="iconbtn" id="btnSound" aria-label="소리">🔊</button>
     </div>
 
-    <div class="wordcard" id="wordcard">
-      <div class="wemoji" id="wEmoji">🌸</div>
-      <div class="wko" id="wKo">꽃</div>
-      <div class="wex" id="wEx"></div>
-      <button class="speak" id="btnSpeak">🔊 듣기</button>
-      <div class="peek" id="peek"></div>
-    </div>
+    <div class="gmain">
+      <div class="gleft">
+        <div class="wordcard" id="wordcard">
+          <div class="wemoji" id="wEmoji">🌸</div>
+          <div class="wmean">
+            <span class="wmtxt" id="wMean">a pretty plant with soft petals</span>
+            <button class="msay" id="btnMeanSpeak" aria-label="뜻을 영어로 들어요" title="뜻 듣기">🔊</button>
+          </div>
+          <div class="speakwrap">
+            <button class="speak" id="btnSpeak">🔊 듣기</button>
+            <button class="speak slow" id="btnSlow">🐢 천천히 듣기</button>
+          </div>
+          <div class="peek" id="peek"></div>
+        </div>
+        <div class="slots" id="slots"></div>
+      </div>
 
-    <div class="slots" id="slots"></div>
-    <div class="tip" id="tip"></div>
-    <div class="tiles" id="tiles"></div>
-
-    <div class="gfoot">
-      <button class="toolbtn" id="btnHint">💡 힌트</button>
-      <button class="toolbtn" id="btnClear">🧽 지우기</button>
+      <div class="gright">
+        <div class="tip" id="tip"></div>
+        <div class="tiles" id="tiles"></div>
+        <div class="gfoot">
+          <button class="toolbtn" id="btnHint">💡 힌트</button>
+          <button class="toolbtn" id="btnClear">🧽 지우기</button>
+        </div>
+      </div>
     </div>
 
     <div class="reward" id="reward"><div class="big" id="rwBig">👑</div><div class="txt" id="rwTxt"></div><div class="w" id="rwW"></div></div>
@@ -358,7 +460,6 @@
     <div class="panel">
       <div id="rEmoji">👑</div>
       <h2 id="rTitle">1단계 완료!</h2>
-      <div class="stars" id="rStars"></div>
       <p class="psub" id="rSub"></p>
       <div class="result-btns">
         <button class="btn primary" id="rNext">다음 단계 →</button>
@@ -378,7 +479,8 @@
         <li><b>👀 빈칸 채우기</b> — 빈칸에 들어갈 글자를 순서대로 눌러요. 빈칸 위치는 <b>날짜마다</b> 바뀌어요.</li>
         <li><b>🐝 스펠링 쓰기</b> — 글자 타일을 골라 단어 전체를 만들어요.</li>
         <li><b>🎧 듣고 쓰기(실전)</b> — 철자가 안 보여요. 소리를 듣고 A~Z 키로 직접 써요. 선생님이 읽어주는 시험 연습!</li>
-        <li><b>🔊 듣기</b> — 영어 발음을 다시 들려줘요.</li>
+        <li><b>🔊 듣기</b> — 단어를 다시 들려줘요. <b>🐢 천천히 듣기</b>는 아주 천천히 들려줘요.</li>
+        <li><b>영어 뜻</b> — 그림 아래 짧은 영어 설명이 나와요. 뜻 옆 <b>🔊</b>를 누르면 뜻을 읽어줘요.</li>
         <li><b>💡 힌트</b> — 다음 글자 하나를 알려줘요.</li>
         <li><b>💛 틀린 단어</b> — 틀렸던 단어만 모아서 다시 풀 수 있어요.</li>
         <li><b>👑 파이널 리뷰</b> — 100개 단어 전체를 랜덤 순서로. 중간에 멈춰도 이어서 할 수 있어요.</li>
@@ -396,115 +498,115 @@
    단어 데이터 (100개)
    ========================================================= */
 const WORDS = [
-  {w:"flower", k:"꽃", e:"🌸", x:"The flower smells sweet."},
-  {w:"jacket", k:"재킷, 겉옷", e:"🧥", x:"Put on your jacket."},
-  {w:"potato", k:"감자", e:"🥔", x:"I like a hot potato."},
-  {w:"thick", k:"두꺼운", e:"📚", x:"The book is thick."},
-  {w:"whistle", k:"호루라기, 휘파람", e:"😙", x:"He blew the whistle."},
-  {w:"borrow", k:"빌리다", e:"📗", x:"May I borrow your pencil?"},
-  {w:"feather", k:"깃털", e:"🪶", x:"A soft feather fell down."},
-  {w:"glasses", k:"안경", e:"👓", x:"Grandpa wears glasses."},
-  {w:"helpful", k:"도움이 되는", e:"🙋", x:"You are very helpful."},
-  {w:"listen", k:"듣다", e:"👂", x:"Listen to the birds."},
+  {w:"flower", k:"꽃", m:"a pretty plant with soft petals", e:"🌸", x:"The flower smells sweet."},
+  {w:"jacket", k:"재킷, 겉옷", m:"a warm coat you wear outside", e:"🧥", x:"Put on your jacket."},
+  {w:"potato", k:"감자", m:"a round food that grows in the dirt", e:"🥔", x:"I like a hot potato."},
+  {w:"thick", k:"두꺼운", m:"not thin, very wide", e:"📚", x:"The book is thick."},
+  {w:"whistle", k:"호루라기, 휘파람", m:"a little toy that makes a loud sound", e:"😙", x:"He blew the whistle."},
+  {w:"borrow", k:"빌리다", m:"to take something and give it back later", e:"📗", x:"May I borrow your pencil?"},
+  {w:"feather", k:"깃털", m:"a soft, light thing on a bird", e:"🪶", x:"A soft feather fell down."},
+  {w:"glasses", k:"안경", m:"you wear them to see clearly", e:"👓", x:"Grandpa wears glasses."},
+  {w:"helpful", k:"도움이 되는", m:"doing kind things for other people", e:"🙋", x:"You are very helpful."},
+  {w:"listen", k:"듣다", m:"to hear carefully with your ears", e:"👂", x:"Listen to the birds."},
 
-  {w:"oxygen", k:"산소", e:"💨", x:"We need oxygen to breathe."},
-  {w:"evolve", k:"변해가다, 발전하다", e:"🦋", x:"Tadpoles evolve into frogs."},
-  {w:"tornado", k:"회오리바람", e:"🌀", x:"The tornado spins fast."},
-  {w:"vaccine", k:"백신, 예방 주사", e:"💉", x:"The vaccine keeps us safe."},
-  {w:"station", k:"역, 정류장", e:"🚉", x:"We wait at the train station."},
-  {w:"society", k:"사회, 함께 사는 곳", e:"🏘️", x:"We live in a society together."},
-  {w:"ancient", k:"아주 오래된", e:"🏛️", x:"The ancient castle is old."},
-  {w:"balance", k:"균형", e:"⚖️", x:"Keep your balance on the beam."},
-  {w:"curious", k:"궁금한", e:"❓", x:"The cat is curious."},
-  {w:"measure", k:"재다, 길이 재기", e:"📏", x:"Let's measure the table."},
+  {w:"oxygen", k:"산소", m:"the air we need to breathe", e:"💨", x:"We need oxygen to breathe."},
+  {w:"evolve", k:"변해가다, 발전하다", m:"to change slowly into something new", e:"🦋", x:"Tadpoles evolve into frogs."},
+  {w:"tornado", k:"회오리바람", m:"spinning wind that goes round and round", e:"🌀", x:"The tornado spins fast."},
+  {w:"vaccine", k:"백신, 예방 주사", m:"a shot that keeps you from getting sick", e:"💉", x:"The vaccine keeps us safe."},
+  {w:"station", k:"역, 정류장", m:"a place where trains stop", e:"🚉", x:"We wait at the train station."},
+  {w:"society", k:"사회, 함께 사는 곳", m:"many people living together", e:"🏘️", x:"We live in a society together."},
+  {w:"ancient", k:"아주 오래된", m:"super old, from long long ago", e:"🏛️", x:"The ancient castle is old."},
+  {w:"balance", k:"균형", m:"standing tall without falling over", e:"⚖️", x:"Keep your balance on the beam."},
+  {w:"curious", k:"궁금한", m:"wondering about things and asking why", e:"❓", x:"The cat is curious."},
+  {w:"measure", k:"재다, 길이 재기", m:"to find out how big or long something is", e:"📏", x:"Let's measure the table."},
 
-  {w:"mixture", k:"섞은 것", e:"🥣", x:"The mixture is green."},
-  {w:"fragile", k:"깨지기 쉬운", e:"🥚", x:"Be careful, it is fragile."},
-  {w:"descend", k:"내려가다", e:"⬇️", x:"The bird descends to the ground."},
-  {w:"blunder", k:"엉뚱한 실수", e:"😅", x:"Oops, I made a blunder."},
-  {w:"recycle", k:"다시 쓰기, 재활용", e:"♻️", x:"We recycle paper and bottles."},
-  {w:"heavier", k:"더 무거운", e:"🏋️", x:"This box is heavier than that one."},
-  {w:"colorful", k:"알록달록한", e:"🌈", x:"The rainbow is colorful."},
-  {w:"generous", k:"마음 넓은, 잘 나눠주는", e:"🎁", x:"You are so generous!"},
-  {w:"kangaroo", k:"캥거루", e:"🦘", x:"The kangaroo hops high."},
-  {w:"lemonade", k:"레모네이드", e:"🍋", x:"I made cold lemonade."},
+  {w:"mixture", k:"섞은 것", m:"many things mixed together", e:"🥣", x:"The mixture is green."},
+  {w:"fragile", k:"깨지기 쉬운", m:"easy to break if you drop it", e:"🥚", x:"Be careful, it is fragile."},
+  {w:"descend", k:"내려가다", m:"to go down", e:"⬇️", x:"The bird descends to the ground."},
+  {w:"blunder", k:"엉뚱한 실수", m:"a big silly mistake", e:"😅", x:"Oops, I made a blunder."},
+  {w:"recycle", k:"다시 쓰기, 재활용", m:"using old things to make new things", e:"♻️", x:"We recycle paper and bottles."},
+  {w:"heavier", k:"더 무거운", m:"weighing more than something else", e:"🏋️", x:"This box is heavier than that one."},
+  {w:"colorful", k:"알록달록한", m:"full of many pretty colors", e:"🌈", x:"The rainbow is colorful."},
+  {w:"generous", k:"마음 넓은, 잘 나눠주는", m:"happy to share with other people", e:"🎁", x:"You are so generous!"},
+  {w:"kangaroo", k:"캥거루", m:"a jumping animal with a pocket for its baby", e:"🦘", x:"The kangaroo hops high."},
+  {w:"lemonade", k:"레모네이드", m:"a sweet drink made from lemons", e:"🍋", x:"I made cold lemonade."},
 
-  {w:"behavior", k:"행동, 태도", e:"🧒", x:"Good behavior in class."},
-  {w:"dissolve", k:"녹다, 사라지다", e:"🧊", x:"Sugar will dissolve in water."},
-  {w:"enormous", k:"엄청 큰", e:"🐘", x:"The elephant is enormous."},
-  {w:"pamphlet", k:"안내 책자", e:"📄", x:"She gave me a pamphlet."},
-  {w:"relieved", k:"안심한, 마음 놓인", e:"😌", x:"I am relieved now."},
-  {w:"remember", k:"기억하다", e:"💭", x:"I remember your name."},
-  {w:"hamburger", k:"햄버거", e:"🍔", x:"I ate a big hamburger."},
-  {w:"vegetable", k:"채소", e:"🥕", x:"A carrot is a vegetable."},
-  {w:"reason", k:"이유", e:"🤔", x:"Tell me the reason."},
-  {w:"safety", k:"안전", e:"🛟", x:"Safety first!"},
+  {w:"behavior", k:"행동, 태도", m:"how you act and what you do", e:"🧒", x:"Good behavior in class."},
+  {w:"dissolve", k:"녹다, 사라지다", m:"to melt away in water", e:"🧊", x:"Sugar will dissolve in water."},
+  {w:"enormous", k:"엄청 큰", m:"very, very big", e:"🐘", x:"The elephant is enormous."},
+  {w:"pamphlet", k:"안내 책자", m:"a small paper book that tells you about something", e:"📄", x:"She gave me a pamphlet."},
+  {w:"relieved", k:"안심한, 마음 놓인", m:"happy because a worry is gone", e:"😌", x:"I am relieved now."},
+  {w:"remember", k:"기억하다", m:"to keep something in your head", e:"💭", x:"I remember your name."},
+  {w:"hamburger", k:"햄버거", m:"a round bun with meat inside", e:"🍔", x:"I ate a big hamburger."},
+  {w:"vegetable", k:"채소", m:"a healthy plant food, like a carrot", e:"🥕", x:"A carrot is a vegetable."},
+  {w:"reason", k:"이유", m:"the why of something", e:"🤔", x:"Tell me the reason."},
+  {w:"safety", k:"안전", m:"being safe and not getting hurt", e:"🛟", x:"Safety first!"},
 
-  {w:"adventure", k:"모험", e:"🧭", x:"Let's go on an adventure!"},
-  {w:"astronaut", k:"우주비행사", e:"👩‍🚀", x:"The astronaut flies to space."},
-  {w:"attention", k:"주의, 집중", e:"👀", x:"Please pay attention."},
-  {w:"confident", k:"자신 있는", e:"😎", x:"She is confident and happy."},
-  {w:"continent", k:"대륙", e:"🌍", x:"Africa is a big continent."},
-  {w:"discovery", k:"발견", e:"🔍", x:"What a fun discovery!"},
-  {w:"education", k:"교육, 배움", e:"📖", x:"Education helps us grow."},
-  {w:"encourage", k:"용기 내라고 해주기", e:"💪", x:"I encourage you to try."},
-  {w:"excellent", k:"아주 훌륭한", e:"🌟", x:"Excellent job!"},
-  {w:"hurricane", k:"태풍, 큰 바람", e:"🌪️", x:"The hurricane brought strong wind."},
+  {w:"adventure", k:"모험", m:"a fun and exciting trip", e:"🧭", x:"Let's go on an adventure!"},
+  {w:"astronaut", k:"우주비행사", m:"a person who flies to space", e:"👩‍🚀", x:"The astronaut flies to space."},
+  {w:"attention", k:"주의, 집중", m:"looking and listening carefully", e:"👀", x:"Please pay attention."},
+  {w:"confident", k:"자신 있는", m:"sure that you can do it", e:"😎", x:"She is confident and happy."},
+  {w:"continent", k:"대륙", m:"a huge piece of land on Earth", e:"🌍", x:"Africa is a big continent."},
+  {w:"discovery", k:"발견", m:"finding something new", e:"🔍", x:"What a fun discovery!"},
+  {w:"education", k:"교육, 배움", m:"learning new things at school", e:"📖", x:"Education helps us grow."},
+  {w:"encourage", k:"용기 내라고 해주기", m:"to help someone feel brave to try", e:"💪", x:"I encourage you to try."},
+  {w:"excellent", k:"아주 훌륭한", m:"very, very good", e:"🌟", x:"Excellent job!"},
+  {w:"hurricane", k:"태풍, 큰 바람", m:"a big storm with very strong wind", e:"🌪️", x:"The hurricane brought strong wind."},
 
-  {w:"knowledge", k:"아는 것, 지식", e:"🧠", x:"Books give us knowledge."},
-  {w:"landslide", k:"산사태", e:"⛰️", x:"The hill moved in a landslide."},
-  {w:"geologist", k:"지질학자", e:"🪨", x:"A geologist studies rocks."},
-  {w:"interrupt", k:"끼어들기, 말 자르기", e:"✋", x:"Please don't interrupt me."},
-  {w:"telephone", k:"전화기", e:"☎️", x:"The telephone is ringing."},
-  {w:"volunteer", k:"자원봉사자", e:"🤝", x:"She is a volunteer at the shelter."},
-  {w:"appreciate", k:"고맙게 여기다", e:"💐", x:"I appreciate your help."},
-  {w:"convenient", k:"편리한", e:"🛋️", x:"The store is very convenient."},
-  {w:"earthquake", k:"지진", e:"🌋", x:"The ground shook in the earthquake."},
-  {w:"especially", k:"특히", e:"✨", x:"I love fruit, especially grapes."},
+  {w:"knowledge", k:"아는 것, 지식", m:"all the things you know", e:"🧠", x:"Books give us knowledge."},
+  {w:"landslide", k:"산사태", m:"rocks and dirt sliding down a hill", e:"⛰️", x:"The hill moved in a landslide."},
+  {w:"geologist", k:"지질학자", m:"a scientist who studies rocks", e:"🪨", x:"A geologist studies rocks."},
+  {w:"interrupt", k:"끼어들기, 말 자르기", m:"to talk while someone else is talking", e:"✋", x:"Please don't interrupt me."},
+  {w:"telephone", k:"전화기", m:"a thing you use to call people", e:"☎️", x:"The telephone is ringing."},
+  {w:"volunteer", k:"자원봉사자", m:"a person who helps and asks for nothing", e:"🤝", x:"She is a volunteer at the shelter."},
+  {w:"appreciate", k:"고맙게 여기다", m:"to feel thankful and say thank you", e:"💐", x:"I appreciate your help."},
+  {w:"convenient", k:"편리한", m:"easy and quick to use", e:"🛋️", x:"The store is very convenient."},
+  {w:"earthquake", k:"지진", m:"the ground shaking", e:"🌋", x:"The ground shook in the earthquake."},
+  {w:"especially", k:"특히", m:"most of all, more than others", e:"✨", x:"I love fruit, especially grapes."},
 
-  {w:"experience", k:"경험, 겪어 보기", e:"🎒", x:"Travel is a fun experience."},
-  {w:"experiment", k:"실험", e:"🧪", x:"Let's do a science experiment."},
-  {w:"expression", k:"표정, 표현", e:"😊", x:"Your expression is happy."},
-  {w:"impossible", k:"불가능한, 안 되는", e:"🚫", x:"Nothing is impossible!"},
-  {w:"microscope", k:"현미경", e:"🔬", x:"We see tiny things with a microscope."},
-  {w:"mysterious", k:"신비로운", e:"🕯️", x:"The cave is mysterious."},
-  {w:"nutritious", k:"몸에 좋은, 영양 가득", e:"🥦", x:"Milk is nutritious."},
-  {w:"permission", k:"허락", e:"🙏", x:"May I have permission to go?"},
-  {w:"properties", k:"특징, 성질", e:"🧲", x:"Ice has cold properties."},
-  {w:"subsection", k:"작은 부분, 하위 항목", e:"📑", x:"Look at the next subsection."},
+  {w:"experience", k:"경험, 겪어 보기", m:"something you do and learn from", e:"🎒", x:"Travel is a fun experience."},
+  {w:"experiment", k:"실험", m:"a fun science test", e:"🧪", x:"Let's do a science experiment."},
+  {w:"expression", k:"표정, 표현", m:"the look on your face", e:"😊", x:"Your expression is happy."},
+  {w:"impossible", k:"불가능한, 안 되는", m:"it cannot be done", e:"🚫", x:"Nothing is impossible!"},
+  {w:"microscope", k:"현미경", m:"a tool that makes tiny things look big", e:"🔬", x:"We see tiny things with a microscope."},
+  {w:"mysterious", k:"신비로운", m:"strange and full of secrets", e:"🕯️", x:"The cave is mysterious."},
+  {w:"nutritious", k:"몸에 좋은, 영양 가득", m:"food that keeps your body strong", e:"🥦", x:"Milk is nutritious."},
+  {w:"permission", k:"허락", m:"an okay to do something", e:"🙏", x:"May I have permission to go?"},
+  {w:"properties", k:"특징, 성질", m:"the special things about something", e:"🧲", x:"Ice has cold properties."},
+  {w:"subsection", k:"작은 부분, 하위 항목", m:"a small part of a bigger page", e:"📑", x:"Look at the next subsection."},
 
-  {w:"definitely", k:"틀림없이, 꼭", e:"✅", x:"I will definitely come."},
-  {w:"apologize", k:"미안하다고 말하기", e:"🙇", x:"I apologize for being late."},
-  {w:"creative", k:"창의적인, 재미난 생각", e:"🎨", x:"Your drawing is creative!"},
-  {w:"important", k:"중요한", e:"❗", x:"This is important."},
-  {w:"substantial", k:"꽤 많은, 튼튼한", e:"🧱", x:"It is a substantial meal."},
-  {w:"temperature", k:"온도, 기온", e:"🌡️", x:"The temperature is high today."},
-  {w:"concentrate", k:"집중하다", e:"🎯", x:"Concentrate on your puzzle."},
-  {w:"opportunity", k:"기회, 좋은 때", e:"🚪", x:"This is a good opportunity."},
-  {w:"performance", k:"공연, 무대", e:"🎭", x:"The show was a great performance."},
-  {w:"imagination", k:"상상력", e:"🦄", x:"Use your imagination!"},
+  {w:"definitely", k:"틀림없이, 꼭", m:"for sure, oh yes", e:"✅", x:"I will definitely come."},
+  {w:"apologize", k:"미안하다고 말하기", m:"to say you are sorry", e:"🙇", x:"I apologize for being late."},
+  {w:"creative", k:"창의적인, 재미난 생각", m:"full of new and fun ideas", e:"🎨", x:"Your drawing is creative!"},
+  {w:"important", k:"중요한", m:"it matters a lot", e:"❗", x:"This is important."},
+  {w:"substantial", k:"꽤 많은, 튼튼한", m:"big and filling", e:"🧱", x:"It is a substantial meal."},
+  {w:"temperature", k:"온도, 기온", m:"how hot or cold the air is", e:"🌡️", x:"The temperature is high today."},
+  {w:"concentrate", k:"집중하다", m:"to think only about one thing", e:"🎯", x:"Concentrate on your puzzle."},
+  {w:"opportunity", k:"기회, 좋은 때", m:"a good chance to do something", e:"🚪", x:"This is a good opportunity."},
+  {w:"performance", k:"공연, 무대", m:"a show for people to watch", e:"🎭", x:"The show was a great performance."},
+  {w:"imagination", k:"상상력", m:"the fun pictures inside your mind", e:"🦄", x:"Use your imagination!"},
 
-  {w:"expertise", k:"전문가의 솜씨", e:"🧑‍🔬", x:"She has great expertise in math."},
-  {w:"evaporate", k:"증발하다, 물이 사라지다", e:"☁️", x:"The water will evaporate in the sun."},
-  {w:"pollution", k:"오염, 더러워짐", e:"🚯", x:"Pollution makes the air dirty."},
-  {w:"daffodils", k:"수선화들", e:"🌼", x:"Yellow daffodils bloom in spring."},
-  {w:"immediately", k:"바로, 즉시", e:"⚡", x:"Come here immediately."},
-  {w:"independent", k:"혼자서도 잘하는", e:"🧍", x:"I can do it, I am independent."},
-  {w:"achievement", k:"성취, 해낸 것", e:"🏆", x:"What a great achievement!"},
-  {w:"celebration", k:"축하 잔치", e:"🎉", x:"We had a big celebration."},
-  {w:"magnificent", k:"멋지고 웅장한", e:"🏰", x:"The mountain is magnificent."},
-  {w:"picturesque", k:"그림처럼 예쁜", e:"🖼️", x:"The village is picturesque."},
+  {w:"expertise", k:"전문가의 솜씨", m:"knowing a whole lot about one thing", e:"🧑‍🔬", x:"She has great expertise in math."},
+  {w:"evaporate", k:"증발하다, 물이 사라지다", m:"to turn into air and go away", e:"☁️", x:"The water will evaporate in the sun."},
+  {w:"pollution", k:"오염, 더러워짐", m:"dirt that makes air and water bad", e:"🚯", x:"Pollution makes the air dirty."},
+  {w:"daffodils", k:"수선화들", m:"yellow flowers that bloom in spring", e:"🌼", x:"Yellow daffodils bloom in spring."},
+  {w:"immediately", k:"바로, 즉시", m:"right now, with no waiting", e:"⚡", x:"Come here immediately."},
+  {w:"independent", k:"혼자서도 잘하는", m:"able to do it all by yourself", e:"🧍", x:"I can do it, I am independent."},
+  {w:"achievement", k:"성취, 해낸 것", m:"something great you worked hard to do", e:"🏆", x:"What a great achievement!"},
+  {w:"celebration", k:"축하 잔치", m:"a fun party for something good", e:"🎉", x:"We had a big celebration."},
+  {w:"magnificent", k:"멋지고 웅장한", m:"grand and lovely to look at", e:"🏰", x:"The mountain is magnificent."},
+  {w:"picturesque", k:"그림처럼 예쁜", m:"so pretty it looks like a picture", e:"🖼️", x:"The village is picturesque."},
 
-  {w:"architecture", k:"건축, 건물 짓기", e:"🏗️", x:"I love old architecture."},
-  {w:"enthusiastic", k:"신나서 열심인", e:"🙌", x:"He is enthusiastic about soccer."},
-  {w:"civilization", k:"문명", e:"🏙️", x:"An old civilization built this city."},
-  {w:"perseverance", k:"끝까지 해내는 힘", e:"🐢", x:"Perseverance helps you finish."},
-  {w:"communication", k:"이야기 주고받기", e:"💬", x:"Talking is communication."},
-  {w:"investigation", k:"조사, 알아보기", e:"🕵️", x:"The detective began an investigation."},
-  {w:"pronunciation", k:"발음", e:"🗣️", x:"Your pronunciation is clear."},
-  {w:"unforgettable", k:"잊을 수 없는", e:"💖", x:"It was an unforgettable day."},
-  {w:"responsibility", k:"책임, 맡은 일", e:"🎒", x:"Feeding the fish is my responsibility."},
-  {w:"transportation", k:"교통, 탈것", e:"🚌", x:"A bus is transportation."}
+  {w:"architecture", k:"건축, 건물 짓기", m:"designing and building houses and towers", e:"🏗️", x:"I love old architecture."},
+  {w:"enthusiastic", k:"신나서 열심인", m:"super excited and full of joy", e:"🙌", x:"He is enthusiastic about soccer."},
+  {w:"civilization", k:"문명", m:"a big old city and the people in it", e:"🏙️", x:"An old civilization built this city."},
+  {w:"perseverance", k:"끝까지 해내는 힘", m:"not giving up, trying again and again", e:"🐢", x:"Perseverance helps you finish."},
+  {w:"communication", k:"이야기 주고받기", m:"sharing words and ideas with others", e:"💬", x:"Talking is communication."},
+  {w:"investigation", k:"조사, 알아보기", m:"looking closely to find the truth", e:"🕵️", x:"The detective began an investigation."},
+  {w:"pronunciation", k:"발음", m:"the way you say a word out loud", e:"🗣️", x:"Your pronunciation is clear."},
+  {w:"unforgettable", k:"잊을 수 없는", m:"so special you never forget it", e:"💖", x:"It was an unforgettable day."},
+  {w:"responsibility", k:"책임, 맡은 일", m:"a job that is yours to take care of", e:"🎒", x:"Feeding the fish is my responsibility."},
+  {w:"transportation", k:"교통, 탈것", m:"ways to travel, like a bus or a train", e:"🚌", x:"A bus is transportation."}
 ];
 
 const DAYS = [
@@ -573,7 +675,6 @@ function rng(seed){
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-const PRAISE = ["완벽해! 🎉","최고야, Rianne! 👑","딱 맞았어! ⭐","대단한데? 🐝","반짝반짝 정답! ✨","멋져! 🌟","역시 Rianne! 💖","정확해! 🎯"];
 const KIND_NAME = ["모음 칸","겹글자 칸","골고루 칸"];
 
 /* =========================================================
@@ -594,18 +695,31 @@ function speechNotice(){
   warnedSpeech = true;
   toast("이 기기에선 영어 소리가 안 나올 수 있어요. 부모님이 확인해 주세요 🙏", 2600);
 }
-function speak(text, rate){
+function makeUtter(text, rate, pitch){
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "en-US"; u.rate = rate || 0.82; u.pitch = pitch || 1.05; u.volume = 1;
+  if(!voices.length) loadVoices();
+  let v = voices.filter(function(x){ return /^en/i.test(x.lang); });
+  v = v.filter(function(x){ return /google|us english|samantha|zira|siri|female/i.test(x.name); }).concat(v);
+  if(v.length) u.voice = v[0];
+  return u;
+}
+/* after : 단어 소리가 끝난 뒤 이어서 읽어 줄 (예: "Yay!") — 겹치지 않고 줄서서 재생돼요 */
+function speak(text, rate, after){
   if(!save.sound || !hasTTS) return;
   try{
     speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "en-US"; u.rate = rate || 0.82; u.pitch = 1.05; u.volume = 1;
-    if(!voices.length) loadVoices();
-    let v = voices.filter(function(x){ return /^en/i.test(x.lang); });
-    v = v.filter(function(x){ return /google|us english|samantha|zira|siri|female/i.test(x.name); }).concat(v);
-    if(v.length) u.voice = v[0];
-    speechSynthesis.speak(u);
+    speechSynthesis.speak(makeUtter(text, rate));
+    if(after){
+      const y = makeUtter(after, 1.02, 1.55);
+      speechSynthesis.speak(y);
+    }
   }catch(e){ speechNotice(); }
+}
+// 정답 축하 인사만 따로 (앞의 단어 소리를 끊지 않게 cancel 하지 않아요)
+function speakCheer(){
+  if(!save.sound || !hasTTS) return;
+  try{ speechSynthesis.speak(makeUtter("Yay!", 1.02, 1.55)); }catch(e){}
 }
 
 let AC = null;
@@ -632,9 +746,46 @@ function notes(list, type, vol){
     }catch(e){}
   });
 }
-function soundGood(){ notes([784, 988, 1319], "sine", 0.12); }
-function soundSoft(){ notes([330, 262], "triangle", 0.08); }
 function soundTap(){ notes([760], "sine", 0.05); }
+
+/* 한 음(엔벨로프 포함) */
+function tone(c, freq, type, at, dur, vol, glideTo){
+  try{
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type || "sine";
+    o.frequency.setValueAtTime(freq, at);
+    if(glideTo) o.frequency.exponentialRampToValueAtTime(glideTo, at + dur * 0.85);
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.exponentialRampToValueAtTime(vol, at + 0.014);
+    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(at); o.stop(at + dur + 0.03);
+  }catch(e){}
+}
+/* 정답 : 밝은 팡파레 + 별 반짝임 */
+function soundGood(){
+  if(!save.sound) return;
+  const c = ac(); if(!c) return;
+  const t0 = c.currentTime + 0.01;
+  [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach(function(f, i){
+    tone(c, f, "sine", t0 + i*0.075, 0.36, 0.13);
+    tone(c, f*2, "triangle", t0 + i*0.075, 0.18, 0.028);
+  });
+  [1046.5, 1318.5, 1567.98].forEach(function(f){
+    tone(c, f, "sine", t0 + 0.44, 0.62, 0.075);
+  });
+  [2093, 2637, 3136, 3520].forEach(function(f, i){
+    tone(c, f, "sine", t0 + 0.52 + i*0.055, 0.22, 0.032);
+  });
+}
+/* 오답 : 놀라지 않는 부드러운 하강 2음 */
+function soundSoft(){
+  if(!save.sound) return;
+  const c = ac(); if(!c) return;
+  const t0 = c.currentTime + 0.01;
+  tone(c, 392.0, "sine", t0, 0.3, 0.1, 350);
+  tone(c, 311.1, "triangle", t0 + 0.18, 0.34, 0.075, 285);
+}
 
 /* =========================================================
    화면 · 토스트
@@ -657,25 +808,17 @@ function toast(msg, ms, good){
 /* =========================================================
    홈
    ========================================================= */
-function starStr(n){
-  let s = "";
-  for(let i=0;i<3;i++) s += (i < n ? "★" : "☆");
-  return s;
-}
 function renderHome(){
   const grid = $("#dayGrid");
   grid.innerHTML = "";
-  let total = 0;
   DAYS.forEach(function(d, i){
     const day = i+1;
     const st = save.stars[day] || 0;
     const pos = save.pos[day] || 0;
-    total += st;
     const b = document.createElement("button");
     b.className = "daycard" + (st ? " done" : "");
     b.innerHTML =
-      '<div class="dtop"><span class="dnum">' + day + '단계</span>' +
-      '<span class="dstars">' + starStr(st) + '</span></div>' +
+      '<div class="dtop"><span class="dnum">' + day + '단계</span></div>' +
       '<div class="dname">' + d.e + ' ' + d.t + '</div>' +
       '<div class="dcount">' + d.words.length + '단어' +
         (st ? ' · 완료' : (pos > 0 ? ' · ' + pos + '개 지나감' : '')) + '</div>' +
@@ -683,7 +826,6 @@ function renderHome(){
     b.addEventListener("click", function(){ openSheet({type:"day", day:day}); });
     grid.appendChild(b);
   });
-  $("#totalStars").textContent = total;
   renderDday();
   const fp = save.final.pos || 0;
   if(fp > 0 && fp < 100){
@@ -856,19 +998,42 @@ function pickDistractors(word, n){
 }
 function trapCount(len){ return len >= 11 ? 2 : 3; }
 
-/* ---------- 큰 글씨 레이아웃 계산 ---------- */
+/* ---------- 큰 글씨 레이아웃 계산 (세로: 위아래 / 가로: 좌우 2단) ---------- */
+function boxPad(el, side){
+  const cs = getComputedStyle(el);
+  return parseFloat(cs["padding" + side] || 0) || 0;
+}
+function layoutGap(el, rows){
+  const cs = getComputedStyle(el);
+  return parseFloat((rows ? cs.rowGap : cs.columnGap) || 0) || 0;
+}
+function isLandscape(){
+  try{ return window.matchMedia("(orientation:landscape)").matches; }catch(e){ return false || window.innerWidth > window.innerHeight; }
+}
 function computeLayout(){
   const n = Q.w.length;
   const isKey = (G.mode === "dictate");
   const nItems = isKey ? 26 : Q.tiles.length;
-  const sg = 6, tg = 9;
   const slotsEl = $("#slots"), tilesEl = $("#tiles");
-  const slotW = Math.max(200, slotsEl.clientWidth - 28);
-  const tilesW = Math.max(200, tilesEl.clientWidth - 24);
-  const gameH = $("#scr-game").clientHeight || 720;
-  const fixed = ($(".gbar") ? $(".gbar").offsetHeight : 56) + $("#wordcard").offsetHeight +
-                $("#tip").offsetHeight + $(".gfoot").offsetHeight + 12;
-  const budget = Math.max(150, gameH - fixed - 10);
+  const sg = layoutGap(slotsEl, true) || 6;
+  const tg = layoutGap(tilesEl, true) || 9;
+  const slotW = Math.max(140, slotsEl.clientWidth - boxPad(slotsEl,"Left") - boxPad(slotsEl,"Right"));
+  const tilesW = Math.max(140, tilesEl.clientWidth - boxPad(tilesEl,"Left") - boxPad(tilesEl,"Right"));
+  const land = isLandscape();
+
+  let slotBudget, tileBudget, landMode = false;
+  if(land){
+    // 가로: 왼쪽(단어카드+슬롯)과 오른쪽(타일+버튼)이 따로 높이를 가져요
+    slotBudget = Math.max(56, slotsEl.clientHeight - boxPad(slotsEl,"Top") - boxPad(slotsEl,"Bottom"));
+    tileBudget = Math.max(80, tilesEl.clientHeight - boxPad(tilesEl,"Top") - boxPad(tilesEl,"Bottom"));
+    landMode = true;
+  } else {
+    const gameH = $("#scr-game").clientHeight || 720;
+    const fixed = ($(".gbar") ? $(".gbar").offsetHeight : 56) + $("#wordcard").offsetHeight +
+                  $("#tip").offsetHeight + $(".gfoot").offsetHeight + 14;
+    const budget = Math.max(150, gameH - fixed - 10);
+    slotBudget = budget; tileBudget = budget;
+  }
 
   let best = null;
   const minRows = Math.max(1, Math.ceil(n / 7));
@@ -879,13 +1044,14 @@ function computeLayout(){
     for(let bw = 70; bw >= 30; bw -= 2){
       if(per * bw + (per - 1) * sg > slotW) continue;      // 좌우로 잘리지 않도록!
       const sH = rows * Math.round(bw * 1.14) + (rows - 1) * sg;
-      if(sH > budget) continue;
+      if(sH > slotBudget) continue;
       for(let tw = 84; tw >= 34; tw -= 2){
         const tPer = Math.max(1, Math.floor((tilesW + tg) / (tw + tg)));
         if(tPer < 4 && nItems > 8) continue;
         const tRows = Math.ceil(nItems / tPer);
         const tH = tRows * Math.round(tw * 1.04) + (tRows - 1) * tg;
-        if(sH + tH > budget) continue;
+        if(tH > tileBudget) continue;
+        if(!landMode && sH + tH > slotBudget) continue;
         let score = Math.min(bw * 0.62, tw * 0.50 * (isKey ? 1.2 : 1)) * 100 + (bw * 0.62 + tw * 0.50) * 2;
         if(tRows > 1 && nItems % tPer === 1) score -= 45;   // 마지막 줄에 하나만 남는 건 싫어요
         if(!best || score > best.score) best = {bw:bw, tw:tw, per:per, rows:rows, tPer:tPer, score:score};
@@ -893,10 +1059,11 @@ function computeLayout(){
     }
   }
   if(!best){
-    const per = Math.min(n, 6);
-    best = {bw: Math.max(30, Math.min(64, Math.floor((slotW - (per-1)*sg) / per))),
-            per: per, rows: Math.ceil(n / per),
-            tw: Math.max(38, Math.min(70, Math.floor((tilesW - 5*tg) / 6))), tPer: 6};
+    const per = Math.min(n, (slotBudget > 150 ? 7 : 6));
+    const bw = Math.max(30, Math.min(64, Math.floor((slotW - (per-1)*sg) / per)));
+    const tw = Math.max(34, Math.min(70, Math.floor((tilesW - 5*tg) / 6)));
+    best = {bw: bw, per: per, rows: Math.ceil(n / per), tw: tw,
+            tPer: Math.max(1, Math.floor((tilesW + tg) / (tw + tg)))};
   }
   return best;
 }
@@ -931,9 +1098,7 @@ function loadQuestion(){
        mistakes:0, hints:0, done:false};
 
   $("#wEmoji").textContent = item.e;
-  $("#wKo").textContent = item.k;
-  $("#wEx").textContent = item.x;
-  $("#wordcard").classList.toggle("noex", mode === "dictate" || w.length > 10);
+  $("#wMean").textContent = item.m || item.x;
   $("#peek").classList.remove("on");
   $("#peek").textContent = "";
   $("#slots").classList.remove("good", "shake");
@@ -949,7 +1114,7 @@ function loadQuestion(){
   drawSlots();
   drawTiles();
   lock = false;
-  setTimeout(function(){ speak(w); }, 240);
+  setTimeout(function(){ speak(w, 0.88); }, 240);
 }
 
 function drawSlots(){
@@ -1080,6 +1245,9 @@ function onWrong(){
       const p = $("#peek");
       p.textContent = Q.w.toUpperCase().split("").join(" ");
       p.classList.add("on");
+      Q.layout = computeLayout();
+      drawSlots();
+      drawTiles();
     }
     speak(Q.w, 0.7);
   }, 640);
@@ -1096,7 +1264,7 @@ function onCorrect(){
   $("#slots").classList.add("good");
   $("#progFill").style.width = ((G.i + 1) / G.total * 100) + "%";
   soundGood();
-  speak(Q.w);
+  speak(Q.w, 0.88, "Yay!");
   showReward();
   setTimeout(function(){
     G.i++;
@@ -1110,31 +1278,65 @@ function onCorrect(){
     }
     if(G.i >= G.total) endGame();
     else loadQuestion();
-  }, 1450);
+  }, 1750);
 }
 
 function showReward(){
   const r = $("#reward");
   $("#rwBig").textContent = Q.item.e;
-  $("#rwTxt").textContent = PRAISE[Math.floor(Math.random()*PRAISE.length)];
+  $("#rwTxt").textContent = "정답!";
   $("#rwW").textContent = Q.w;
+  r.classList.remove("on");
+  void r.offsetWidth;
   r.classList.add("on");
-  setTimeout(function(){ r.classList.remove("on"); }, 1250);
+  starBurst();
+  setTimeout(function(){ r.classList.remove("on"); }, 1550);
+}
 
+/* ---------- 별 폭죽 ---------- */
+function starBurst(){
   const fx = $("#fx");
-  const icons = ["⭐","✨","👑","💖","🌸","🦋"];
-  for(let i=0;i<12;i++){
+  if(!fx) return;
+  const icons = ["⭐","✨","🌟","💫"];
+  const popIcons = ["⭐","🌟","✨","💫","🎉","💖"];
+  const N = 40;
+  for(let i=0;i<N;i++){
     const s = document.createElement("span");
-    s.className = "spark";
+    s.className = "star";
+    const ang = (Math.PI * 2 * i / N) + (Math.random() - 0.5) * 0.34;
+    const dist = 70 + Math.random() * 190;
     s.textContent = icons[Math.floor(Math.random()*icons.length)];
-    s.style.left = (34 + Math.random()*32) + "%";
-    s.style.top = "36%";
-    s.style.setProperty("--dx", (Math.random()*240 - 120) + "px");
-    s.style.setProperty("--dy", (-70 - Math.random()*160) + "px");
-    s.style.animationDelay = (Math.random()*0.15) + "s";
+    s.style.fontSize = (15 + Math.round(Math.random()*21)) + "px";
+    s.style.setProperty("--tx", Math.round(Math.cos(ang) * dist) + "px");
+    s.style.setProperty("--ty", Math.round(Math.sin(ang) * dist) + "px");
+    s.style.setProperty("--rot", Math.round(Math.random()*700 - 350) + "deg");
+    s.style.setProperty("--dur", (0.85 + Math.random()*0.5).toFixed(2) + "s");
+    s.style.animationDelay = (Math.random()*0.1).toFixed(2) + "s";
     fx.appendChild(s);
-    setTimeout(function(){ s.remove(); }, 1400);
+    setTimeout(function(){ s.remove(); }, 2100);
   }
+  // 큰 별 다섯 개가 팡!
+  for(let i=0;i<5;i++){
+    const b = document.createElement("span");
+    b.className = "star";
+    const ang = -Math.PI/2 + (i - 2) * 0.5;
+    b.textContent = popIcons[i % popIcons.length];
+    b.style.fontSize = (34 + i * 3) + "px";
+    b.style.setProperty("--tx", Math.round(Math.cos(ang) * (120 + i * 12)) + "px");
+    b.style.setProperty("--ty", Math.round(Math.sin(ang) * (120 + i * 12) - 20) + "px");
+    b.style.setProperty("--rot", (Math.random()*80 - 40).toFixed(0) + "deg");
+    b.style.setProperty("--dur", "1.15s");
+    fx.appendChild(b);
+    setTimeout(function(){ b.remove(); }, 2100);
+  }
+  const ring = document.createElement("span");
+  ring.className = "ring";
+  fx.appendChild(ring);
+  setTimeout(function(){ ring.remove(); }, 950);
+  const flash = document.createElement("span");
+  flash.className = "flash";
+  fx.appendChild(flash);
+  setTimeout(function(){ flash.remove(); }, 520);
 }
 
 /* ---------- 버튼 ---------- */
@@ -1161,7 +1363,22 @@ $("#btnSpeak").addEventListener("click", function(){
   ac();
   if(!hasTTS){ toast("이 브라우저에서는 소리가 안 나와요 🙏", 2200); return; }
   if(!save.sound){ save.sound = true; persist(); updateSoundButtons(); }
-  speak(Q.w, 0.78);
+  speak(Q.w, 0.88);
+});
+$("#btnSlow").addEventListener("click", function(){
+  if(!Q) return;
+  ac();
+  if(!hasTTS){ toast("이 브라우저에서는 소리가 안 나와요 🙏", 2200); return; }
+  if(!save.sound){ save.sound = true; persist(); updateSoundButtons(); }
+  toast("🐢 천천히 다시 들려줄게요", 900);
+  speak(Q.w, 0.5);
+});
+$("#btnMeanSpeak").addEventListener("click", function(){
+  if(!Q) return;
+  ac();
+  if(!hasTTS){ toast("이 브라우저에서는 소리가 안 나와요 🙏", 2200); return; }
+  if(!save.sound){ save.sound = true; persist(); updateSoundButtons(); }
+  speak(Q.item.m || Q.item.x, 0.8);
 });
 $("#btnSound").addEventListener("click", function(){
   save.sound = !save.sound; persist(); updateSoundButtons();
@@ -1181,38 +1398,31 @@ $("#btnHome").addEventListener("click", function(){
    ========================================================= */
 function endGame(){
   const isDay = G.src.type === "day";
-  let stars = 0;
   if(isDay){
-    stars = G.mistakes === 0 ? 3 : (G.mistakes <= 3 ? 2 : 1);
+    // 완료 표시(👑 배지)만 기록하고, 별 점수는 화면에 보여주지 않아요
+    const done = G.mistakes === 0 ? 3 : (G.mistakes <= 3 ? 2 : 1);
     const day = G.src.day;
-    if(stars > (save.stars[day] || 0)) save.stars[day] = stars;
+    if(done > (save.stars[day] || 0)) save.stars[day] = done;
     persist();
   }
   $("#progFill").style.width = "100%";
 
-  const rE = $("#rEmoji"), rT = $("#rTitle"), rS = $("#rStars"), rSub = $("#rSub");
+  const rE = $("#rEmoji"), rT = $("#rTitle"), rSub = $("#rSub");
   if(isDay){
     rE.textContent = "👑";
     rT.textContent = G.src.day + "단계 완료!";
-    rS.innerHTML = starStr(stars).split("").map(function(c){
-      return c === "★" ? "<span>★</span>" : '<span class="off">☆</span>';
-    }).join("");
-    rSub.textContent = G.total + "개 중 " + G.firstTry + "개를 한 번에 맞혔어요!";
+    rSub.innerHTML = "<b>" + G.total + "개 중 " + G.firstTry + "개</b>를 한 번에 맞혔어요!";
   } else if(G.src.type === "final"){
     const scored = G.firstTry, totalN = G.total;
-    const pct = Math.round(scored / totalN * 100);
     rE.textContent = "👑";
     rT.textContent = "파이널 리뷰 완료!";
-    const crowns = pct >= 90 ? "👑👑👑" : (pct >= 70 ? "👑👑" : "👑");
-    rS.innerHTML = '<span style="font-size:30px;letter-spacing:2px">' + crowns + '</span>';
     if(scored > (save.final.best || 0)){ save.final.best = scored; persist(); }
-    rSub.innerHTML = "<b>" + totalN + "개 중 " + scored + "개</b>를 한 번에 맞혔어요 · " + pct + "점" +
-      (save.final.best ? "<br><span style='font-size:13px'>지금까지 최고 " + save.final.best + "/" + totalN + " 👑</span>" : "");
+    rSub.innerHTML = "<b>" + totalN + "개 중 " + scored + "개</b>를 한 번에 맞혔어요!" +
+      (save.final.best ? "<br><span style='font-size:13px'>지금까지 최고 " + save.final.best + "/" + totalN + "</span>" : "");
   } else {
     rE.textContent = "💛";
     rT.textContent = "틀린 단어 완료!";
-    rS.innerHTML = "";
-    rSub.textContent = G.total + "개 중 " + G.firstTry + "개를 한 번에 맞혔어요!";
+    rSub.innerHTML = "<b>" + G.total + "개 중 " + G.firstTry + "개</b>를 한 번에 맞혔어요!";
   }
 
   const nextBtn = $("#rNext");
@@ -1273,6 +1483,30 @@ $$(".overlay").forEach(function(ov){
 });
 document.addEventListener("touchstart", function(){ ac(); }, {once:true, passive:true});
 document.addEventListener("mousedown", function(){ ac(); }, {once:true});
+
+/* 화면을 돌리거나 크기가 바뀌면 글자칸·타일을 다시 배치 */
+let relayoutTimer = null;
+function relayout(){
+  if(!G || !Q || Q.done) return;
+  if(!$("#scr-game").classList.contains("on")) return;
+  const prev = JSON.stringify(Q.layout);
+  Q.layout = computeLayout();
+  if(JSON.stringify(Q.layout) === prev) return;
+  drawSlots();
+  drawTiles();
+}
+function scheduleRelayout(ms){
+  clearTimeout(relayoutTimer);
+  relayoutTimer = setTimeout(relayout, ms);
+}
+window.addEventListener("resize", function(){ scheduleRelayout(120); });
+window.addEventListener("orientationchange", function(){ scheduleRelayout(280); });
+if(window.matchMedia){
+  try{
+    const mq = window.matchMedia("(orientation:landscape)");
+    if(mq.addEventListener) mq.addEventListener("change", function(){ scheduleRelayout(260); });
+  }catch(e){}
+}
 
 renderHome();
 </script>
