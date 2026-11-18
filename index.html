@@ -75,38 +75,45 @@
   h1{font-size:clamp(24px,7.4vw,31px); margin:6px 0 0; letter-spacing:-.8px; color:var(--plum);}
   .sub{margin:3px 0 0; font-size:13.5px; color:var(--plum2); font-weight:800;}
 
+  /* 단계 카드 = 단계 번호 + 글자 수만. 카드끼리 위아래 간격을 넉넉히 둬 배지가 절대 붙지 않게 */
   .days{flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
-    display:grid; grid-template-columns:1fr 1fr; gap:9px; padding:9px 14px 6px; align-content:start;}
+    display:grid; grid-template-columns:1fr 1fr; gap:14px 12px; padding:12px 14px 10px;
+    grid-auto-rows:minmax(clamp(76px,8.6vh,90px),1fr); align-content:stretch;}
   .daycard{
-    position:relative; text-align:left; background:linear-gradient(180deg,#FFFFFF 0%,var(--cream) 100%);
+    position:relative; text-align:center; background:linear-gradient(180deg,#FFFFFF 0%,var(--cream) 100%);
     border:3px solid #F8CFE2; border-radius:20px;
-    box-shadow:0 6px 0 #EFCBDE; display:flex; flex-direction:column; justify-content:center; gap:4px;
-    min-height:clamp(72px,9.2vh,86px); padding:9px 12px; transition:transform .08s;
+    box-shadow:0 6px 0 #EFCBDE; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px;
+    min-height:clamp(76px,8.6vh,90px); padding:12px 10px; transition:transform .08s;
   }
   .daycard:active{transform:translateY(4px); box-shadow:0 2px 0 #EFCBDE;}
   .daycard.done{border-color:var(--gold); background:linear-gradient(180deg,#FFFDF6,#FFF2D8);
     box-shadow:0 6px 0 #E8CE8E;}
-  .daycard.done::after{content:"👑"; position:absolute; right:8px; bottom:6px; font-size:18px; opacity:.9;}
-  .dtop{display:flex; align-items:center; justify-content:space-between; gap:4px;}
-  .dnum{font-size:12.5px; font-weight:900; color:#B0568A; letter-spacing:.3px;
-    background:var(--rose-l); border-radius:999px; padding:2px 9px;}
-  .dname{font-size:clamp(14.5px,4vw,16.5px); font-weight:900; line-height:1.2; margin-top:1px;}
-  .dcount{font-size:12px; font-weight:800; color:var(--plum2);}
-  .dbar{width:100%; height:6px; border-radius:99px; background:#FBE3EE; overflow:hidden; margin-top:3px;}
+  .daycard.done::after{content:"👑"; position:absolute; right:8px; top:7px; font-size:14px; opacity:.95; line-height:1;}
+  .dnum{font-size:12px; font-weight:900; color:#B0568A; letter-spacing:.2px; line-height:1.25;
+    background:var(--rose-l); border-radius:999px; padding:2px 10px; flex:0 0 auto;}
+  .drange{font-size:clamp(19px,4.7vw,23px); font-weight:900; line-height:1.05; color:var(--plum);
+    letter-spacing:-.4px; white-space:nowrap;}
+  .dbar{width:100%; max-width:98px; height:5px; border-radius:99px; background:#FBE3EE; overflow:hidden; flex:0 0 auto;}
+  .dbar.off{visibility:hidden;}
   .dbar i{display:block; height:100%; background:linear-gradient(90deg,#F9B8D6,#E2719F); border-radius:99px;}
 
-  .review-row{display:flex; gap:10px; padding:0 14px 4px;}
-  .finalcard{display:flex; align-items:center; gap:12px; margin:0 14px 8px; padding:10px 15px;
-    border-radius:22px; border:3px solid var(--gold); box-shadow:0 6px 0 #E4C069;
-    background:linear-gradient(135deg,#FFF7DC 0%,#FFE6F2 60%,#F3E3FF 100%); text-align:left;}
-  .finalcard:active{transform:translateY(4px); box-shadow:0 2px 0 #E4C069;}
-  .finalcard .ficon{font-size:30px; line-height:1;}
-  .finalcard .fbody{flex:1; display:flex; flex-direction:column; gap:2px;}
-  .finalcard .ftitle{font-size:18px; font-weight:900; color:var(--plum);}
-  .finalcard .fsub{font-size:12.5px; font-weight:800; color:var(--plum2);}
-  .finalcard .fbar{display:block; height:7px; border-radius:99px; background:#FBE3EE; overflow:hidden; margin-top:4px;}
-  .finalcard .fbar i{display:block; height:100%; background:linear-gradient(90deg,#F9B8D6,#E2719F);}
-  .finalcard .fgo{font-size:16px; color:#B0568A; font-weight:900;}
+  /* 하단 2열 : 파이널 리뷰 · 틀린 단어 / 소리 · 사용법 — 파이널 리뷰가 한 줄을 다 차지하지 않게 */
+  .homefoot{display:grid; grid-template-columns:1fr 1fr; gap:10px;
+    padding:2px 14px calc(10px + env(safe-area-inset-bottom));}
+  .minibtn{position:relative; display:flex; align-items:center; justify-content:center; gap:6px; min-height:46px;
+    font-size:13px; font-weight:900; color:var(--plum2); background:#fff; border:2px solid #EFDCC8;
+    border-radius:999px; padding:7px 10px; overflow:hidden; line-height:1.15;}
+  .minibtn:active{transform:translateY(2px);}
+  .minibtn .mi{font-size:16px; line-height:1;}
+  .minibtn .mlab{display:flex; flex-direction:column; align-items:flex-start; gap:1px; min-width:0;}
+  .minibtn .mt{font-size:13.5px; font-weight:900; color:var(--plum); line-height:1.15; white-space:nowrap;}
+  .minibtn .ms{font-size:10.5px; font-weight:800; color:var(--plum2); line-height:1.15; white-space:nowrap;}
+  .minibtn.final{border-color:var(--gold); box-shadow:0 4px 0 #E4C069; padding-bottom:11px;
+    background:linear-gradient(135deg,#FFF7DC 0%,#FFE6F2 60%,#F3E3FF 100%);}
+  .minibtn.final:active{transform:translateY(3px); box-shadow:0 1px 0 #E4C069;}
+  .minibtn.final .mt{font-size:14.5px;}
+  .minibtn.final .fbar{position:absolute; left:18px; right:18px; bottom:5px; height:4px; border-radius:99px; background:rgba(226,113,159,.18);}
+  .minibtn.final .fbar i{display:block; height:100%; background:linear-gradient(90deg,#F9B8D6,#E2719F);}
   .btn{background:#fff; border:3px solid var(--rose); border-radius:18px; font-weight:900;
     box-shadow:var(--shadow); padding:12px 14px; font-size:16px; display:flex; align-items:center;
     justify-content:center; gap:6px; min-height:54px; transition:transform .08s; color:var(--plum);}
@@ -114,11 +121,7 @@
   .btn.primary{background:linear-gradient(180deg,#FFD9EC,#FFBEDD); border-color:#F08CB8; box-shadow:0 6px 0 #E88CB6;}
   .btn.gold{background:linear-gradient(180deg,#FFF0C0,#FFE1A0); border-color:var(--gold); box-shadow:var(--shadow-gold);}
   .btn.ghost{border-color:#EFDCC8; box-shadow:0 5px 0 #EFE1D2; color:var(--plum2); background:var(--cream);}
-  .review-row .btn{flex:1;}
-  .foot{display:flex; gap:8px; justify-content:center; padding:4px 14px calc(9px + env(safe-area-inset-bottom));}
-  .foot .mini{flex:1; text-align:center; min-height:42px; font-size:12.5px; padding:8px 6px;}
-  .mini{font-size:13px; font-weight:900; color:var(--plum2); background:#fff; border:2px solid #EFDCC8;
-    border-radius:999px; padding:8px 14px;}
+
 
   /* ================= GAME ================= */
   .gbar{display:flex; align-items:center; gap:9px; padding:calc(7px + env(safe-area-inset-top)) 14px 2px; flex:0 0 auto;}
@@ -200,13 +203,15 @@
     h1{font-size:22px; margin-top:3px;}
     .sub{font-size:12px;}
     .bunting i{border-top-width:11px; border-left-width:6px; border-right-width:6px;}
-    .daycard{min-height:64px; padding:7px 11px;}
-    .dnum{font-size:11px;}
-    .finalcard{padding:8px 13px;}
-    .finalcard .ficon{font-size:24px;}
-    .finalcard .ftitle{font-size:16px;}
-    .finalcard .fsub{font-size:11px;}
-    .foot .mini{min-height:38px; font-size:11.5px;}
+    .days{gap:11px; padding:8px 12px 8px; grid-auto-rows:minmax(58px,1fr);}
+    .daycard{min-height:60px; padding:8px; gap:4px;}
+    .dnum{font-size:10.5px; padding:1px 8px;}
+    .drange{font-size:18px;}
+    .homefoot{gap:8px; padding-bottom:calc(8px + env(safe-area-inset-bottom));}
+    .minibtn{min-height:40px; font-size:12px;}
+    .minibtn .mt{font-size:12px;}
+    .minibtn.final .mt{font-size:12.5px;}
+    .minibtn.final{padding-bottom:9px;}
     .wemoji{font-size:28px;}
     .wmtxt{font-size:18px;}
     .msay{width:34px; height:34px; font-size:15px;}
@@ -220,9 +225,12 @@
   @media (orientation:landscape){
     #app{max-width:1000px;}
     .home-top{padding-top:calc(4px + env(safe-area-inset-top));}
-    .days{grid-template-columns:repeat(5,1fr); grid-auto-rows:minmax(0,1fr); align-content:stretch;
-      gap:9px; padding:8px 12px 4px;}
-    .daycard{min-height:0;}
+    .days{grid-template-columns:repeat(5,1fr); gap:12px; grid-auto-rows:auto;
+      padding:10px 14px 8px; align-content:center;}
+    .daycard{min-height:clamp(84px,17vh,112px);}
+    .drange{font-size:clamp(18px,3.2vh,26px);}
+    .homefoot{grid-template-columns:repeat(4,1fr); gap:10px; padding-bottom:calc(8px + env(safe-area-inset-bottom));}
+    .minibtn{min-height:44px;}
 
     .gbar{gap:10px; padding:calc(5px + env(safe-area-inset-top)) 12px 0;}
     .iconbtn{width:38px; height:38px; font-size:18px; border-radius:12px;}
@@ -322,19 +330,19 @@
     .crest .crown{font-size:14px; top:-9px;}
     h1{font-size:19px; margin:0; letter-spacing:-.5px; white-space:nowrap;}
     .sub{margin:0; font-size:10.5px; white-space:nowrap;}
-    .days{gap:7px; padding:6px 10px 3px;}
-    .dnum{font-size:10.5px; padding:1px 7px;}
-    .dname{font-size:12.5px;}
-    .dcount{font-size:10.5px;}
-    .dbar{height:4px; margin-top:2px;}
-    .daycard.done::after{font-size:13px; right:6px; bottom:3px;}
-    .finalcard{margin:0 10px 5px; padding:6px 12px; border-radius:16px; gap:8px;}
-    .finalcard .ficon{font-size:20px;}
-    .finalcard .ftitle{font-size:14px;}
-    .finalcard .fsub{font-size:10.5px;}
-    .finalcard .fbar{height:5px; margin-top:2px;}
-    .foot{padding:2px 10px calc(4px + env(safe-area-inset-bottom)); gap:6px;}
-    .foot .mini{min-height:34px; font-size:11px; padding:4px 4px;}
+    .days{gap:11px; padding:8px 12px 6px;}
+    .daycard{padding:10px 8px; min-height:0; gap:6px;}
+    .dnum{font-size:10.5px; padding:1px 8px;}
+    .drange{font-size:clamp(17px,4.6vh,21px);}
+    .dbar{height:4px; max-width:80px;}
+    .daycard.done::after{font-size:13px; right:7px; top:5px;}
+    .homefoot{gap:8px; padding:0 12px calc(6px + env(safe-area-inset-bottom));}
+    .minibtn{min-height:38px; font-size:11.5px; padding:5px 8px; gap:5px;}
+    .minibtn .mt{font-size:12.5px;}
+    .minibtn .ms{font-size:10px;}
+    .minibtn.final .mt{font-size:13px;}
+    .minibtn.final{padding-bottom:9px;}
+    .minibtn .mi{font-size:14px;}
 
     .stack{gap:3px;}
     .wemoji{font-size:clamp(24px,8vh,34px);}
@@ -385,19 +393,15 @@
       <div class="sub" id="ddayChip">🗓 12월 14일 스펠링비</div>
     </div>
     <div class="days" id="dayGrid"></div>
-    <button class="finalcard" id="btnFinal">
-      <span class="ficon">👑</span>
-      <span class="fbody">
-        <span class="ftitle">파이널 리뷰</span>
-        <span class="fsub" id="finalSub">100개 단어 전체 점검 · 실전 모의시험</span>
+    <div class="homefoot">
+      <button class="minibtn final" id="btnFinal">
+        <span class="mi">👑</span>
+        <span class="mlab"><span class="mt">파이널 리뷰</span><span class="ms" id="finalSub">100단어</span></span>
         <span class="fbar" id="finalBar" style="display:none"><i></i></span>
-      </span>
-      <span class="fgo">▶</span>
-    </button>
-    <div class="foot">
-      <button class="mini" id="btnWrong">💛 틀린 단어 <span id="wrongCnt">0</span></button>
-      <button class="mini" id="btnSoundHome">🔊 소리 켜짐</button>
-      <button class="mini" id="btnHelp">❓ 사용법</button>
+      </button>
+      <button class="minibtn" id="btnWrong"><span class="mi">💛</span><span class="mt">틀린 단어 <span id="wrongCnt">0</span></span></button>
+      <button class="minibtn" id="btnSoundHome"><span class="mi" id="soundHomeIcon">🔊</span><span class="mt" id="soundHomeT">소리 켜짐</span></button>
+      <button class="minibtn" id="btnHelp"><span class="mi">❓</span><span class="mt">사용법</span></button>
     </div>
   </section>
 
@@ -1071,7 +1075,7 @@ function ttsFor(id){
   return {text:e.t, lang:lang};
 }
 let lastHintAt = 0;
-/* 소리 힌트 : 사람 목소리로 파닉스 소리를 또박또박 두 번 */
+/* 소리 힌트 : 사람 목소리로 파닉스 소리를 또박또박 '한 번만' */
 function playPhoneme(id){
   if(id === "silent"){
     notes([587.33], "sine", 0.05);
@@ -1084,8 +1088,7 @@ function playPhoneme(id){
   if(!snd) return false;
   try{
     speechSynthesis.cancel();
-    speechSynthesis.speak(makeUtter(snd.text, 0.78, 1.05, snd.lang));
-    speechSynthesis.speak(makeUtter(snd.text, 0.78, 1.05, snd.lang));
+    speechSynthesis.speak(makeUtter(snd.text, 0.72, 1.05, snd.lang));
   }catch(e){ speechNotice(); return false; }
   return true;
 }
@@ -1111,6 +1114,13 @@ function toast(msg, ms, good){
 /* =========================================================
    홈
    ========================================================= */
+/* 단계별 실제 글자 수 범위 : "5~7글자" / 같으면 "9글자" */
+function lenRange(words){
+  let lo = Infinity, hi = 0;
+  words.forEach(function(w){ const n = String(w).length; if(n < lo) lo = n; if(n > hi) hi = n; });
+  if(!hi) return "";
+  return (lo === hi) ? (lo + "글자") : (lo + "~" + hi + "글자");
+}
 function renderHome(){
   const grid = $("#dayGrid");
   grid.innerHTML = "";
@@ -1121,25 +1131,24 @@ function renderHome(){
     const b = document.createElement("button");
     b.className = "daycard" + (st ? " done" : "");
     b.innerHTML =
-      '<div class="dtop"><span class="dnum">' + day + '단계</span></div>' +
-      '<div class="dname">' + d.e + ' ' + d.t + '</div>' +
-      '<div class="dcount">' + d.words.length + '단어' +
-        (st ? ' · 완료' : (pos > 0 ? ' · ' + pos + '개 지나감' : '')) + '</div>' +
-      (pos > 0 ? '<div class="dbar"><i style="width:' + Math.round(pos / d.words.length * 100) + '%"></i></div>' : '');
+      '<span class="dnum">' + day + '단계</span>' +
+      '<span class="drange">' + lenRange(d.words) + '</span>' +
+      '<span class="dbar' + ((pos > 0 && pos < d.words.length) ? '' : ' off') + '"><i style="width:' +
+        Math.round(Math.min(pos, d.words.length) / d.words.length * 100) + '%"></i></span>';
     b.addEventListener("click", function(){ openSheet({type:"day", day:day}); });
     grid.appendChild(b);
   });
   renderDday();
   const fp = save.final.pos || 0;
   if(fp > 0 && fp < 100){
-    $("#finalSub").textContent = "중간까지 해도 괜찮아요 · " + fp + "/100 진행 중 (이어서 GO!)";
+    $("#finalSub").textContent = fp + "/100 이어서";
     $("#finalBar").style.display = "block";
     $("#finalBar").firstElementChild.style.width = fp + "%";
   } else if(save.final.best > 0){
-    $("#finalSub").textContent = "지난 최고 기록 " + save.final.best + "/100 · 다시 도전해 볼까요?";
+    $("#finalSub").textContent = "최고 " + save.final.best + "/100";
     $("#finalBar").style.display = "none";
   } else {
-    $("#finalSub").textContent = "100개 단어 전체 점검 · 실전 모의시험";
+    $("#finalSub").textContent = "100단어";
     $("#finalBar").style.display = "none";
   }
   $("#wrongCnt").textContent = save.wrong.length;
@@ -1157,7 +1166,9 @@ function renderDday(){
 }
 function updateSoundButtons(){
   const on = save.sound;
-  $("#btnSoundHome").textContent = on ? "🔊 소리 켜짐" : "🔇 소리 꺼짐";
+  const ic = $("#soundHomeIcon"), tx = $("#soundHomeT");
+  if(ic) ic.textContent = on ? "🔊" : "🔇";
+  if(tx) tx.textContent = on ? "소리 켜짐" : "소리 꺼짐";
   $("#btnSound").textContent = on ? "🔊" : "🔇";
 }
 
@@ -1170,8 +1181,8 @@ function openSheet(src){
   let title = "", sub = "";
   if(src.type === "day"){
     const d = DAYS[src.day-1];
-    title = src.day + "단계 · " + d.t;
-    sub = d.words.length + "개 단어 · 어떻게 연습할까요?";
+    title = src.day + "단계";
+    sub = lenRange(d.words) + " · 어떻게 연습할까요?";
     const kind = (dayOfYear() + (save.round[src.day] || 0)) % 3;
     $("#fillDesc").textContent = "오늘은 " + KIND_NAME[kind] + "! 빈칸 위치가 날마다 바뀌어요";
     const pos = save.pos[src.day] || 0;
