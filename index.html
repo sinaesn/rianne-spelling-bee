@@ -1732,7 +1732,7 @@ $("#btnHint").addEventListener("click", function(){
   if(Date.now() - lastHintAt < 650) return;
   lastHintAt = Date.now();
   const slot = Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
-  if(slot === undefined){ toast("빈칸이 다 채워졌어요!", 1200); return; }
+  if(slot === undefined){ toast("빈칸이 다 찼어요! 빨간 글자를 🧽 지우기로 지우고 다시 해봐요", 1800); return; }
   const pid = Q.ph[slot] || "";
   Q.hints++;
   ac();
