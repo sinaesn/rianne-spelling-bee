@@ -6,10 +6,8 @@
 <meta name="theme-color" content="#FFD9EC">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<link rel="manifest" href="manifest.json">
-<link id="favIcon" rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-<link id="touchIcon" rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link id="favIcon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='32' fill='%23FFE4F0'/%3E%3Cellipse cx='46' cy='46' rx='18' ry='12' transform='rotate(-25 46 46)' fill='%23FFF' stroke='%23E2719F' stroke-width='3'/%3E%3Cellipse cx='82' cy='46' rx='18' ry='12' transform='rotate(25 82 46)' fill='%23FFF' stroke='%23E2719F' stroke-width='3'/%3E%3Cellipse cx='64' cy='76' rx='30' ry='24' fill='%23FF9EC4' stroke='%233E1F4A' stroke-width='4'/%3E%3Cpath d='M42 68 Q64 74 86 68 M40 80 Q64 86 88 80' stroke='%233E1F4A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='53' cy='68' r='4' fill='%233E1F4A'/%3E%3Ccircle cx='75' cy='68' r='4' fill='%233E1F4A'/%3E%3Cpath d='M48 30 L56 42 L64 26 L72 42 L80 30 L82 46 L46 46 Z' fill='%23F0CE72' stroke='%23C89A2E' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link id="touchIcon" rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='32' fill='%23FFE4F0'/%3E%3Cellipse cx='46' cy='46' rx='18' ry='12' transform='rotate(-25 46 46)' fill='%23FFF' stroke='%23E2719F' stroke-width='3'/%3E%3Cellipse cx='82' cy='46' rx='18' ry='12' transform='rotate(25 82 46)' fill='%23FFF' stroke='%23E2719F' stroke-width='3'/%3E%3Cellipse cx='64' cy='76' rx='30' ry='24' fill='%23FF9EC4' stroke='%233E1F4A' stroke-width='4'/%3E%3Cpath d='M42 68 Q64 74 86 68 M40 80 Q64 86 88 80' stroke='%233E1F4A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='53' cy='68' r='4' fill='%233E1F4A'/%3E%3Ccircle cx='75' cy='68' r='4' fill='%233E1F4A'/%3E%3Cpath d='M48 30 L56 42 L64 26 L72 42 L80 30 L82 46 L46 46 Z' fill='%23F0CE72' stroke='%23C89A2E' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
 <title>👑 Rianne's Spelling Bee</title>
 <style>
   :root{
@@ -120,70 +118,72 @@
   .mini{font-size:13px; font-weight:900; color:var(--plum2); background:#fff; border:2px solid #EFDCC8;
     border-radius:999px; padding:8px 14px;}
 
-  /* ---------- GAME ---------- */
-  .gbar{display:flex; align-items:center; gap:8px; padding:calc(8px + env(safe-area-inset-top)) 12px 4px;}
-  .iconbtn{width:46px; height:46px; flex:0 0 auto; border-radius:15px; background:#fff; border:2px solid var(--rose);
-    box-shadow:0 4px 0 #EFC9DC; font-size:21px; display:flex; align-items:center; justify-content:center;}
+  /* ================= GAME ================= */
+  .gbar{display:flex; align-items:center; gap:9px; padding:calc(7px + env(safe-area-inset-top)) 14px 2px; flex:0 0 auto;}
+  .iconbtn{width:44px; height:44px; flex:0 0 auto; border-radius:14px; background:#fff; border:2px solid var(--rose);
+    box-shadow:0 4px 0 #EFC9DC; font-size:20px; display:flex; align-items:center; justify-content:center;}
   .iconbtn:active{transform:translateY(3px); box-shadow:none;}
-  .gprog{flex:1; height:16px; background:#FFE7F1; border:2px solid var(--rose); border-radius:999px; overflow:hidden;}
+  .gprog{flex:1; height:14px; background:#FFE7F1; border:2px solid var(--rose); border-radius:999px; overflow:hidden;}
   .gprog i{display:block; height:100%; width:0%; border-radius:999px;
     background:linear-gradient(90deg,#F9B8D6,#E2719F); transition:width .35s ease;}
   .gcount{font-weight:900; font-size:15px; color:#B0568A; min-width:44px; text-align:center;}
 
-  .wordcard{display:flex; flex-direction:column; align-items:center; gap:2px; padding:6px 12px 2px; text-align:center; flex:0 0 auto;}
-  .wemoji{font-size:clamp(38px,6.2vh,62px); line-height:1.05;}
-  .wmean{display:flex; align-items:center; justify-content:center; gap:7px; max-width:100%; padding:0 2px;}
-  .wmtxt{font-size:clamp(13px,1.95vh,17px); font-weight:800; color:var(--plum2); line-height:1.22;}
-  .msay{flex:0 0 auto; width:31px; height:31px; border-radius:50%; background:#fff; border:2px solid var(--rose);
-    box-shadow:0 3px 0 #EFC9DC; font-size:14px; display:flex; align-items:center; justify-content:center; padding:0;}
+  /* 위 : 이모지 · 영문 뜻 · 듣기 버튼 */
+  .gmain{flex:1; min-height:0; display:flex; flex-direction:column; padding:2px 10px 0;}
+  @media (orientation:portrait){ .gmain{padding:2px 6px 0;} }
+  .stack{flex:1 1 auto; min-height:0; display:flex; flex-direction:column; justify-content:center; gap:6px;}
+  .wtop{display:flex; flex-direction:column; align-items:center; gap:1px; text-align:center; flex:0 0 auto; min-height:0;}
+  .wemoji{font-size:clamp(30px,5.4vh,46px); line-height:1.06;}
+  .wmean{display:flex; align-items:center; justify-content:center; gap:10px; max-width:100%; min-width:0;}
+  .wmtxt{font-size:clamp(18px,2.7vh,21px); font-weight:900; color:var(--plum); line-height:1.22; letter-spacing:-.2px;}
+  .msay{flex:0 0 auto; width:40px; height:40px; border-radius:50%; background:#fff; border:2px solid var(--rose);
+    box-shadow:0 3px 0 #EFC9DC; font-size:18px; display:flex; align-items:center; justify-content:center; padding:0;}
   .msay:active{transform:translateY(2px); box-shadow:none;}
-  .speakwrap{display:flex; flex-direction:column; gap:5px; align-items:center; margin-top:6px;}
-  .speak{display:inline-flex; align-items:center; justify-content:center; gap:7px; background:linear-gradient(180deg,#FFF3C8,#FFE4A6);
-    border:2.5px solid var(--gold); border-radius:999px; padding:7px 20px; font-weight:900;
-    font-size:clamp(15px,2.1vh,18px); box-shadow:0 4px 0 #E4C069; color:var(--plum);}
+  .speakwrap{display:flex; flex-direction:row; gap:7px; align-items:center; justify-content:center; margin-top:4px; flex:0 0 auto;}
+  .speak{display:inline-flex; align-items:center; justify-content:center; gap:6px; background:linear-gradient(180deg,#FFF3C8,#FFE4A6);
+    border:2.5px solid var(--gold); border-radius:999px; padding:6px 15px; font-weight:900;
+    font-size:clamp(13px,1.9vh,16px); box-shadow:0 4px 0 #E4C069; color:var(--plum); white-space:nowrap;}
   .speak:active{transform:translateY(3px); box-shadow:none;}
   .speak.slow{background:linear-gradient(180deg,#EAFBF2,#CFEFE0); border-color:#8FD6B2; box-shadow:0 4px 0 #86C9A6; color:#1F6B4C;}
   .speak.slow:active{box-shadow:none;}
 
-  /* 게임 본문 : 세로=위아래, 가로=좌우 2단 */
-  .gmain{flex:1; min-height:0; display:flex; flex-direction:column;}
-  .gleft{display:flex; flex-direction:column; min-height:0; flex:0 0 auto;}
-  .gright{display:flex; flex-direction:column; flex:1 1 auto; min-height:0;}
-
-  .slots{display:grid; justify-content:center; align-content:center; gap:6px; padding:8px 14px 2px; min-height:58px;}
-  .slot{display:flex; align-items:center; justify-content:center; font-weight:900; line-height:1;
-    border-radius:15px; transition:transform .1s, background .15s;}
-  .slot.fixed{background:#FFFDF8; border:3px solid #F3DCC2; color:#A9762F;}
-  .slot.blank{background:#FFF6FB; border:3px dashed #E2719F; color:var(--rose-d); box-shadow:0 3px 0 #F5D3E2;}
-  .slot.blank.on{border-style:solid; background:#FFE7F2; box-shadow:0 3px 0 #EFBBD4;}
+  /* 가운데 : 단어 전체 한 줄 */
+  .slotbox{flex:0 0 auto; width:100%; display:flex; align-items:center; justify-content:center; overflow:hidden;}
+  .slots{display:flex; flex-wrap:nowrap; align-items:center; justify-content:center; gap:var(--sg,6px);}
+  .slot{flex:0 0 auto; display:flex; align-items:center; justify-content:center; font-weight:900; line-height:1;
+    width:var(--sw,40px); height:var(--sh,46px); font-size:var(--sfs,26px);
+    border-radius:min(15px, calc(var(--sw,40px) * 0.3)); white-space:nowrap;
+    transition:transform .1s, background .15s; border-width:var(--sbw,3px); border-style:solid;}
+  .slot.fixed{background:#FFFDF8; border-color:#F3DCC2; color:#A9762F;}
+  .slot.blank{background:#FFF6FB; border-color:#E2719F; border-style:dashed; color:var(--rose-d); box-shadow:0 3px 0 #F5D3E2;}
+  .slot.blank.on{border-style:solid; background:#FFE7F2; box-shadow:0 3px 0 #EFBBD4, 0 0 0 3px rgba(226,113,159,.22);}
   .slot.blank.filled{border-style:solid; background:#FFE7F2; color:var(--plum);}
   .slots.shake{animation:shake .4s;}
   @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}
     60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
   .slots.good .slot.blank{border-color:var(--mint); background:#EBFBF1; box-shadow:0 3px 0 #B6E7C9; color:#25714A;}
 
-  .tiles{flex:1; min-height:0; display:grid; justify-content:center; align-content:center; gap:9px;
-    padding:6px 12px 12px; overflow-y:auto;}
-  .tile{border-radius:18px; background:#FFFDF8; border:3px solid #F3B7D1; box-shadow:0 5px 0 #E9A6C4;
-    font-weight:900; color:var(--plum); display:flex; align-items:center; justify-content:center;
+  /* 아래 : 보기 타일 / A~Z 키패드 */
+  .tiles{flex:0 0 auto; display:grid; justify-content:center; align-content:center;
+    gap:var(--tg,8px); overflow:hidden;}
+  .tile{border-radius:16px; background:#FFFDF8; border:3px solid #F3B7D1; box-shadow:0 5px 0 #E9A6C4;
+    font-weight:900; color:var(--plum); display:flex; align-items:center; justify-content:center; line-height:1;
     transition:transform .1s, opacity .15s;}
   .tile:active{transform:translateY(4px); box-shadow:0 1px 0 #E9A6C4;}
   .tile.key{border-color:#EFC25E; box-shadow:0 5px 0 #DDB44E; background:#FFFCF2;}
   .tile.key:active{background:#FFF0C4; transform:translateY(4px); box-shadow:0 1px 0 #DDB44E;}
   .tile.used{background:#FDEBF3; border:3px dashed #F0B6CE; box-shadow:none; color:transparent; pointer-events:none;}
 
-  .gfoot{display:flex; gap:10px; padding:4px 14px calc(10px + env(safe-area-inset-bottom));}
-  .toolbtn{flex:1; min-height:58px; border-radius:18px; background:#fff; border:3px solid var(--rose);
-    box-shadow:0 5px 0 #E9A6C4; font-weight:900; font-size:clamp(15px,2.1vh,17px); color:var(--plum);}
+  .gfoot{display:flex; gap:10px; padding:2px 4px calc(8px + env(safe-area-inset-bottom)); flex:0 0 auto;}
+  .toolbtn{flex:1; min-height:52px; border-radius:18px; background:#fff; border:3px solid var(--rose);
+    box-shadow:0 5px 0 #E9A6C4; font-weight:900; font-size:clamp(14px,2.0vh,17px); color:var(--plum);}
   .toolbtn:active{transform:translateY(4px); box-shadow:none;}
   .toolbtn[disabled]{opacity:.45; box-shadow:none;}
 
-  .peek{margin:3px auto 0; font-size:16px; font-weight:900; color:#B0568A; background:#FFF3F8;
-    border:2px dashed #F0A9C9; border-radius:14px; padding:4px 14px; letter-spacing:2px; display:none;}
-  .peek.on{display:block;}
-  .tip{text-align:center; font-size:13px; font-weight:800; color:#8A5480; padding:2px 10px 0;}
+  .tip{text-align:center; font-size:13px; font-weight:800; color:#8A5480; padding:0 8px; flex:0 0 auto;}
 
-  @media (max-height:700px){
+  /* 세로가 짧은 기기 */
+  @media (max-height:700px) and (orientation:portrait){
     .crest{width:56px; height:56px;}
     .crest .bee{font-size:26px;}
     .crest .crown{font-size:17px; top:-11px;}
@@ -197,106 +197,53 @@
     .finalcard .ftitle{font-size:16px;}
     .finalcard .fsub{font-size:11px;}
     .foot .mini{min-height:38px; font-size:11.5px;}
-  }
-  @media (max-height:720px){
-    .wemoji{font-size:38px;}
-    .wmtxt{font-size:13px;}
-    .msay{width:27px; height:27px; font-size:13px;}
-    .speak{padding:5px 15px; font-size:14.5px;}
-    .speakwrap{margin-top:4px; gap:4px;}
-    .slots{min-height:50px; padding-top:6px;}
-    .toolbtn{min-height:50px; font-size:15px;}
-    .tip{font-size:12px;}
-  }
-  @media (max-height:640px) and (orientation:portrait){
-    .wemoji{font-size:30px;}
-    .wmtxt{font-size:12px;}
-    .speak{padding:4px 12px; font-size:13px;}
-    .speakwrap{margin-top:3px; gap:3px;}
-    .msay{width:24px; height:24px; font-size:12px;}
-    .slots{min-height:44px; padding-top:4px;}
+    .wemoji{font-size:28px;}
+    .wmtxt{font-size:18px;}
+    .msay{width:34px; height:34px; font-size:15px;}
+    .speak{padding:5px 12px; font-size:13px;}
+    .speakwrap{margin-top:2px; gap:5px;}
+    .toolbtn{min-height:46px;}
     .tip{display:none;}
-    .toolbtn{min-height:46px; font-size:14px;}
-    .gbar{padding-top:4px;}
-    .iconbtn{width:40px; height:40px; font-size:18px;}
   }
 
-  /* ---------- 가로(landscape) : 게임은 좌우 2단 ---------- */
+  /* ---------- 가로(landscape) : 위→아래 한 줄 구성 ---------- */
   @media (orientation:landscape){
-    #app{max-width:920px;}
-    .home-top{padding-top:calc(6px + env(safe-area-inset-top));}
+    #app{max-width:1000px;}
+    .home-top{padding-top:calc(4px + env(safe-area-inset-top));}
     .days{grid-template-columns:repeat(5,1fr); grid-auto-rows:minmax(0,1fr); align-content:stretch;
       gap:9px; padding:8px 12px 4px;}
     .daycard{min-height:0;}
-    .gmain{flex-direction:row; gap:12px; padding:0 12px; align-items:stretch;}
-    .gleft{flex:0 0 44%; min-width:0; min-height:0;}
-    .gright{flex:1 1 56%; min-width:0; min-height:0;}
-    .slots{flex:1; min-height:0; align-content:center; padding:6px 4px;}
-    .tiles{align-content:center; padding:4px 0;}
-    .tip{display:none;}
-    .gfoot{padding:4px 0 calc(4px + env(safe-area-inset-bottom));}
-    .reward{top:50%;}
-  }
-  @media (orientation:landscape) and (max-height:560px){
-    .bunting{display:none;}
-    .home-top{display:flex; align-items:center; justify-content:center; gap:9px; flex-wrap:nowrap;
-      padding:calc(4px + env(safe-area-inset-top)) 12px 2px;}
-    .crest{width:40px; height:40px; border-width:2px; box-shadow:0 3px 0 rgba(200,154,46,.28), inset 0 0 0 3px #fff;}
-    .crest .bee svg{width:26px; height:26px;}
-    .crest .crown{font-size:14px; top:-9px;}
-    h1{font-size:19px; margin:0; letter-spacing:-.5px; white-space:nowrap;}
-    .sub{margin:0; font-size:10.5px; white-space:nowrap;}
-    .days{gap:7px; padding:6px 10px 3px;}
-    .dnum{font-size:10.5px; padding:1px 7px;}
-    .dname{font-size:12.5px;}
-    .dcount{font-size:10.5px;}
-    .dbar{height:4px; margin-top:2px;}
-    .daycard.done::after{font-size:13px; right:6px; bottom:3px;}
-    .finalcard{margin:0 10px 5px; padding:6px 12px; border-radius:16px; gap:8px;}
-    .finalcard .ficon{font-size:20px;}
-    .finalcard .ftitle{font-size:14px;}
-    .finalcard .fsub{font-size:10.5px;}
-    .finalcard .fbar{height:5px; margin-top:2px;}
-    .foot{padding:2px 10px calc(4px + env(safe-area-inset-bottom)); gap:6px;}
-    .foot .mini{min-height:34px; font-size:11px; padding:4px 4px;}
 
-    .gbar{gap:6px; padding:calc(4px + env(safe-area-inset-top)) 10px 2px;}
-    .iconbtn{width:36px; height:36px; font-size:16px; border-radius:12px; box-shadow:0 3px 0 #EFC9DC;}
+    .gbar{gap:10px; padding:calc(5px + env(safe-area-inset-top)) 12px 0;}
+    .iconbtn{width:38px; height:38px; font-size:18px; border-radius:12px;}
     .gprog{height:12px;}
-    .gcount{font-size:12px; min-width:34px;}
-    .gmain{gap:10px; padding:0 10px;}
-    .gleft{flex:0 0 43%;}
-    .wordcard{padding:2px 4px 0; gap:1px;}
-    .wemoji{font-size:clamp(26px,7vh,36px);}
-    .wmtxt{font-size:clamp(11px,2.9vh,13.5px); line-height:1.18;}
-    .wmean{gap:5px;}
-    .msay{width:23px; height:23px; font-size:11px; border-width:1.5px; box-shadow:0 2px 0 #EFC9DC;}
-    .speakwrap{flex-direction:row; gap:6px; margin-top:4px;}
-    .speak{padding:5px 11px; font-size:12.5px; gap:4px; border-width:2px; box-shadow:0 3px 0 #E4C069;}
-    .speak.slow{box-shadow:0 3px 0 #86C9A6;}
-    .slots{padding:4px 4px 2px; gap:5px;}
-    .gfoot{gap:7px;}
-    .toolbtn{min-height:42px; font-size:12.5px; border-width:2px; border-radius:14px; box-shadow:0 3px 0 #E9A6C4;}
-    .tiles{gap:6px; padding:2px 0;}
-    .tile{border-width:2px; border-radius:13px;}
-    .peek{font-size:13px; padding:2px 10px; letter-spacing:1.5px;}
-    .reward{top:50%; padding:8px 18px 9px;}
-    .reward .big{font-size:26px;}
-    .reward .w{font-size:13px;}
-    .toast{bottom:calc(56px + env(safe-area-inset-bottom)); font-size:14px; padding:8px 14px;}
-    .panel{max-width:560px; padding:14px 16px calc(14px + env(safe-area-inset-bottom));}
-    .panel h2{font-size:19px;}
-    .panel .psub{font-size:12.5px; margin-bottom:9px;}
-    .modebtn{padding:9px 12px; margin-bottom:8px; border-radius:16px;}
-    .modebtn .ico{font-size:24px;}
-    .modebtn .t{font-size:15px;}
-    .modebtn .s{font-size:11.5px;}
-    .help-list{font-size:13px;}
-  }
+    .gcount{font-size:13px; min-width:40px;}
 
+    .gmain{padding:2px 12px 0;}
+    .stack{gap:5px;}
+    /* 이모지 · 뜻 · 듣기 버튼을 한 줄로 */
+    .wtop{flex-direction:row; gap:14px; justify-content:center; align-items:center; text-align:left;}
+    .wemoji{font-size:clamp(28px,7.6vh,44px); flex:0 0 auto;}
+    .wmean{flex:0 1 auto; min-width:0; justify-content:flex-start; gap:10px;}
+    .wmtxt{font-size:clamp(20px,3.3vh,24px); line-height:1.18;}
+    .msay{width:42px; height:42px; font-size:19px;}
+    .speakwrap{margin-top:0; margin-left:6px; flex:0 0 auto;}
+    .speak{padding:7px 15px; font-size:clamp(14px,2.3vh,17px); box-shadow:0 3px 0 #E4C069;}
+    .speak.slow{box-shadow:0 3px 0 #86C9A6;}
+
+    .tiles{gap:var(--tg,8px);}
+    .tile{border-radius:14px; box-shadow:0 4px 0 #E9A6C4;}
+    .toolbtn{min-height:44px; font-size:clamp(13px,2.2vh,16px);}
+    .gfoot{padding-bottom:calc(5px + env(safe-area-inset-bottom));}
+    .tip{display:none;}
+
+    .reward{top:50%;}
+    .toast{top:calc(2px + env(safe-area-inset-top)); bottom:auto; font-size:15px; padding:9px 16px;}
+    .panel{max-width:620px; padding:14px 18px calc(14px + env(safe-area-inset-bottom));}
+  }
   .toast{position:absolute; left:50%; bottom:calc(92px + env(safe-area-inset-bottom)); transform:translate(-50%,0) scale(.9);
     z-index:60; background:rgba(62,31,74,.94); color:#fff; font-weight:900; font-size:16px; padding:11px 20px;
-    border-radius:18px; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; max-width:86%;
+    border-radius:18px; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; max-width:88%;
     text-align:center; line-height:1.35;}
   .toast.on{opacity:1; transform:translate(-50%,0) scale(1);}
   .toast.good{background:rgba(37,113,74,.95);}
@@ -355,6 +302,60 @@
   .help-list li{margin-bottom:9px; padding-left:26px; position:relative;}
   .help-list li::before{content:"✦"; position:absolute; left:6px; color:var(--rose-d); font-size:15px; top:0;}
   .tiny{font-size:12px; color:var(--plum2); font-weight:700; text-align:center; margin:6px 0 10px; line-height:1.4;}
+  /* 가로 + 아주 낮은 화면 (390 높이 등) */
+  @media (orientation:landscape) and (max-height:430px){
+    .bunting{display:none;}
+    .home-top{display:flex; align-items:center; justify-content:center; gap:9px; flex-wrap:nowrap;
+      padding:calc(3px + env(safe-area-inset-top)) 12px 2px;}
+    .crest{width:40px; height:40px; border-width:2px; box-shadow:0 3px 0 rgba(200,154,46,.28), inset 0 0 0 3px #fff;}
+    .crest .bee svg{width:26px; height:26px;}
+    .crest .crown{font-size:14px; top:-9px;}
+    h1{font-size:19px; margin:0; letter-spacing:-.5px; white-space:nowrap;}
+    .sub{margin:0; font-size:10.5px; white-space:nowrap;}
+    .days{gap:7px; padding:6px 10px 3px;}
+    .dnum{font-size:10.5px; padding:1px 7px;}
+    .dname{font-size:12.5px;}
+    .dcount{font-size:10.5px;}
+    .dbar{height:4px; margin-top:2px;}
+    .daycard.done::after{font-size:13px; right:6px; bottom:3px;}
+    .finalcard{margin:0 10px 5px; padding:6px 12px; border-radius:16px; gap:8px;}
+    .finalcard .ficon{font-size:20px;}
+    .finalcard .ftitle{font-size:14px;}
+    .finalcard .fsub{font-size:10.5px;}
+    .finalcard .fbar{height:5px; margin-top:2px;}
+    .foot{padding:2px 10px calc(4px + env(safe-area-inset-bottom)); gap:6px;}
+    .foot .mini{min-height:34px; font-size:11px; padding:4px 4px;}
+
+    .stack{gap:3px;}
+    .wemoji{font-size:clamp(24px,8vh,34px);}
+    .wmtxt{font-size:clamp(20px,5vh,23px);}
+    .msay{width:38px; height:38px; font-size:16px; border-width:2px;}
+    .speak{padding:5px 11px; font-size:12.5px; border-width:2px;}
+    .speakwrap{gap:6px; margin-left:2px;}
+    .toolbtn{min-height:38px; font-size:12.5px; border-width:2px; box-shadow:0 3px 0 #E9A6C4;}
+    .tile{border-width:2px; border-radius:12px; box-shadow:0 3px 0 #E9A6C4;}
+    .tile.key{box-shadow:0 3px 0 #DDB44E;}
+    .slot{border-width:var(--sbw,2px);}
+    .toast{top:calc(2px + env(safe-area-inset-top)); bottom:auto; font-size:13.5px; padding:7px 13px;}
+    .reward{padding:8px 18px 9px;}
+    .reward .big{font-size:26px;}
+    .reward .txt{font-size:26px;}
+    .reward .w{font-size:13px;}
+    .panel{max-width:620px; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); max-height:96%;}
+    .panel h2{font-size:19px;}
+    .panel .psub{font-size:12.5px; margin-bottom:7px;}
+    .modebtn{padding:7px 12px; margin-bottom:6px; border-radius:15px; gap:10px;}
+    .modebtn .ico{font-size:22px;}
+    .modebtn .t{font-size:15px;}
+    .modebtn .s{display:none;}
+    .panel .psub{margin-bottom:7px;}
+    .help-list{font-size:12.5px;}
+    .result-btns{flex-direction:row; flex-wrap:wrap; gap:8px; margin-top:8px;}
+    .result-btns .btn{flex:1 1 46%; min-height:44px; font-size:14.5px; padding:8px 10px;}
+    #rEmoji{font-size:26px; line-height:1;}
+  }
+
+
 </style>
 </head>
 <body>
@@ -400,29 +401,32 @@
     </div>
 
     <div class="gmain">
-      <div class="gleft">
-        <div class="wordcard" id="wordcard">
-          <div class="wemoji" id="wEmoji">🌸</div>
-          <div class="wmean">
-            <span class="wmtxt" id="wMean">a pretty plant with soft petals</span>
-            <button class="msay" id="btnMeanSpeak" aria-label="뜻을 영어로 들어요" title="뜻 듣기">🔊</button>
-          </div>
-          <div class="speakwrap">
-            <button class="speak" id="btnSpeak">🔊 듣기</button>
-            <button class="speak slow" id="btnSlow">🐢 천천히 듣기</button>
-          </div>
-          <div class="peek" id="peek"></div>
+     <div class="stack">
+      <!-- 위 : 이모지 · 영문 뜻 · 듣기 버튼 -->
+      <div class="wtop">
+        <div class="wemoji" id="wEmoji">🌸</div>
+        <div class="wmean">
+          <span class="wmtxt" id="wMean">a pretty plant with soft petals</span>
+          <button class="msay" id="btnMeanSpeak" aria-label="뜻을 영어로 들어요" title="뜻 듣기">🔊</button>
         </div>
-        <div class="slots" id="slots"></div>
+        <div class="speakwrap">
+          <button class="speak" id="btnSpeak">🔊 듣기</button>
+          <button class="speak slow" id="btnSlow">🐢 천천히</button>
+        </div>
       </div>
 
-      <div class="gright">
-        <div class="tip" id="tip"></div>
-        <div class="tiles" id="tiles"></div>
-        <div class="gfoot">
-          <button class="toolbtn" id="btnHint">💡 힌트</button>
-          <button class="toolbtn" id="btnClear">🧽 지우기</button>
-        </div>
+      <!-- 가운데 : 단어 전체가 한 줄 -->
+      <div class="slotbox"><div class="slots" id="slots"></div></div>
+
+      <div class="tip" id="tip"></div>
+
+      <!-- 아래 : 보기 타일 / A~Z 키패드 -->
+      <div class="tiles" id="tiles"></div>
+     </div>
+
+      <div class="gfoot">
+        <button class="toolbtn" id="btnHint">💡 소리 힌트</button>
+        <button class="toolbtn" id="btnClear">🧽 지우기</button>
       </div>
     </div>
 
@@ -476,16 +480,16 @@
       <h2>👑 사용법</h2>
       <ul class="help-list">
         <li><b>1~10단계</b> — 단계마다 10단어, 짧은 단어부터 차근차근. 하루에 다 못 해도 괜찮아요!</li>
-        <li><b>👀 빈칸 채우기</b> — 빈칸에 들어갈 글자를 순서대로 눌러요. 빈칸 위치는 <b>날짜마다</b> 바뀌어요.</li>
+        <li><b>👀 빈칸 채우기</b> — 빈칸에 들어갈 글자를 순서대로 눌러요. 보기 6개 중에서 골라요. 빈칸 위치는 <b>날짜마다</b> 바뀌어요.</li>
         <li><b>🐝 스펠링 쓰기</b> — 글자 타일을 골라 단어 전체를 만들어요.</li>
         <li><b>🎧 듣고 쓰기(실전)</b> — 철자가 안 보여요. 소리를 듣고 A~Z 키로 직접 써요. 선생님이 읽어주는 시험 연습!</li>
-        <li><b>🔊 듣기</b> — 단어를 다시 들려줘요. <b>🐢 천천히 듣기</b>는 아주 천천히 들려줘요.</li>
+        <li><b>🔊 듣기</b> — 단어를 다시 들려줘요. <b>🐢 천천히</b>는 아주 천천히 들려줘요.</li>
         <li><b>영어 뜻</b> — 그림 아래 짧은 영어 설명이 나와요. 뜻 옆 <b>🔊</b>를 누르면 뜻을 읽어줘요.</li>
-        <li><b>💡 힌트</b> — 다음 글자 하나를 알려줘요.</li>
+        <li><b>💡 소리 힌트</b> — 다음 빈칸에 들어갈 글자의 <b>소리만</b> 들려줘요. 글자는 알려주지 않아요! 단모음(애)과 장모음(에이)을 단어에 맞게 구분해서 들려줘요.</li>
         <li><b>💛 틀린 단어</b> — 틀렸던 단어만 모아서 다시 풀 수 있어요.</li>
         <li><b>👑 파이널 리뷰</b> — 100개 단어 전체를 랜덤 순서로. 중간에 멈춰도 이어서 할 수 있어요.</li>
       </ul>
-      <p class="tiny">소리가 안 나오면 기기 볼륨을 올리고 브라우저를 한 번 새로 열어 주세요.<br>홈 화면에 추가하면 앱처럼 쓸 수 있어요.</p>
+      <p class="tiny">소리가 안 나오면 기기 볼륨을 올리고 화면을 한 번 눌러 주세요.<br>홈 화면에 추가하면 앱처럼 쓸 수 있어요.</p>
       <button class="btn primary" id="helpClose" style="width:100%">알겠어요</button>
     </div>
   </div>
@@ -623,6 +627,177 @@ const DAYS = [
 ];
 
 /* =========================================================
+   파닉스 표기 (글자 단위 소리)
+   ========================================================= */
+/* 소리 종류
+   · 모음 : a_s(애) a_l(에이) e_s(에) e_l(이) i_s(이) i_l(아이) o_s(아) o_l(오)
+            u_s(어) u_l(유) u_oo(우) schwa(어) er(얼) ar(아르) or(오르) eer(이어) aw(오) ow(아우)
+   · 자음 : b d f g h j k l m n p r s t v w y z sh ch th th_v zh ks kw ng
+   · 묵음 : silent
+   표기법 : "글자=소리 글자=소리 ..." (글자를 이어붙이면 단어와 똑같아야 해요) */
+const PHONO = {
+  flower:"f=f l=l ow=ow er=er",
+  jacket:"j=j a=a_s ck=k e=i_s t=t",
+  potato:"p=p o=schwa t=t a=a_l t=t o=o_l",
+  thick:"th=th i=i_s ck=k",
+  whistle:"wh=w i=i_s s=s t=silent l=l e=silent",
+  borrow:"b=b o=o_s rr=r ow=o_l",
+  feather:"f=f ea=e_s th=th_v er=er",
+  glasses:"g=g l=l a=a_s ss=s e=i_s s=z",
+  helpful:"h=h e=e_s l=l p=p f=f u=schwa l=l",
+  listen:"l=l i=i_s s=s t=silent e=silent n=n",
+
+  oxygen:"o=o_s x=ks y=i_s g=j e=schwa n=n",
+  evolve:"e=i_s v=v o=o_s l=l v=v e=silent",
+  tornado:"t=t o=or r=r n=n a=a_l d=d o=o_l",
+  vaccine:"v=v a=a_s cc=k i=e_l n=n e=silent",
+  station:"s=s t=t a=a_l t=sh i=silent o=schwa n=n",
+  society:"s=s o=schwa c=s i=i_l e=i_s t=t y=e_l",
+  ancient:"a=a_l n=n c=sh i=schwa e=silent n=n t=t",
+  balance:"b=b a=a_s l=l a=schwa n=n c=s e=silent",
+  curious:"c=k u=u_l r=r i=e_l o=schwa u=silent s=s",
+  measure:"m=m e=e_s a=silent s=zh u=schwa r=r e=silent",
+
+  mixture:"m=m i=i_s x=ks t=ch u=schwa r=r e=silent",
+  fragile:"f=f r=r a=a_s g=j i=schwa l=l e=silent",
+  descend:"d=d e=i_s s=s c=s e=e_s n=n d=d",
+  blunder:"b=b l=l u=u_s n=n d=d e=er r=r",
+  recycle:"r=r e=e_l c=s y=i_l c=k l=l e=silent",
+  heavier:"h=h e=e_s a=silent v=v i=e_l e=schwa r=r",
+  colorful:"c=k o=u_s l=l o=schwa r=r f=f u=schwa l=l",
+  generous:"g=j e=e_s n=n e=schwa r=r o=schwa u=silent s=s",
+  kangaroo:"k=k a=a_s n=ng g=g a=schwa r=r oo=u_oo",
+  lemonade:"l=l e=e_s m=m o=schwa n=n a=a_l d=d e=silent",
+
+  behavior:"b=b e=i_s h=h a=a_l v=v i=y o=schwa r=r",
+  dissolve:"d=d i=i_s ss=z o=o_s l=l v=v e=silent",
+  enormous:"e=i_s n=n o=or r=r m=m o=schwa u=silent s=s",
+  pamphlet:"p=p a=a_s m=m p=p h=silent l=l e=schwa t=t",
+  relieved:"r=r e=i_s l=l i=e_l e=silent v=v e=silent d=d",
+  remember:"r=r e=i_s m=m e=e_s m=m b=b e=er r=r",
+  hamburger:"h=h a=a_s m=m b=b u=er r=r g=g e=er r=r",
+  vegetable:"v=v e=e_s g=j e=silent t=t a=schwa b=b l=l e=silent",
+  reason:"r=r e=e_l a=silent s=z o=schwa n=n",
+  safety:"s=s a=a_l f=f e=silent t=t y=e_l",
+
+  adventure:"a=schwa d=d v=v e=e_s n=n t=ch u=schwa r=r e=silent",
+  astronaut:"a=a_s s=s t=t r=r o=schwa n=n au=aw t=t",
+  attention:"a=schwa tt=t e=e_s n=n t=sh i=silent o=schwa n=n",
+  confident:"c=k o=o_s n=n f=f i=i_s d=d e=schwa n=n t=t",
+  continent:"c=k o=o_s n=n t=t i=i_s n=n e=schwa n=n t=t",
+  discovery:"d=d i=i_s s=s c=k o=u_s v=v e=schwa r=r y=e_l",
+  education:"e=e_s d=d u=u_l c=k a=a_l t=sh i=silent o=schwa n=n",
+  encourage:"e=i_s n=n c=k ou=er r=r a=i_s g=j e=silent",
+  excellent:"e=e_s x=ks c=s e=schwa ll=l e=schwa n=n t=t",
+  hurricane:"h=h u=er r=r r=r i=i_s c=k a=a_l n=n e=silent",
+
+  knowledge:"k=silent n=n o=o_s w=silent l=l e=i_s d=d g=j e=silent",
+  landslide:"l=l a=a_s n=n d=d s=s l=l i=i_l d=d e=silent",
+  geologist:"g=j e=e_l o=o_s l=l o=schwa g=j i=i_s s=s t=t",
+  interrupt:"i=i_s n=n t=t e=schwa rr=r u=u_s p=p t=t",
+  telephone:"t=t e=e_s l=l e=schwa p=p h=f o=o_l n=n e=silent",
+  volunteer:"v=v o=o_s l=l u=schwa n=n t=t ee=eer r=r",
+  appreciate:"a=schwa pp=p r=r e=e_l c=sh i=e_l a=a_l t=t e=silent",
+  convenient:"c=k o=schwa n=n v=v e=e_l n=n i=y e=schwa n=n t=t",
+  earthquake:"ea=er r=r th=th qu=kw a=a_l k=k e=silent",
+  especially:"e=i_s s=s p=p e=e_s c=sh i=schwa a=silent ll=l y=e_l",
+
+  experience:"e=i_s x=ks p=p e=e_s r=r i=e_l e=schwa n=n c=s e=silent",
+  experiment:"e=i_s x=ks p=p e=e_s r=r i=i_s m=m e=schwa n=n t=t",
+  expression:"e=i_s x=ks p=p r=r e=e_s ss=sh i=silent o=schwa n=n",
+  impossible:"i=i_s m=m p=p o=o_s ss=s i=schwa b=b l=l e=silent",
+  microscope:"m=m i=i_l c=k r=r o=schwa s=s c=k o=o_l p=p e=silent",
+  mysterious:"m=m y=i_s s=s t=t e=e_l r=r i=e_l o=schwa u=silent s=s",
+  nutritious:"n=n u=u_oo t=t r=r i=i_s t=sh i=silent o=schwa u=silent s=s",
+  permission:"p=p e=er r=r m=m i=i_s ss=sh i=silent o=schwa n=n",
+  properties:"p=p r=r o=o_s p=p e=er r=r t=t i=e_l e=silent s=z",
+  subsection:"s=s u=u_s b=b s=s e=e_s c=k t=sh i=silent o=schwa n=n",
+
+  definitely:"d=d e=e_s f=f i=i_s n=n i=schwa t=t e=silent l=l y=e_l",
+  apologize:"a=schwa p=p o=o_s l=l o=schwa g=j i=i_l z=z e=silent",
+  creative:"c=k r=r e=e_l a=a_l t=t i=i_s v=v e=silent",
+  important:"i=i_s m=m p=p o=or r=r t=t a=schwa n=n t=t",
+  substantial:"s=s u=schwa b=b s=s t=t a=a_s n=n t=sh i=schwa a=silent l=l",
+  temperature:"t=t e=e_s m=m p=p e=schwa r=r a=silent t=ch u=schwa r=r e=silent",
+  concentrate:"c=k o=o_s n=n c=s e=schwa n=n t=t r=r a=a_l t=t e=silent",
+  opportunity:"o=o_s pp=p o=schwa r=r t=t u=u_oo n=n i=i_s t=t y=e_l",
+  performance:"p=p e=er r=r f=f o=or r=r m=m a=schwa n=n c=s e=silent",
+  imagination:"i=i_s m=m a=a_s g=j i=i_s n=n a=a_l t=sh i=silent o=schwa n=n",
+
+  expertise:"e=e_s x=ks p=p e=er r=r t=t i=e_l s=z e=silent",
+  evaporate:"e=i_s v=v a=a_s p=p o=schwa r=r a=a_l t=t e=silent",
+  pollution:"p=p o=schwa ll=l u=u_oo t=sh i=silent o=schwa n=n",
+  daffodils:"d=d a=a_s ff=f o=schwa d=d i=i_s l=l s=z",
+  immediately:"i=i_s mm=m e=e_l d=d i=e_l a=schwa t=t e=silent l=l y=e_l",
+  independent:"i=i_s n=n d=d e=i_s p=p e=e_s n=n d=d e=schwa n=n t=t",
+  achievement:"a=schwa ch=ch i=e_l e=silent v=v e=silent m=m e=schwa n=n t=t",
+  celebration:"c=s e=e_s l=l e=i_s b=b r=r a=a_l t=sh i=silent o=schwa n=n",
+  magnificent:"m=m a=a_s g=g n=n i=i_s f=f i=i_s c=s e=schwa n=n t=t",
+  picturesque:"p=p i=i_s c=k t=ch u=schwa r=r e=silent s=s qu=k e=silent",
+
+  architecture:"a=ar r=r ch=k i=i_s t=t e=e_s c=k t=ch u=schwa r=r e=silent",
+  enthusiastic:"e=i_s n=n th=th u=u_oo s=z i=e_l a=a_s s=s t=t i=i_s c=k",
+  civilization:"c=s i=i_s v=v i=schwa l=l i=i_s z=z a=a_l t=sh i=silent o=schwa n=n",
+  perseverance:"p=p e=er r=r s=s e=schwa v=v e=i_s r=r a=schwa n=n c=s e=silent",
+  communication:"c=k o=schwa mm=m u=u_l n=n i=i_s c=k a=a_l t=sh i=silent o=schwa n=n",
+  investigation:"i=i_s n=n v=v e=e_s s=s t=t i=i_s g=g a=a_l t=sh i=silent o=schwa n=n",
+  pronunciation:"p=p r=r o=schwa n=n u=u_s n=n c=s i=e_l a=a_l t=sh i=silent o=schwa n=n",
+  unforgettable:"u=u_s n=n f=f o=schwa r=r g=g e=e_s tt=t a=schwa b=b l=l e=silent",
+  responsibility:"r=r e=i_s s=s p=p o=o_s n=n s=s i=schwa b=b i=i_s l=l i=schwa t=t y=e_l",
+  transportation:"t=t r=r a=a_s n=n s=s p=p o=schwa r=r t=t a=a_l t=sh i=silent o=schwa n=n"
+};
+
+/* 소리 정의 : k = 종류, f = 포만트(입 모양), d = 길이 */
+const PH = {
+  /* --- 모음 --- */
+  a_s:{k:"v", ipa:"æ", f:[860,1900,2650], d:.30},
+  a_l:{k:"g", ipa:"eɪ", f:[600,1850,2500], f1:[350,2300,2900], d:.38},
+  e_s:{k:"v", ipa:"ɛ", f:[720,1850,2550], d:.30},
+  e_l:{k:"v", ipa:"iː", f:[330,2350,3000], d:.34},
+  i_s:{k:"v", ipa:"ɪ", f:[420,1950,2600], d:.28},
+  i_l:{k:"g", ipa:"aɪ", f:[760,1250,2500], f1:[350,2250,2900], d:.40},
+  o_s:{k:"v", ipa:"ɑ", f:[740,1120,2500], d:.32},
+  o_l:{k:"g", ipa:"oʊ", f:[560,900,2400], f1:[350,760,2300], d:.38},
+  u_s:{k:"v", ipa:"ʌ", f:[660,1200,2500], d:.30},
+  u_l:{k:"g", ipa:"juː", f:[300,2200,2800], f1:[340,780,2300], d:.44},
+  u_oo:{k:"v", ipa:"uː", f:[330,800,2400], d:.34},
+  schwa:{k:"v", ipa:"ə", f:[600,1250,2500], d:.26},
+  er:{k:"v", ipa:"ɜr", f:[520,1350,1680], d:.34},
+  ar:{k:"v", ipa:"ɑr", f:[720,1050,1520], d:.36},
+  or:{k:"v", ipa:"ɔr", f:[560,860,1600], d:.36},
+  eer:{k:"v", ipa:"ɪr", f:[420,1900,1950], d:.34},
+  aw:{k:"v", ipa:"ɔː", f:[620,900,2400], d:.34},
+  ow:{k:"g", ipa:"aʊ", f:[760,1180,2500], f1:[380,850,2300], d:.40},
+  /* --- 자음 --- */
+  b:{k:"stop", voiced:true, bfs:900, d:.18},
+  d:{k:"stop", voiced:true, bfs:3200, d:.18},
+  g:{k:"stop", voiced:true, bfs:1600, d:.18},
+  p:{k:"stop", voiced:false, bfs:1000, d:.18},
+  t:{k:"stop", voiced:false, bfs:4200, d:.18},
+  k:{k:"stop", voiced:false, bfs:1900, d:.18},
+  f:{k:"fric", voiced:false, bf:3400, bq:.8, gn:.20, d:.26},
+  v:{k:"fric", voiced:true, bf:3400, bq:.8, gn:.18, d:.26},
+  s:{k:"fric", voiced:false, bf:6200, bq:1.0, gn:.22, d:.30},
+  z:{k:"fric", voiced:true, bf:6200, bq:1.0, gn:.20, d:.30},
+  sh:{k:"fric", voiced:false, bf:3000, bq:1.8, gn:.24, d:.30},
+  zh:{k:"fric", voiced:true, bf:3000, bq:1.6, gn:.20, d:.26},
+  th:{k:"fric", voiced:false, bf:5200, bq:.7, gn:.13, d:.22},
+  th_v:{k:"fric", voiced:true, bf:5200, bq:.7, gn:.14, d:.22},
+  h:{k:"fric", voiced:false, bf:1300, bq:.6, gn:.13, d:.18},
+  m:{k:"nasal", f:[280,1000,2200], d:.28},
+  n:{k:"nasal", f:[280,1600,2600], d:.28},
+  ng:{k:"nasal", f:[280,2000,2600], d:.28},
+  l:{k:"liq", f:[380,1050,2700], d:.26},
+  r:{k:"liq", f:[420,900,1450], d:.26},
+  w:{k:"g", ipa:"w", f:[320,700,2300], f1:[400,900,2400], d:.20},
+  y:{k:"g", ipa:"j", f:[280,2100,2900], f1:[340,2350,3000], d:.20},
+  ch:{k:"affr", voiced:false, bf:4000, nf:3000, nq:1.6, d:.26},
+  j:{k:"affr", voiced:true, bf:2600, nf:3000, nq:1.4, d:.26},
+  ks:{k:"ks", d:.44},
+  kw:{k:"kw", d:.44}
+};
+
+/* =========================================================
    저장 · 도우미
    ========================================================= */
 const SAVE_KEY = "rian-spelling-bee-v2";
@@ -676,6 +851,50 @@ function rng(seed){
   };
 }
 const KIND_NAME = ["모음 칸","겹글자 칸","골고루 칸"];
+
+/* =========================================================
+   글자 → 소리
+   ========================================================= */
+function phUnits(word){
+  const raw = PHONO[word];
+  if(!raw) return null;
+  return raw.trim().split(/\s+/).map(function(tok){
+    const p = tok.split("=");
+    return {g:p[0], p:p[1]};
+  });
+}
+function phMap(word){
+  const units = phUnits(word);
+  const out = [];
+  if(!units) return out;
+  let i = 0;
+  units.forEach(function(u){
+    for(let k=0;k<u.g.length;k++){ out[i+k] = u.p; }
+    i += u.g.length;
+  });
+  return out;
+}
+/* 표기 자체를 검사 (100개 단어 전부) */
+function phCheck(){
+  const bad = [], missing = [], unknown = [];
+  const seen = {};
+  WORDS.forEach(function(o){
+    const w = o.w;
+    seen[w] = true;
+    const units = phUnits(w);
+    if(!units){ missing.push(w); return; }
+    const joined = units.map(function(u){ return u.g; }).join("");
+    if(joined !== w){ bad.push(w + " -> " + joined); return; }
+    units.forEach(function(u){
+      if(u.p !== "silent" && !PH[u.p]) unknown.push(w + ":" + u.g + "=" + u.p);
+    });
+    const m = phMap(w);
+    if(m.length !== w.length || m.indexOf(undefined) >= 0){ bad.push(w + " (길이/빈칸)"); }
+  });
+  const extra = Object.keys(PHONO).filter(function(k){ return !seen[k]; });
+  return {ok:!bad.length && !missing.length && !unknown.length && !extra.length,
+          words:WORDS.length, bad:bad, missing:missing, unknown:unknown, extra:extra};
+}
 
 /* =========================================================
    소리
@@ -785,6 +1004,155 @@ function soundSoft(){
   const t0 = c.currentTime + 0.01;
   tone(c, 392.0, "sine", t0, 0.3, 0.1, 350);
   tone(c, 311.1, "triangle", t0 + 0.18, 0.34, 0.075, 285);
+}
+
+/* =========================================================
+   파닉스 소리 합성 (Web Audio)
+   ========================================================= */
+function noiseFor(c){
+  if(c.__nb && c.__nb.sampleRate === c.sampleRate) return c.__nb;
+  const len = Math.max(1024, Math.round(c.sampleRate * 0.5));
+  const buf = c.createBuffer(1, len, c.sampleRate);
+  const d = buf.getChannelData(0);
+  for(let i=0;i<len;i++) d[i] = Math.random() * 2 - 1;
+  c.__nb = buf;
+  return buf;
+}
+/* 성대 진동(톱니) + 포만트 밴드패스 = 사람 목소리 비슷한 모음 */
+function pulseFor(c, f0){
+  c.__pb = c.__pb || {};
+  const key = Math.round(f0);
+  if(c.__pb[key]) return c.__pb[key];
+  const N = Math.max(8, Math.round(c.sampleRate / f0));
+  const buf = c.createBuffer(1, N, c.sampleRate);
+  const d = buf.getChannelData(0);
+  const w = 4;                       /* 짧은 펄스 = 고른 스펙트럼 */
+  for(let i=0;i<w && i<N;i++) d[i] = Math.sin(Math.PI * (i + 0.5) / w);
+  c.__pb[key] = buf;
+  return buf;
+}
+const VOICE_GAIN = 5.0;
+function phVoice(c, at, dur, f, f1, vol){
+  try{
+    const src = c.createBufferSource();
+    src.buffer = pulseFor(c, 190);
+    src.loop = true;
+    let lfo = null, lg = null;
+    if(dur > 0.18){
+      lfo = c.createOscillator(); lfo.frequency.value = 5.1;
+      lg = c.createGain(); lg.gain.value = 0.012;
+      lfo.connect(lg); lg.connect(src.playbackRate);
+    }
+    const out = c.createGain();
+    const v = vol * VOICE_GAIN;
+    out.gain.setValueAtTime(0.0001, at);
+    out.gain.exponentialRampToValueAtTime(v, at + Math.min(0.03, dur * 0.4));
+    out.gain.setValueAtTime(v, at + dur * 0.8);
+    out.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+    out.connect(c.destination);
+    for(let i=0;i<3;i++){
+      const bp = c.createBiquadFilter();
+      bp.type = "bandpass"; bp.Q.value = [8, 10, 12][i];
+      bp.frequency.setValueAtTime(Math.max(80, f[i]), at);
+      if(f1) bp.frequency.exponentialRampToValueAtTime(Math.max(80, f1[i]), at + dur * 0.85);
+      const g = c.createGain(); g.gain.value = [1, 0.78, 0.46][i];
+      src.connect(bp); bp.connect(g); g.connect(out);
+    }
+    src.start(at);
+    if(lfo) lfo.start(at);
+    src.stop(at + dur + 0.02);
+    if(lfo) lfo.stop(at + dur + 0.02);
+  }catch(e){}
+}
+/* 숨소리(마찰음) */
+function phNoise(c, at, dur, freq, q, vol){
+  try{
+    const src = c.createBufferSource();
+    src.buffer = noiseFor(c);
+    src.loop = true;
+    const bp = c.createBiquadFilter();
+    bp.type = "bandpass"; bp.frequency.setValueAtTime(freq, at); bp.Q.value = q || 1;
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.exponentialRampToValueAtTime(vol, at + 0.012);
+    g.gain.setValueAtTime(vol, at + Math.max(0.02, dur * 0.75));
+    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+    src.connect(bp); bp.connect(g); g.connect(c.destination);
+    src.start(at); src.stop(at + dur + 0.02);
+  }catch(e){}
+}
+/* 소리 하나를 시간축(at)에 그려요. 끝난 시각을 돌려줘요. */
+function phSchedule(c, def, at){
+  if(!def) return at;
+  const k = def.k;
+  if(k === "v" || k === "g"){
+    phVoice(c, at, def.d, def.f, def.f1, 0.30);
+    return at + def.d;
+  }
+  if(k === "stop"){
+    phNoise(c, at, 0.045, def.bfs, 1.1, 0.30);
+    if(def.voiced) phVoice(c, at, 0.05, [280, 950, 2300], null, 0.10);
+    phVoice(c, at + 0.05, 0.12, [640, 1180, 2500], null, 0.26);   /* "부" 하고 끝나는 짧은 모음 */
+    return at + 0.19;
+  }
+  if(k === "fric"){
+    phNoise(c, at, def.d, def.bf, def.bq, def.gn);
+    if(def.voiced) phVoice(c, at, def.d * 0.85, [300, 1150, 2400], null, 0.07);
+    return at + def.d;
+  }
+  if(k === "nasal" || k === "liq"){
+    phVoice(c, at, def.d, def.f, null, 0.34);
+    return at + def.d;
+  }
+  if(k === "affr"){
+    phNoise(c, at, 0.04, def.bf, 1.1, 0.28);
+    phNoise(c, at + 0.035, 0.20, def.nf, def.nq, 0.30);
+    if(def.voiced) phVoice(c, at + 0.035, 0.19, [300, 1500, 2500], null, 0.08);
+    return at + 0.24;
+  }
+  if(k === "ks"){
+    phSchedule(c, PH.k, at);
+    phSchedule(c, PH.s, at + 0.14);
+    return at + 0.46;
+  }
+  if(k === "kw"){
+    phSchedule(c, PH.k, at);
+    phSchedule(c, PH.w, at + 0.14);
+    return at + 0.38;
+  }
+  return at;
+}
+/* Web Audio 를 못 쓰는 브라우저에서만 쓰는 TTS 대체 발음 */
+const PH_TTS = {
+  a_s:"aah", a_l:"ay", e_s:"eh", e_l:"ee", i_s:"ih", i_l:"eye", o_s:"ah", o_l:"oh",
+  u_s:"uh", u_l:"you", u_oo:"oo", schwa:"uh", er:"er", ar:"ar", or:"or", eer:"eer",
+  aw:"aw", ow:"ow", b:"buh", d:"duh", f:"fff", g:"guh", h:"huh", j:"juh", k:"kuh",
+  l:"lll", m:"mmm", n:"nnn", p:"puh", r:"rrr", s:"sss", t:"tuh", v:"vvv", w:"wuh",
+  y:"yuh", z:"zzz", sh:"shh", ch:"ch", th:"th", th_v:"th", zh:"zh", ks:"ks", kw:"kwuh", ng:"ng"
+};
+let lastHintAt = 0;
+/* 소리 힌트 재생 (한 번 + 조금 쉬고 한 번 더) */
+function playPhoneme(id){
+  if(id === "silent"){
+    notes([587.33], "sine", 0.05);
+    return true;
+  }
+  const def = PH[id];
+  if(!def) return false;
+  if(!save.sound){ toast("🔇 소리가 꺼져 있어요", 1400); return false; }
+  const c = ac();
+  if(!c){
+    if(PH_TTS[id] && hasTTS){
+      try{ speechSynthesis.cancel(); speechSynthesis.speak(makeUtter(PH_TTS[id], 0.6, 1.05)); }catch(e){ return false; }
+      return true;
+    }
+    return false;
+  }
+  try{ speechSynthesis.cancel(); }catch(e){}
+  const t = c.currentTime + 0.05;
+  const end = phSchedule(c, def, t);
+  phSchedule(c, def, end + 0.26);
+  return true;
 }
 
 /* =========================================================
@@ -964,7 +1332,6 @@ function startGame(src, mode, startIdx){
 
 /* ---------- 빈칸 고르기 : 날짜 + 회차(round) + 단어마다 달라짐 ---------- */
 function blankCount(len){
-  if(len <= 6) return 2;
   if(len <= 9) return 2;
   return 3;
 }
@@ -990,6 +1357,60 @@ function pickBlanks(word, count, rand, kind){
   scored.sort(function(a,b){ return b.s - a.s; });
   return scored.slice(0, count).map(function(o){ return o.i; }).sort(function(a,b){ return a-b; });
 }
+
+/* ---------- 빈칸 채우기 보기 : 5~6개, 헷갈리는 글자를 섞어요 ---------- */
+const VOWELS = "aeiou";
+const CONFUSE = {
+  b:"pd", p:"bd", d:"tb", t:"dk", k:"cg", g:"kj", c:"ks", j:"gz",
+  m:"nw", n:"md", f:"vth", v:"fz", s:"zc", z:"sv", l:"r", r:"lw",
+  w:"m", y:"i", h:"fg", x:"ks", q:"ck"
+};
+function pickOptions(word, needs){
+  const short = word.length <= 5;
+  const total = short ? 5 : 6;
+  const out = needs.slice();
+  const used = {};
+  out.forEach(function(c){ used[c] = (used[c] || 0) + 1; });
+  const low = word.toLowerCase();
+  function add(c){
+    if(out.length >= total) return false;
+    if(!/^[a-z]$/.test(c)) return false;
+    if(used[c]) return false;
+    used[c] = 1; out.push(c); return true;
+  }
+  /* 빈칸 글자마다 '헷갈리는 글자' 후보를 만들어요 (모음은 다른 모음, 자음은 비슷한 자음) */
+  function candsFor(ch){
+    if(VOWELS.indexOf(ch) >= 0){
+      return shuffle(VOWELS.split("").filter(function(v){ return v !== ch; }));
+    }
+    const near = shuffle((CONFUSE[ch] || "").split("").filter(function(x){ return x && x !== ch; }));
+    const far = shuffle("bcdfghjklmnpqrstvwxz".split("").filter(function(x){
+      return low.indexOf(x) < 0 && x !== ch && near.indexOf(x) < 0;
+    }));
+    return near.concat(far);
+  }
+  const order = shuffle(needs);
+  /* 1단계 : 빈칸 글자마다 헷갈리는 글자 하나씩 */
+  order.forEach(function(ch){ add(candsFor(ch)[0]); });
+  /* 2단계 : 한 바퀴씩 돌면서 한 글자씩 (한 글자만 잔뜩 나오지 않게) */
+  let round = 0;
+  while(out.length < total && round < 8){
+    round++;
+    let added = false;
+    for(let k=0;k<order.length && out.length<total;k++){
+      const cs = candsFor(order[k]).filter(function(c){ return !used[c]; });
+      if(cs.length){ add(cs[0]); added = true; }
+    }
+    if(!added) break;
+  }
+  const pool = "aeioubcdfghklmnprst".split("");
+  let guard = 0;
+  while(out.length < total && guard < 60){
+    guard++;
+    add(pool[Math.floor(Math.random() * pool.length)]);
+  }
+  return shuffle(out);
+}
 function pickDistractors(word, n){
   const pool = "abcdefghijklmnopqrstuvwxyz".split("");
   const used = word.toLowerCase().split("");
@@ -998,74 +1419,69 @@ function pickDistractors(word, n){
 }
 function trapCount(len){ return len >= 11 ? 2 : 3; }
 
-/* ---------- 큰 글씨 레이아웃 계산 (세로: 위아래 / 가로: 좌우 2단) ---------- */
-function boxPad(el, side){
-  const cs = getComputedStyle(el);
-  return parseFloat(cs["padding" + side] || 0) || 0;
-}
-function layoutGap(el, rows){
-  const cs = getComputedStyle(el);
-  return parseFloat((rows ? cs.rowGap : cs.columnGap) || 0) || 0;
-}
-function isLandscape(){
-  try{ return window.matchMedia("(orientation:landscape)").matches; }catch(e){ return false || window.innerWidth > window.innerHeight; }
-}
+/* =========================================================
+   레이아웃 : 위(뜻) → 가운데(단어 한 줄) → 아래(보기)
+   ========================================================= */
 function computeLayout(){
   const n = Q.w.length;
   const isKey = (G.mode === "dictate");
   const nItems = isKey ? 26 : Q.tiles.length;
-  const slotsEl = $("#slots"), tilesEl = $("#tiles");
-  const sg = layoutGap(slotsEl, true) || 6;
-  const tg = layoutGap(tilesEl, true) || 9;
-  const slotW = Math.max(140, slotsEl.clientWidth - boxPad(slotsEl,"Left") - boxPad(slotsEl,"Right"));
-  const tilesW = Math.max(140, tilesEl.clientWidth - boxPad(tilesEl,"Left") - boxPad(tilesEl,"Right"));
-  const land = isLandscape();
+  const gm = $(".stack");
+  const cs = getComputedStyle(gm);
+  const padL = parseFloat(cs.paddingLeft) || 0, padR = parseFloat(cs.paddingRight) || 0;
+  const padT = parseFloat(cs.paddingTop) || 0, padB = parseFloat(cs.paddingBottom) || 0;
+  const rg = parseFloat(cs.rowGap || cs.gap) || 0;
+  const W = Math.max(150, gm.clientWidth - padL - padR);
 
-  let slotBudget, tileBudget, landMode = false;
-  if(land){
-    // 가로: 왼쪽(단어카드+슬롯)과 오른쪽(타일+버튼)이 따로 높이를 가져요
-    slotBudget = Math.max(56, slotsEl.clientHeight - boxPad(slotsEl,"Top") - boxPad(slotsEl,"Bottom"));
-    tileBudget = Math.max(80, tilesEl.clientHeight - boxPad(tilesEl,"Top") - boxPad(tilesEl,"Bottom"));
-    landMode = true;
-  } else {
-    const gameH = $("#scr-game").clientHeight || 720;
-    const fixed = ($(".gbar") ? $(".gbar").offsetHeight : 56) + $("#wordcard").offsetHeight +
-                  $("#tip").offsetHeight + $(".gfoot").offsetHeight + 14;
-    const budget = Math.max(150, gameH - fixed - 10);
-    slotBudget = budget; tileBudget = budget;
+  const kids = Array.prototype.slice.call(gm.children);
+  let fixedH = 0, gapsN = 0;
+  kids.forEach(function(el){
+    if(getComputedStyle(el).display === "none") return;
+    gapsN++;
+    if(!el.classList.contains("slotbox") && !el.classList.contains("tiles")) fixedH += el.offsetHeight;
+  });
+  const totalH = gm.clientHeight - padT - padB;
+  const free = Math.max(80, totalH - fixedH - Math.max(0, gapsN - 1) * rg);
+
+  /* 글자칸 : 한 줄(nowrap)로 무조건 들어가게 폭/높이 계산 */
+  let g = n >= 13 ? 2 : n >= 11 ? 3 : n >= 9 ? 4 : n >= 7 ? 6 : 8;
+  const capH = Math.max(18, Math.floor((free * 0.52) / 1.16));
+  let bw = Math.min(capH, 116, Math.floor((W - (n - 1) * g) / n));
+  while(bw < 18 && g > 2){
+    g--;
+    bw = Math.min(capH, 116, Math.floor((W - (n - 1) * g) / n));
   }
+  bw = Math.max(10, bw);
+  const sh = Math.max(18, Math.round(bw * 1.16));
+  const sfs = Math.max(11, Math.min(Math.round(bw * 0.72), bw - 6));
+  const sbw = bw < 34 ? 2 : 3;
 
+  /* 보기 타일 : 폭·높이에 맞춰 한 줄에 최대한 크게 */
+  const tileBudget = Math.max(56, free - sh - rg);
+  const tg = nItems > 12 ? 6 : 8;
+  const capT = Math.max(96, Math.min(140, Math.round(W * 0.12)));
   let best = null;
-  const minRows = Math.max(1, Math.ceil(n / 7));
-  const maxRows = Math.max(minRows, Math.ceil(n / 6));
-  for(let rows = minRows; rows <= maxRows; rows++){
-    const per = Math.ceil(n / rows);
-    if(per > 7 || per < 3) continue;
-    for(let bw = 70; bw >= 30; bw -= 2){
-      if(per * bw + (per - 1) * sg > slotW) continue;      // 좌우로 잘리지 않도록!
-      const sH = rows * Math.round(bw * 1.14) + (rows - 1) * sg;
-      if(sH > slotBudget) continue;
-      for(let tw = 84; tw >= 34; tw -= 2){
-        const tPer = Math.max(1, Math.floor((tilesW + tg) / (tw + tg)));
-        if(tPer < 4 && nItems > 8) continue;
-        const tRows = Math.ceil(nItems / tPer);
-        const tH = tRows * Math.round(tw * 1.04) + (tRows - 1) * tg;
-        if(tH > tileBudget) continue;
-        if(!landMode && sH + tH > slotBudget) continue;
-        let score = Math.min(bw * 0.62, tw * 0.50 * (isKey ? 1.2 : 1)) * 100 + (bw * 0.62 + tw * 0.50) * 2;
-        if(tRows > 1 && nItems % tPer === 1) score -= 45;   // 마지막 줄에 하나만 남는 건 싫어요
-        if(!best || score > best.score) best = {bw:bw, tw:tw, per:per, rows:rows, tPer:tPer, score:score};
-      }
-    }
+  for(let per = 1; per <= nItems; per++){
+    const tw = Math.min(capT, Math.floor((W - (per - 1) * tg) / per));
+    if(tw < 30) continue;
+    const rows = Math.ceil(nItems / per);
+    if(nItems > 12 && rows > 6) continue;            /* A~Z 키패드는 5줄 이하로 */
+    const th = Math.round(tw * 1.04);
+    if(rows * th + (rows - 1) * tg > tileBudget) continue;
+    let score = tw;
+    if(rows === 1) score *= 1.06;
+    else score *= (1 - 0.015 * (rows - 1));
+    const last = nItems - (rows - 1) * per;
+    if(rows > 1 && last === 1) score *= 0.80;
+    if(!best || score > best.score) best = {per:per, tw:tw, th:th, rows:rows, tg:tg, score:score};
   }
   if(!best){
-    const per = Math.min(n, (slotBudget > 150 ? 7 : 6));
-    const bw = Math.max(30, Math.min(64, Math.floor((slotW - (per-1)*sg) / per)));
-    const tw = Math.max(34, Math.min(70, Math.floor((tilesW - 5*tg) / 6)));
-    best = {bw: bw, per: per, rows: Math.ceil(n / per), tw: tw,
-            tPer: Math.max(1, Math.floor((tilesW + tg) / (tw + tg)))};
+    const per = Math.max(1, Math.min(nItems, Math.floor((W + tg) / (34 + tg))));
+    const tw = Math.max(24, Math.min(70, Math.floor((W - (per - 1) * tg) / per)));
+    best = {per:per, tw:tw, th:Math.round(tw * 1.04), rows:Math.ceil(nItems / per), tg:tg};
   }
-  return best;
+  return {bw:bw, g:g, sh:sh, sfs:sfs, sbw:sbw,
+          per:best.per, tw:best.tw, th:best.th, tg:best.tg, rows:best.rows};
 }
 
 /* =========================================================
@@ -1088,19 +1504,22 @@ function loadQuestion(){
   hiddenIdx.forEach(function(i){ hidden[i] = true; });
 
   const need = hiddenIdx.map(function(i){ return w[i]; });
-  const pool = (mode === "dictate") ? [] :
-      shuffle(need.concat(pickDistractors(w, mode === "fill" ? 2 : trapCount(w.length))))
-        .map(function(ch, k){ return {ch:ch, id:"t" + k, used:false}; });
+  let pool = [];
+  if(mode === "fill"){
+    pool = pickOptions(w, need);                                  // 5~6개 (정답 + 헷갈리는 글자)
+  } else if(mode === "spell"){
+    pool = need.concat(pickDistractors(w, trapCount(w.length)));
+  }
+  const tiles = shuffle(pool).map(function(ch, k){ return {ch:ch, id:"t" + k, used:false}; });
 
   Q = {item:item, w:w, hidden:hidden, hiddenIdx:hiddenIdx,
        order:hiddenIdx.slice().sort(function(a,b){ return a-b; }),
-       fill:new Array(w.length).fill(null), tiles:pool,
+       fill:new Array(w.length).fill(null), tiles:tiles,
+       ph:phMap(w),
        mistakes:0, hints:0, done:false};
 
   $("#wEmoji").textContent = item.e;
   $("#wMean").textContent = item.m || item.x;
-  $("#peek").classList.remove("on");
-  $("#peek").textContent = "";
   $("#slots").classList.remove("good", "shake");
   $("#gcount").textContent = (G.i+1) + "/" + G.total;
   $("#progFill").style.width = (G.i / G.total * 100) + "%";
@@ -1119,21 +1538,21 @@ function loadQuestion(){
 
 function drawSlots(){
   const box = $("#slots");
-  box.innerHTML = "";
   const L = Q.layout;
-  box.style.gridTemplateColumns = "repeat(" + L.per + ", " + L.bw + "px)";
-  for(let i=0;i<Q.order.length + (Q.w.length - Q.order.length); i++){
+  box.style.setProperty("--sw", L.bw + "px");
+  box.style.setProperty("--sh", L.sh + "px");
+  box.style.setProperty("--sfs", L.sfs + "px");
+  box.style.setProperty("--sg", L.g + "px");
+  box.style.setProperty("--sbw", L.sbw + "px");
+  box.innerHTML = "";
+  const nextEmpty = Q.order.filter(function(k){ return Q.fill[k] === null; })[0];
+  for(let i=0;i<Q.w.length;i++){
     const isHidden = !!Q.hidden[i];
     const val = isHidden ? Q.fill[i] : Q.w[i];
     const d = document.createElement("div");
     d.className = "slot " + (isHidden ? "blank" : "fixed") + (val ? " filled" : "");
-    d.style.height = Math.round(L.bw * 1.14) + "px";
-    d.style.fontSize = Math.round(L.bw * 0.62) + "px";
     d.textContent = val ? String(val).toUpperCase() : "";
-    if(isHidden && !val){
-      const nextEmpty = Q.order.filter(function(k){ return Q.fill[k] === null; })[0];
-      if(nextEmpty === i) d.classList.add("on");
-    }
+    if(isHidden && !val && nextEmpty === i) d.classList.add("on");
     box.appendChild(d);
   }
 }
@@ -1142,13 +1561,13 @@ function drawTiles(){
   const box = $("#tiles");
   box.innerHTML = "";
   const L = Q.layout;
-  const tPer = Math.max(1, L.tPer);
-  box.style.gridTemplateColumns = "repeat(" + tPer + ", " + L.tw + "px)";
-  const h = Math.round(L.tw * 1.04) + "px";
+  box.style.setProperty("--tg", L.tg + "px");
+  box.style.gridTemplateColumns = "repeat(" + L.per + ", " + L.tw + "px)";
+  const h = L.th + "px";
 
   let cells = [];
   if(G.mode === "dictate"){
-    const fs = Math.max(16, Math.round(L.tw * 0.46));
+    const fs = Math.max(15, Math.round(L.tw * 0.46));
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(function(ch){
       const b = document.createElement("button");
       b.className = "tile key";
@@ -1159,7 +1578,7 @@ function drawTiles(){
       cells.push(b);
     });
   } else {
-    const fs = Math.max(16, Math.round(L.tw * 0.50));
+    const fs = Math.max(15, Math.round(L.tw * 0.52));
     Q.tiles.forEach(function(t){
       const b = document.createElement("button");
       b.className = "tile" + (t.used ? " used" : "");
@@ -1170,11 +1589,9 @@ function drawTiles(){
       cells.push(b);
     });
   }
-
-  // 마지막 줄이 허전하지 않도록 앞뒤에 보이지 않는 칸을 채워 가운데 정렬
-  const rem = cells.length % tPer;
-  if(rem > 0 && cells.length > tPer){
-    const pad = tPer - rem;
+  const rem = cells.length % L.per;
+  if(rem > 0 && cells.length > L.per){
+    const pad = L.per - rem;
     const before = Math.floor(pad / 2);
     const sp = function(){ const d = document.createElement("span"); d.style.visibility = "hidden"; return d; };
     const startIdx = cells.length - rem;
@@ -1236,20 +1653,12 @@ function onWrong(){
   soundSoft();
   const sl = $("#slots");
   sl.classList.add("shake");
-  toast(Q.mistakes === 1 ? "음~ 다시 한 번 해볼까? 🙂" : "괜찮아! 정답을 보고 따라 해봐 💛", 1300);
+  toast(Q.mistakes === 1 ? "음~ 다시 한 번 해볼까? 🙂" : "괜찮아! 💡 소리 힌트를 들어보고 다시 해봐 💛", 1600);
   setTimeout(function(){
     sl.classList.remove("shake");
-    clearFills();
+    clearFills();          // 정답은 절대 보여주지 않아요. 스스로 다시!
     lock = false;
-    if(Q.mistakes >= 2){
-      const p = $("#peek");
-      p.textContent = Q.w.toUpperCase().split("").join(" ");
-      p.classList.add("on");
-      Q.layout = computeLayout();
-      drawSlots();
-      drawTiles();
-    }
-    speak(Q.w, 0.7);
+    speak(Q.w, 0.64);
   }, 640);
 }
 
@@ -1340,19 +1749,28 @@ function starBurst(){
 }
 
 /* ---------- 버튼 ---------- */
+/* 💡 힌트 : 글자를 채우지 않고, 그 자리에 들어갈 글자의 '소리'만 들려줘요 */
 $("#btnHint").addEventListener("click", function(){
-  if(!Q || Q.done) return;
+  if(!Q || Q.done || lock) return;
+  if(Date.now() - lastHintAt < 650) return;
+  lastHintAt = Date.now();
   const slot = Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
-  if(slot === undefined) return;
-  const ch = Q.w[slot];
-  const t = Q.tiles.filter(function(x){ return !x.used && x.ch === ch; })[0];
-  if(t) t.used = true;
-  Q.fill[slot] = ch;
+  if(slot === undefined){ toast("빈칸이 다 채워졌어요!", 1200); return; }
+  const pid = Q.ph[slot] || "";
   Q.hints++;
-  drawSlots();
-  drawTiles();
-  notes([880], "sine", 0.08);
-  afterFill();
+  ac();
+  if(!save.sound){
+    toast("🔇 소리가 꺼져 있어요. 오른쪽 위 🔊를 눌러 주세요", 2000);
+    return;
+  }
+  if(pid === "silent"){
+    playPhoneme("silent");
+    toast("🤫 이 글자는 소리가 없어요!", 1700);
+    return;
+  }
+  if(playPhoneme(pid)){
+    toast("🔊 소리 힌트! 잘 듣고 골라 봐요", 1500);
+  }
 });
 $("#btnClear").addEventListener("click", function(){
   if(!Q || Q.done) return;
@@ -1507,6 +1925,13 @@ if(window.matchMedia){
     if(mq.addEventListener) mq.addEventListener("change", function(){ scheduleRelayout(260); });
   }catch(e){}
 }
+
+/* 검증용 손잡이 (앱 동작에는 영향 없음) */
+window.PHONICS_DEBUG = {
+  PH:PH, PHONO:PHONO, map:phMap, units:phUnits, check:phCheck,
+  play:playPhoneme, schedule:phSchedule, layout:function(){ return Q ? Q.layout : null; },
+  state:function(){ return Q; }, G:function(){ return G; }, load:function(){ loadQuestion(); }
+};
 
 renderHome();
 </script>
