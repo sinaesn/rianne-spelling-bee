@@ -160,6 +160,13 @@
   .slot.blank{background:#FFF6FB; border-color:#E2719F; border-style:dashed; color:var(--rose-d); box-shadow:0 3px 0 #F5D3E2;}
   .slot.blank.on{border-style:solid; background:#FFE7F2; box-shadow:0 3px 0 #EFBBD4, 0 0 0 3px rgba(226,113,159,.22);}
   .slot.blank.filled{border-style:solid; background:#FFE7F2; color:var(--plum);}
+  /* 맞은 글자 = 초록, 틀린 글자 = 빨강 (고를 때 바로바로) */
+  .slot.blank.filled.ok{background:#E7FAEF; border-color:#3FBF79; color:#16703E; box-shadow:0 3px 0 #B2E6C6;}
+  .slot.blank.filled.ng{background:#FFEAEC; border-color:#E4535F; color:#AE1F2C; box-shadow:0 3px 0 #F6BEC3;}
+  .slot.blank.filled.ok.pop{animation:slotpop .22s ease;}
+  .slot.blank.filled.ng.pop{animation:slotwrong .24s ease;}
+  @keyframes slotpop{0%{transform:scale(.86);}60%{transform:scale(1.06);}100%{transform:scale(1);}}
+  @keyframes slotwrong{0%,100%{transform:translateX(0);}30%{transform:translateX(-3px);}65%{transform:translateX(3px);}}
   .slots.shake{animation:shake .4s;}
   @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}
     60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
@@ -168,13 +175,14 @@
   /* 아래 : 보기 타일 / A~Z 키패드 */
   .tiles{flex:0 0 auto; display:grid; justify-content:center; align-content:center;
     gap:var(--tg,8px); overflow:hidden;}
-  .tile{border-radius:16px; background:#FFFDF8; border:3px solid #F3B7D1; box-shadow:0 5px 0 #E9A6C4;
+  /* 아래 보기 타일·키패드는 옅은 회색 (위 단어 칸은 아이보리/흰색 그대로 → 한눈에 구분) */
+  .tile{border-radius:16px; background:#EEF1F5; border:3px solid #D2D7E0; box-shadow:0 5px 0 #C7CED9;
     font-weight:900; color:var(--plum); display:flex; align-items:center; justify-content:center; line-height:1;
     transition:transform .1s, opacity .15s;}
-  .tile:active{transform:translateY(4px); box-shadow:0 1px 0 #E9A6C4;}
-  .tile.key{border-color:#EFC25E; box-shadow:0 5px 0 #DDB44E; background:#FFFCF2;}
-  .tile.key:active{background:#FFF0C4; transform:translateY(4px); box-shadow:0 1px 0 #DDB44E;}
-  .tile.used{background:#FDEBF3; border:3px dashed #F0B6CE; box-shadow:none; color:transparent; pointer-events:none;}
+  .tile:active{transform:translateY(4px); box-shadow:0 1px 0 #C7CED9;}
+  .tile.key{background:#E6EAF0; border-color:#C3CAD6; box-shadow:0 5px 0 #B6BECB;}
+  .tile.key:active{background:#D9DFE7; transform:translateY(4px); box-shadow:0 1px 0 #B6BECB;}
+  .tile.used{background:#F5F7FA; border:3px dashed #CBD1DB; box-shadow:none; color:transparent; pointer-events:none;}
 
   .gfoot{display:flex; gap:10px; padding:2px 4px calc(8px + env(safe-area-inset-bottom)); flex:0 0 auto;}
   .toolbtn{flex:1; min-height:52px; border-radius:18px; background:#fff; border:3px solid var(--rose);
@@ -483,11 +491,13 @@
       <ul class="help-list">
         <li><b>1~10단계</b> — 단계마다 10단어, 짧은 단어부터 차근차근. 하루에 다 못 해도 괜찮아요!</li>
         <li><b>👀 빈칸 채우기</b> — 빈칸에 들어갈 글자를 순서대로 눌러요. 보기 6개 중에서 골라요. 빈칸 위치는 <b>날짜마다</b> 바뀌어요.</li>
+        <li><b>🟩 맞은 글자는 초록, 🟥 틀린 글자는 빨강</b> — 고르는 순간 바로 색이 바뀌어요. 빨간 글자는 지우고 다시 골라요.</li>
+        <li><b>🧽 지우기</b> — 누를 때마다 마지막에 고른 글자 <b>한 칸씩</b> 뒤로 지워요. 보기 타일도 다시 살아나요.</li>
         <li><b>🐝 스펠링 쓰기</b> — 글자 타일을 골라 단어 전체를 만들어요.</li>
         <li><b>🎧 듣고 쓰기(실전)</b> — 철자가 안 보여요. 소리를 듣고 A~Z 키로 직접 써요. 선생님이 읽어주는 시험 연습!</li>
         <li><b>🔊 듣기</b> — 단어를 다시 들려줘요. <b>🐢 천천히</b>는 아주 천천히 들려줘요.</li>
         <li><b>영어 뜻</b> — 그림 아래 짧은 영어 설명이 나와요. 뜻 옆 <b>🔊</b>를 누르면 뜻을 읽어줘요.</li>
-        <li><b>💡 소리 힌트</b> — 다음 빈칸에 들어갈 글자의 <b>소리만</b> 사람 목소리로 또박또박 들려줘요. 글자는 알려주지 않아요! 단모음(애)과 장모음(에이)을 단어에 맞게 구분해서 들려줘요.</li>
+        <li><b>💡 소리 힌트</b> — 다음 빈칸에 들어갈 글자의 <b>소리만</b> 사람 목소리로 또박또박 들려줘요. 글자는 알려주지 않아요! a=애, e=에, i=이, o=아처럼 <b>그 글자의 소리</b>로 들려줘요.</li>
         <li><b>💛 틀린 단어</b> — 틀렸던 단어만 모아서 다시 풀 수 있어요.</li>
         <li><b>👑 파이널 리뷰</b> — 100개 단어 전체를 랜덤 순서로. 중간에 멈춰도 이어서 할 수 있어요.</li>
       </ul>
@@ -631,122 +641,125 @@ const DAYS = [
 /* =========================================================
    파닉스 표기 (글자 단위 소리)
    ========================================================= */
-/* 소리 종류
-   · 모음 : a_s(애) a_l(에이) e_s(에) e_l(이) i_s(이) i_l(아이) o_s(아) o_l(오)
-            u_s(어) u_l(유) u_oo(우) schwa(어) er(얼) ar(아르) or(오르) eer(이어) aw(오) ow(아우)
+/* 소리 종류 (글자 ↔ 소리 표)
+   · 모음 : a_s(애) a_l(에이) / e_s(에) e_l(이이) / i_s(이) i_l(아이) /
+            o_s(아) o_l(오우) / u_s(어) u_l(유) u_oo(우)
+            + r-통제·이중모음 : er(어르) ar(아르) or(오르) eer(이어) aw(어) ow(아우)
    · 자음 : b d f g h j k l m n p r s t v w y z sh ch th th_v zh ks kw ng
    · 묵음 : silent
+   규칙 : 한 글자는 그 글자의 기본 소리만 가져요 (예전처럼 i 가 schwa(어) 로 새지 않게).
+          비강세 모음도 a→애, e→에, i→이, o→아, u→어 로 적어 아이가 듣고 글자를 고를 수 있게 했어요.
    표기법 : "글자=소리 글자=소리 ..." (글자를 이어붙이면 단어와 똑같아야 해요) */
 const PHONO = {
   flower:"f=f l=l ow=ow er=er",
-  jacket:"j=j a=a_s ck=k e=i_s t=t",
-  potato:"p=p o=schwa t=t a=a_l t=t o=o_l",
+  jacket:"j=j a=a_s ck=k e=e_s t=t",
+  potato:"p=p o=o_s t=t a=a_l t=t o=o_l",
   thick:"th=th i=i_s ck=k",
   whistle:"wh=w i=i_s s=s t=silent l=l e=silent",
   borrow:"b=b o=o_s rr=r ow=o_l",
   feather:"f=f ea=e_s th=th_v er=er",
-  glasses:"g=g l=l a=a_s ss=s e=i_s s=z",
-  helpful:"h=h e=e_s l=l p=p f=f u=schwa l=l",
+  glasses:"g=g l=l a=a_s ss=s e=e_s s=z",
+  helpful:"h=h e=e_s l=l p=p f=f u=u_s l=l",
   listen:"l=l i=i_s s=s t=silent e=silent n=n",
 
-  oxygen:"o=o_s x=ks y=i_s g=j e=schwa n=n",
-  evolve:"e=i_s v=v o=o_s l=l v=v e=silent",
+  oxygen:"o=o_s x=ks y=i_s g=j e=e_s n=n",
+  evolve:"e=e_s v=v o=o_s l=l v=v e=silent",
   tornado:"t=t o=or r=r n=n a=a_l d=d o=o_l",
-  vaccine:"v=v a=a_s cc=k i=e_l n=n e=silent",
-  station:"s=s t=t a=a_l t=sh i=silent o=schwa n=n",
-  society:"s=s o=schwa c=s i=i_l e=i_s t=t y=e_l",
-  ancient:"a=a_l n=n c=sh i=schwa e=silent n=n t=t",
-  balance:"b=b a=a_s l=l a=schwa n=n c=s e=silent",
-  curious:"c=k u=u_l r=r i=e_l o=schwa u=silent s=s",
-  measure:"m=m e=e_s a=silent s=zh u=schwa r=r e=silent",
+  vaccine:"v=v a=a_s cc=k i=i_s n=n e=silent",
+  station:"s=s t=t a=a_l t=sh i=silent o=o_s n=n",
+  society:"s=s o=o_s c=s i=i_l e=e_s t=t y=e_l",
+  ancient:"a=a_l n=n c=sh i=i_s e=silent n=n t=t",
+  balance:"b=b a=a_s l=l a=a_s n=n c=s e=silent",
+  curious:"c=k u=u_l r=r i=i_s o=o_s u=silent s=s",
+  measure:"m=m e=e_s a=silent s=zh u=u_s r=r e=silent",
 
-  mixture:"m=m i=i_s x=ks t=ch u=schwa r=r e=silent",
-  fragile:"f=f r=r a=a_s g=j i=schwa l=l e=silent",
-  descend:"d=d e=i_s s=s c=s e=e_s n=n d=d",
+  mixture:"m=m i=i_s x=ks t=ch u=u_s r=r e=silent",
+  fragile:"f=f r=r a=a_s g=j i=i_s l=l e=silent",
+  descend:"d=d e=e_s s=s c=s e=e_s n=n d=d",
   blunder:"b=b l=l u=u_s n=n d=d e=er r=r",
   recycle:"r=r e=e_l c=s y=i_l c=k l=l e=silent",
-  heavier:"h=h e=e_s a=silent v=v i=e_l e=schwa r=r",
-  colorful:"c=k o=u_s l=l o=schwa r=r f=f u=schwa l=l",
-  generous:"g=j e=e_s n=n e=schwa r=r o=schwa u=silent s=s",
-  kangaroo:"k=k a=a_s n=ng g=g a=schwa r=r oo=u_oo",
-  lemonade:"l=l e=e_s m=m o=schwa n=n a=a_l d=d e=silent",
+  heavier:"h=h e=e_s a=silent v=v i=i_s e=e_s r=r",
+  colorful:"c=k o=o_s l=l o=o_s r=r f=f u=u_s l=l",
+  generous:"g=j e=e_s n=n e=e_s r=r o=o_s u=silent s=s",
+  kangaroo:"k=k a=a_s n=ng g=g a=a_s r=r oo=u_oo",
+  lemonade:"l=l e=e_s m=m o=o_s n=n a=a_l d=d e=silent",
 
-  behavior:"b=b e=i_s h=h a=a_l v=v i=y o=schwa r=r",
+  behavior:"b=b e=e_s h=h a=a_l v=v i=i_s o=o_s r=r",
   dissolve:"d=d i=i_s ss=z o=o_s l=l v=v e=silent",
-  enormous:"e=i_s n=n o=or r=r m=m o=schwa u=silent s=s",
-  pamphlet:"p=p a=a_s m=m p=p h=silent l=l e=schwa t=t",
-  relieved:"r=r e=i_s l=l i=e_l e=silent v=v e=silent d=d",
-  remember:"r=r e=i_s m=m e=e_s m=m b=b e=er r=r",
+  enormous:"e=e_s n=n o=or r=r m=m o=o_s u=silent s=s",
+  pamphlet:"p=p a=a_s m=m p=p h=silent l=l e=e_s t=t",
+  relieved:"r=r e=e_s l=l i=i_s e=silent v=v e=silent d=d",
+  remember:"r=r e=e_s m=m e=e_s m=m b=b e=er r=r",
   hamburger:"h=h a=a_s m=m b=b u=er r=r g=g e=er r=r",
-  vegetable:"v=v e=e_s g=j e=silent t=t a=schwa b=b l=l e=silent",
-  reason:"r=r e=e_l a=silent s=z o=schwa n=n",
+  vegetable:"v=v e=e_s g=j e=silent t=t a=a_s b=b l=l e=silent",
+  reason:"r=r e=e_l a=silent s=z o=o_s n=n",
   safety:"s=s a=a_l f=f e=silent t=t y=e_l",
 
-  adventure:"a=schwa d=d v=v e=e_s n=n t=ch u=schwa r=r e=silent",
-  astronaut:"a=a_s s=s t=t r=r o=schwa n=n au=aw t=t",
-  attention:"a=schwa tt=t e=e_s n=n t=sh i=silent o=schwa n=n",
-  confident:"c=k o=o_s n=n f=f i=i_s d=d e=schwa n=n t=t",
-  continent:"c=k o=o_s n=n t=t i=i_s n=n e=schwa n=n t=t",
-  discovery:"d=d i=i_s s=s c=k o=u_s v=v e=schwa r=r y=e_l",
-  education:"e=e_s d=d u=u_l c=k a=a_l t=sh i=silent o=schwa n=n",
-  encourage:"e=i_s n=n c=k ou=er r=r a=i_s g=j e=silent",
-  excellent:"e=e_s x=ks c=s e=schwa ll=l e=schwa n=n t=t",
+  adventure:"a=a_s d=d v=v e=e_s n=n t=ch u=u_s r=r e=silent",
+  astronaut:"a=a_s s=s t=t r=r o=o_s n=n au=aw t=t",
+  attention:"a=a_s tt=t e=e_s n=n t=sh i=silent o=o_s n=n",
+  confident:"c=k o=o_s n=n f=f i=i_s d=d e=e_s n=n t=t",
+  continent:"c=k o=o_s n=n t=t i=i_s n=n e=e_s n=n t=t",
+  discovery:"d=d i=i_s s=s c=k o=o_s v=v e=e_s r=r y=e_l",
+  education:"e=e_s d=d u=u_l c=k a=a_l t=sh i=silent o=o_s n=n",
+  encourage:"e=e_s n=n c=k ou=er r=r a=a_s g=j e=silent",
+  excellent:"e=e_s x=ks c=s e=e_s ll=l e=e_s n=n t=t",
   hurricane:"h=h u=er r=r r=r i=i_s c=k a=a_l n=n e=silent",
 
-  knowledge:"k=silent n=n o=o_s w=silent l=l e=i_s d=d g=j e=silent",
+  knowledge:"k=silent n=n o=o_s w=silent l=l e=e_s d=d g=j e=silent",
   landslide:"l=l a=a_s n=n d=d s=s l=l i=i_l d=d e=silent",
-  geologist:"g=j e=e_l o=o_s l=l o=schwa g=j i=i_s s=s t=t",
-  interrupt:"i=i_s n=n t=t e=schwa rr=r u=u_s p=p t=t",
-  telephone:"t=t e=e_s l=l e=schwa p=p h=f o=o_l n=n e=silent",
-  volunteer:"v=v o=o_s l=l u=schwa n=n t=t ee=eer r=r",
-  appreciate:"a=schwa pp=p r=r e=e_l c=sh i=e_l a=a_l t=t e=silent",
-  convenient:"c=k o=schwa n=n v=v e=e_l n=n i=y e=schwa n=n t=t",
+  geologist:"g=j e=e_l o=o_s l=l o=o_s g=j i=i_s s=s t=t",
+  interrupt:"i=i_s n=n t=t e=e_s rr=r u=u_s p=p t=t",
+  telephone:"t=t e=e_s l=l e=e_s p=p h=f o=o_l n=n e=silent",
+  volunteer:"v=v o=o_s l=l u=u_s n=n t=t ee=eer r=r",
+  appreciate:"a=a_s pp=p r=r e=e_l c=sh i=i_s a=a_l t=t e=silent",
+  convenient:"c=k o=o_s n=n v=v e=e_l n=n i=i_s e=e_s n=n t=t",
   earthquake:"ea=er r=r th=th qu=kw a=a_l k=k e=silent",
-  especially:"e=i_s s=s p=p e=e_s c=sh i=schwa a=silent ll=l y=e_l",
+  especially:"e=e_s s=s p=p e=e_s c=sh i=i_s a=silent ll=l y=e_l",
 
-  experience:"e=i_s x=ks p=p e=e_s r=r i=e_l e=schwa n=n c=s e=silent",
-  experiment:"e=i_s x=ks p=p e=e_s r=r i=i_s m=m e=schwa n=n t=t",
-  expression:"e=i_s x=ks p=p r=r e=e_s ss=sh i=silent o=schwa n=n",
-  impossible:"i=i_s m=m p=p o=o_s ss=s i=schwa b=b l=l e=silent",
-  microscope:"m=m i=i_l c=k r=r o=schwa s=s c=k o=o_l p=p e=silent",
-  mysterious:"m=m y=i_s s=s t=t e=e_l r=r i=e_l o=schwa u=silent s=s",
-  nutritious:"n=n u=u_oo t=t r=r i=i_s t=sh i=silent o=schwa u=silent s=s",
-  permission:"p=p e=er r=r m=m i=i_s ss=sh i=silent o=schwa n=n",
-  properties:"p=p r=r o=o_s p=p e=er r=r t=t i=e_l e=silent s=z",
-  subsection:"s=s u=u_s b=b s=s e=e_s c=k t=sh i=silent o=schwa n=n",
+  experience:"e=e_s x=ks p=p e=e_s r=r i=i_s e=e_s n=n c=s e=silent",
+  experiment:"e=e_s x=ks p=p e=e_s r=r i=i_s m=m e=e_s n=n t=t",
+  expression:"e=e_s x=ks p=p r=r e=e_s ss=sh i=silent o=o_s n=n",
+  impossible:"i=i_s m=m p=p o=o_s ss=s i=i_s b=b l=l e=silent",
+  microscope:"m=m i=i_l c=k r=r o=o_s s=s c=k o=o_l p=p e=silent",
+  mysterious:"m=m y=i_s s=s t=t e=e_l r=r i=i_s o=o_s u=silent s=s",
+  nutritious:"n=n u=u_oo t=t r=r i=i_s t=sh i=silent o=o_s u=silent s=s",
+  permission:"p=p e=er r=r m=m i=i_s ss=sh i=silent o=o_s n=n",
+  properties:"p=p r=r o=o_s p=p e=er r=r t=t i=i_s e=silent s=z",
+  subsection:"s=s u=u_s b=b s=s e=e_s c=k t=sh i=silent o=o_s n=n",
 
-  definitely:"d=d e=e_s f=f i=i_s n=n i=schwa t=t e=silent l=l y=e_l",
-  apologize:"a=schwa p=p o=o_s l=l o=schwa g=j i=i_l z=z e=silent",
+  definitely:"d=d e=e_s f=f i=i_s n=n i=i_s t=t e=silent l=l y=e_l",
+  apologize:"a=a_s p=p o=o_s l=l o=o_s g=j i=i_l z=z e=silent",
   creative:"c=k r=r e=e_l a=a_l t=t i=i_s v=v e=silent",
-  important:"i=i_s m=m p=p o=or r=r t=t a=schwa n=n t=t",
-  substantial:"s=s u=schwa b=b s=s t=t a=a_s n=n t=sh i=schwa a=silent l=l",
-  temperature:"t=t e=e_s m=m p=p e=schwa r=r a=silent t=ch u=schwa r=r e=silent",
-  concentrate:"c=k o=o_s n=n c=s e=schwa n=n t=t r=r a=a_l t=t e=silent",
-  opportunity:"o=o_s pp=p o=schwa r=r t=t u=u_oo n=n i=i_s t=t y=e_l",
-  performance:"p=p e=er r=r f=f o=or r=r m=m a=schwa n=n c=s e=silent",
-  imagination:"i=i_s m=m a=a_s g=j i=i_s n=n a=a_l t=sh i=silent o=schwa n=n",
+  important:"i=i_s m=m p=p o=or r=r t=t a=a_s n=n t=t",
+  substantial:"s=s u=u_s b=b s=s t=t a=a_s n=n t=sh i=i_s a=silent l=l",
+  temperature:"t=t e=e_s m=m p=p e=e_s r=r a=silent t=ch u=u_s r=r e=silent",
+  concentrate:"c=k o=o_s n=n c=s e=e_s n=n t=t r=r a=a_l t=t e=silent",
+  opportunity:"o=o_s pp=p o=o_s r=r t=t u=u_oo n=n i=i_s t=t y=e_l",
+  performance:"p=p e=er r=r f=f o=or r=r m=m a=a_s n=n c=s e=silent",
+  imagination:"i=i_s m=m a=a_s g=j i=i_s n=n a=a_l t=sh i=silent o=o_s n=n",
 
-  expertise:"e=e_s x=ks p=p e=er r=r t=t i=e_l s=z e=silent",
-  evaporate:"e=i_s v=v a=a_s p=p o=schwa r=r a=a_l t=t e=silent",
-  pollution:"p=p o=schwa ll=l u=u_oo t=sh i=silent o=schwa n=n",
-  daffodils:"d=d a=a_s ff=f o=schwa d=d i=i_s l=l s=z",
-  immediately:"i=i_s mm=m e=e_l d=d i=e_l a=schwa t=t e=silent l=l y=e_l",
-  independent:"i=i_s n=n d=d e=i_s p=p e=e_s n=n d=d e=schwa n=n t=t",
-  achievement:"a=schwa ch=ch i=e_l e=silent v=v e=silent m=m e=schwa n=n t=t",
-  celebration:"c=s e=e_s l=l e=i_s b=b r=r a=a_l t=sh i=silent o=schwa n=n",
-  magnificent:"m=m a=a_s g=g n=n i=i_s f=f i=i_s c=s e=schwa n=n t=t",
-  picturesque:"p=p i=i_s c=k t=ch u=schwa r=r e=silent s=s qu=k e=silent",
+  expertise:"e=e_s x=ks p=p e=er r=r t=t i=i_s s=z e=silent",
+  evaporate:"e=e_s v=v a=a_s p=p o=o_s r=r a=a_l t=t e=silent",
+  pollution:"p=p o=o_s ll=l u=u_oo t=sh i=silent o=o_s n=n",
+  daffodils:"d=d a=a_s ff=f o=o_s d=d i=i_s l=l s=z",
+  immediately:"i=i_s mm=m e=e_l d=d i=i_s a=a_s t=t e=silent l=l y=e_l",
+  independent:"i=i_s n=n d=d e=e_s p=p e=e_s n=n d=d e=e_s n=n t=t",
+  achievement:"a=a_s ch=ch i=i_s e=silent v=v e=silent m=m e=e_s n=n t=t",
+  celebration:"c=s e=e_s l=l e=e_s b=b r=r a=a_l t=sh i=silent o=o_s n=n",
+  magnificent:"m=m a=a_s g=g n=n i=i_s f=f i=i_s c=s e=e_s n=n t=t",
+  picturesque:"p=p i=i_s c=k t=ch u=u_s r=r e=silent s=s qu=k e=silent",
 
-  architecture:"a=ar r=r ch=k i=i_s t=t e=e_s c=k t=ch u=schwa r=r e=silent",
-  enthusiastic:"e=i_s n=n th=th u=u_oo s=z i=e_l a=a_s s=s t=t i=i_s c=k",
-  civilization:"c=s i=i_s v=v i=schwa l=l i=i_s z=z a=a_l t=sh i=silent o=schwa n=n",
-  perseverance:"p=p e=er r=r s=s e=schwa v=v e=i_s r=r a=schwa n=n c=s e=silent",
-  communication:"c=k o=schwa mm=m u=u_l n=n i=i_s c=k a=a_l t=sh i=silent o=schwa n=n",
-  investigation:"i=i_s n=n v=v e=e_s s=s t=t i=i_s g=g a=a_l t=sh i=silent o=schwa n=n",
-  pronunciation:"p=p r=r o=schwa n=n u=u_s n=n c=s i=e_l a=a_l t=sh i=silent o=schwa n=n",
-  unforgettable:"u=u_s n=n f=f o=schwa r=r g=g e=e_s tt=t a=schwa b=b l=l e=silent",
-  responsibility:"r=r e=i_s s=s p=p o=o_s n=n s=s i=schwa b=b i=i_s l=l i=schwa t=t y=e_l",
-  transportation:"t=t r=r a=a_s n=n s=s p=p o=schwa r=r t=t a=a_l t=sh i=silent o=schwa n=n"
+  architecture:"a=ar r=r ch=k i=i_s t=t e=e_s c=k t=ch u=u_s r=r e=silent",
+  enthusiastic:"e=e_s n=n th=th u=u_oo s=z i=i_s a=a_s s=s t=t i=i_s c=k",
+  civilization:"c=s i=i_s v=v i=i_s l=l i=i_s z=z a=a_l t=sh i=silent o=o_s n=n",
+  perseverance:"p=p e=er r=r s=s e=e_s v=v e=e_s r=r a=a_s n=n c=s e=silent",
+  communication:"c=k o=o_s mm=m u=u_l n=n i=i_s c=k a=a_l t=sh i=silent o=o_s n=n",
+  investigation:"i=i_s n=n v=v e=e_s s=s t=t i=i_s g=g a=a_l t=sh i=silent o=o_s n=n",
+  pronunciation:"p=p r=r o=o_s n=n u=u_s n=n c=s i=i_s a=a_l t=sh i=silent o=o_s n=n",
+  unforgettable:"u=u_s n=n f=f o=o_s r=r g=g e=e_s tt=t a=a_s b=b l=l e=silent",
+  responsibility:"r=r e=e_s s=s p=p o=o_s n=n s=s i=i_s b=b i=i_s l=l i=i_s t=t y=e_l",
+  transportation:"t=t r=r a=a_s n=n s=s p=p o=o_s r=r t=t a=a_l t=sh i=silent o=o_s n=n"
 };
 
 /* 소리 목록 : k = 소리 종류, ipa = 국제음성기호 (실제로 들려줄 말은 아래 PH_TTS) */
@@ -995,23 +1008,59 @@ function soundSoft(){
    소리 힌트 발음 (사람 목소리 TTS)
    ========================================================= */
 /* PH 의 소리 하나하나를 '그 소리만' 나도록 적은 TTS 음절.
-   · 영어 TTS 가 알파벳 이름(L → "엘")을 읽지 않도록 소리 나는 대로 적었어요.
-   · a_s(애)는 영어 TTS 가 "a"를 "에이"로 읽어서 한국어 음성으로 읽고,
-     한국어 음성이 없는 기기에서는 영어 "ah" 로 대신해요. */
+   · 영어(en-US) TTS 는 "ih", "eh", "uh", "ks" 같은 짧은 음절을 "아", "케이에스"처럼
+     엉뚱하게 읽어 버려서, 단모음·대부분의 자음은 한국어(ko-KR) TTS 로 또박또박 읽어요.
+       예) i_s → "이", l → "르", ks → "크스"
+   · f/v/th/th_v/z 처럼 한국어에 없는 소리만 영어 TTS("fuh", "vuh", "thuh", "zuh") 를 써요.
+   · alt = 한국어 음성이 없는 기기에서 대신 쓸 영어 표기 (그 기기에서는 en-US 로 읽어요). */
 const PH_TTS = {
   /* --- 모음 --- */
-  a_s:{t:"애", lang:"ko-KR", alt:"ah"},
-  a_l:{t:"ay"}, e_s:{t:"eh"}, e_l:{t:"ee"}, i_s:{t:"ih"}, i_l:{t:"eye"},
-  o_s:{t:"ah"}, o_l:{t:"oh"}, u_s:{t:"uh"}, u_l:{t:"you"}, u_oo:{t:"oo"},
-  schwa:{t:"uh"}, er:{t:"er"}, ar:{t:"ar"}, or:{t:"or"}, eer:{t:"ear"},
-  aw:{t:"aw"}, ow:{t:"ow"},
-  /* --- 자음 --- */
-  b:{t:"buh"}, ch:{t:"chuh"}, d:{t:"duh"}, f:{t:"fuh"}, g:{t:"guh"},
-  h:{t:"huh"}, j:{t:"juh"}, k:{t:"kuh"}, ks:{t:"ks"}, kw:{t:"kwuh"},
-  l:{t:"luh"}, m:{t:"muh"}, n:{t:"nuh"}, ng:{t:"ung"}, p:{t:"puh"},
-  r:{t:"ruh"}, s:{t:"suh"}, sh:{t:"shh"}, t:{t:"tuh"}, th:{t:"thuh"},
-  th_v:{t:"thuh"}, v:{t:"vuh"}, w:{t:"wuh"}, y:{t:"yuh"}, z:{t:"zuh"},
-  zh:{t:"zhuh"}
+  a_s:{t:"애",  lang:"ko-KR", alt:"ah"},
+  a_l:{t:"에이", lang:"ko-KR", alt:"ay"},
+  e_s:{t:"에",  lang:"ko-KR", alt:"eh"},
+  e_l:{t:"이이", lang:"ko-KR", alt:"ee"},
+  i_s:{t:"이",  lang:"ko-KR", alt:"ih"},
+  i_l:{t:"아이", lang:"ko-KR", alt:"eye"},
+  o_s:{t:"아",  lang:"ko-KR", alt:"aw"},
+  o_l:{t:"오우", lang:"ko-KR", alt:"oh"},
+  u_s:{t:"어",  lang:"ko-KR", alt:"uh"},
+  u_l:{t:"유",  lang:"ko-KR", alt:"you"},
+  u_oo:{t:"우", lang:"ko-KR", alt:"oo"},
+  schwa:{t:"어", lang:"ko-KR", alt:"uh"},
+  er:{t:"어르", lang:"ko-KR", alt:"er"},
+  ar:{t:"아르", lang:"ko-KR", alt:"ar"},
+  or:{t:"오르", lang:"ko-KR", alt:"or"},
+  eer:{t:"이어", lang:"ko-KR", alt:"ear"},
+  aw:{t:"어",  lang:"ko-KR", alt:"aw"},
+  ow:{t:"아우", lang:"ko-KR", alt:"ow"},
+  /* --- 자음 (한국어로 정확히 나는 소리) --- */
+  b:{t:"브",  lang:"ko-KR", alt:"buh"},
+  d:{t:"드",  lang:"ko-KR", alt:"duh"},
+  g:{t:"그",  lang:"ko-KR", alt:"guh"},
+  k:{t:"크",  lang:"ko-KR", alt:"kuh"},
+  p:{t:"프",  lang:"ko-KR", alt:"puh"},
+  t:{t:"트",  lang:"ko-KR", alt:"tuh"},
+  s:{t:"쓰",  lang:"ko-KR", alt:"ss"},
+  sh:{t:"쉬", lang:"ko-KR", alt:"shh"},
+  zh:{t:"즈", lang:"ko-KR", alt:"zhuh"},
+  h:{t:"흐",  lang:"ko-KR", alt:"huh"},
+  m:{t:"음",  lang:"ko-KR", alt:"muh"},
+  n:{t:"은",  lang:"ko-KR", alt:"nuh"},
+  ng:{t:"응", lang:"ko-KR", alt:"ung"},
+  l:{t:"르",  lang:"ko-KR", alt:"luh"},
+  r:{t:"러",  lang:"ko-KR", alt:"ruh"},
+  w:{t:"워",  lang:"ko-KR", alt:"wuh"},
+  y:{t:"여",  lang:"ko-KR", alt:"yuh"},
+  j:{t:"쥐",  lang:"ko-KR", alt:"juh"},
+  ch:{t:"취", lang:"ko-KR", alt:"chuh"},
+  ks:{t:"크스", lang:"ko-KR", alt:"ks"},
+  kw:{t:"쿼", lang:"ko-KR", alt:"kwuh"},
+  /* --- 한국어에 없는 소리만 영어 TTS --- */
+  f:{t:"fuh", lang:"en-US"},
+  v:{t:"vuh", lang:"en-US"},
+  th:{t:"thuh", lang:"en-US"},
+  th_v:{t:"thuh", lang:"en-US"},
+  z:{t:"zuh", lang:"en-US"}
 };
 /* 소리 하나 → 실제로 읽을 말과 언어 (그 언어 목소리가 없으면 alt 로 대신) */
 function ttsFor(id){
@@ -1401,6 +1450,7 @@ function loadQuestion(){
   Q = {item:item, w:w, hidden:hidden, hiddenIdx:hiddenIdx,
        order:hiddenIdx.slice().sort(function(a,b){ return a-b; }),
        fill:new Array(w.length).fill(null), tiles:tiles,
+       entry:[], cursor:null,          /* entry : 채운 순서(지우기는 뒤에서부터 한 칸씩) */
        ph:phMap(w),
        mistakes:0, hints:0, done:false};
 
@@ -1431,12 +1481,18 @@ function drawSlots(){
   box.style.setProperty("--sg", L.g + "px");
   box.style.setProperty("--sbw", L.sbw + "px");
   box.innerHTML = "";
-  const nextEmpty = Q.order.filter(function(k){ return Q.fill[k] === null; })[0];
+  let nextEmpty = Q.order.filter(function(k){ return Q.fill[k] === null; })[0];
+  /* 방금 지운 칸을 가리키게 (없으면 비어 있는 첫 칸) */
+  if(Q.cursor !== null && Q.cursor !== undefined && Q.fill[Q.cursor] === null) nextEmpty = Q.cursor;
   for(let i=0;i<Q.w.length;i++){
     const isHidden = !!Q.hidden[i];
     const val = isHidden ? Q.fill[i] : Q.w[i];
     const d = document.createElement("div");
     d.className = "slot " + (isHidden ? "blank" : "fixed") + (val ? " filled" : "");
+    /* 채운 글자가 정답 글자와 같으면 초록, 다르면 빨강 */
+    if(isHidden && val){
+      d.classList.add(String(val).toLowerCase() === String(Q.w[i]).toLowerCase() ? "ok" : "ng");
+    }
     d.textContent = val ? String(val).toUpperCase() : "";
     if(isHidden && !val && nextEmpty === i) d.classList.add("on");
     box.appendChild(d);
@@ -1496,6 +1552,12 @@ function afterFill(){
     setTimeout(checkAnswer, 260);
   }
 }
+function popSlot(i, ok){
+  const el = $("#slots").children[i];
+  if(!el) return;
+  el.classList.add("pop");
+  setTimeout(function(){ el.classList.remove("pop"); }, 260);
+}
 function tapTile(id){
   if(lock || Q.done) return;
   const t = Q.tiles.filter(function(x){ return x.id === id; })[0];
@@ -1504,9 +1566,13 @@ function tapTile(id){
   if(slot === undefined) return;
   t.used = true;
   Q.fill[slot] = t.ch;
+  Q.entry.push({slot:slot, tile:t.id});
+  Q.cursor = Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
+  if(Q.cursor === undefined) Q.cursor = null;
   soundTap();
   drawSlots();
   drawTiles();
+  popSlot(slot, String(t.ch).toLowerCase() === String(Q.w[slot]).toLowerCase());
   afterFill();
 }
 function tapKey(ch){
@@ -1514,9 +1580,32 @@ function tapKey(ch){
   const slot = Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
   if(slot === undefined) return;
   Q.fill[slot] = String(ch).toLowerCase();
+  Q.entry.push({slot:slot, tile:null});
+  Q.cursor = Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
+  if(Q.cursor === undefined) Q.cursor = null;
   soundTap();
   drawSlots();
+  popSlot(slot, String(ch).toLowerCase() === String(Q.w[slot]).toLowerCase());
   afterFill();
+}
+/* 🧽 지우기 : 마지막에 채운 칸 하나만 뒤로 지워요 (한 번 더 누르면 그 전 칸도) */
+function eraseOne(){
+  if(!Q || Q.done || lock) return false;
+  if(!Q.entry.length){
+    toast("지울 글자가 없어요 🙂", 1000);
+    return false;
+  }
+  const last = Q.entry.pop();
+  Q.fill[last.slot] = null;
+  if(last.tile){
+    const t = Q.tiles.filter(function(x){ return x.id === last.tile; })[0];
+    if(t) t.used = false;         /* 보기 타일도 다시 살아나요 */
+  }
+  Q.cursor = last.slot;          /* 커서도 방금 지운 칸으로 */
+  soundTap();
+  drawSlots();
+  drawTiles();
+  return true;
 }
 function checkAnswer(){
   const guess = Q.w.split("").map(function(c, i){
@@ -1528,6 +1617,8 @@ function checkAnswer(){
 function clearFills(){
   Q.order.forEach(function(i){ Q.fill[i] = null; });
   Q.tiles.forEach(function(t){ t.used = false; });
+  Q.entry = [];
+  Q.cursor = null;
   drawSlots();
   drawTiles();
 }
@@ -1539,10 +1630,10 @@ function onWrong(){
   soundSoft();
   const sl = $("#slots");
   sl.classList.add("shake");
-  toast(Q.mistakes === 1 ? "음~ 다시 한 번 해볼까? 🙂" : "괜찮아! 💡 소리 힌트를 들어보고 다시 해봐 💛", 1600);
+  toast("빨간 글자는 🧽 지우기로 지우고 다시 골라 봐 🙂", 1900);
   setTimeout(function(){
     sl.classList.remove("shake");
-    clearFills();          // 정답은 절대 보여주지 않아요. 스스로 다시!
+    /* 채운 글자는 그대로 둬요 : 맞은 칸은 초록, 틀린 칸만 빨강 → 지우기로 고쳐요 */
     lock = false;
     speak(Q.w, 0.64);
   }, 640);
@@ -1662,7 +1753,7 @@ $("#btnHint").addEventListener("click", function(){
 });
 $("#btnClear").addEventListener("click", function(){
   if(!Q || Q.done) return;
-  clearFills();
+  eraseOne();
 });
 $("#btnSpeak").addEventListener("click", function(){
   if(!Q) return;
@@ -1818,6 +1909,7 @@ if(window.matchMedia){
 window.PHONICS_DEBUG = {
   PH:PH, PHONO:PHONO, map:phMap, units:phUnits, check:phCheck,
   play:playPhoneme, tts:PH_TTS, ttsFor:ttsFor, utterance:makeUtter,
+  erase:eraseOne, tapTile:tapTile, tapKey:tapKey,
   layout:function(){ return Q ? Q.layout : null; },
   state:function(){ return Q; }, G:function(){ return G; }, load:function(){ loadQuestion(); }
 };
