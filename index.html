@@ -67,7 +67,7 @@
   }
   /* 몽글몽글 구름 */
   .bgcloud{position:fixed; width:74px; height:26px; border-radius:999px; background:rgba(255,255,255,.9);
-    pointer-events:none; z-index:0; filter:drop-shadow(0 4px 10px rgba(183,155,230,.18));
+    pointer-events:none; z-index:0; box-shadow:0 4px 10px rgba(183,155,230,.18);
     animation:clouddrift 22s ease-in-out infinite alternate;}
   .bgcloud::before, .bgcloud::after{content:""; position:absolute; background:inherit; border-radius:50%;}
   .bgcloud::before{width:36px; height:36px; left:11px; top:-17px;}
@@ -371,20 +371,28 @@
     .tip{display:none;}
 
     .reward{top:50%;}
-    .toast{top:calc(2px + env(safe-area-inset-top)); bottom:auto; font-size:15px; padding:9px 16px;}
     .panel{max-width:620px; padding:14px 18px calc(14px + env(safe-area-inset-bottom));}
   }
+  /* 화면 안내 말풍선 : 폰과 같은 크기감, 태블릿(넓은 화면)에서는 커지지 않게 상한을 둡니다 */
   .toast{position:absolute; left:50%; bottom:calc(92px + env(safe-area-inset-bottom)); transform:translate(-50%,0) scale(.9);
-    z-index:60; background:rgba(62,31,74,.94); color:#fff; font-weight:900; font-size:16px; padding:11px 20px;
-    border-radius:18px; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; max-width:88%;
-    text-align:center; line-height:1.35;}
+    z-index:60; background:rgba(62,31,74,.94); color:#fff; font-weight:800;
+    font-size:15px; padding:9px 16px; border-radius:16px; opacity:0; pointer-events:none;
+    transition:opacity .2s, transform .2s;
+    width:max-content; min-width:0; max-width:min(86vw, 360px); box-sizing:border-box;
+    text-align:center; line-height:1.32; word-break:keep-all; overflow-wrap:break-word;}
   .toast.on{opacity:1; transform:translate(-50%,0) scale(1);}
   .toast.good{background:rgba(37,113,74,.95);}
 
+  /* 새 문제로 바뀔 때 한 번 부드럽게 그려지면서, WebKit이 반드시 새 프레임을 그리게 해요 */
+  @keyframes freshen{from{opacity:.62;} to{opacity:1;}}
+  .freshen{animation:freshen .2s ease-out both;}
+
   /* 보상 — 정답! + 별 폭죽 */
-  #fx{position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:50;}
-  .star{position:absolute; left:50%; top:44%; line-height:1; will-change:transform,opacity;
-    filter:drop-shadow(0 2px 4px rgba(200,154,46,.45));
+  #fx{position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:50;
+    contain:layout style paint;}
+  #fx:empty{display:none;}          /* 파티클이 없을 때는 레이어 자체를 만들지 않아요 (iPad WebKit 화면 멈춤 방지) */
+  .star{position:absolute; left:50%; top:44%; line-height:1; transform:translate(-50%,-50%);
+    text-shadow:0 2px 3px rgba(200,154,46,.35);   /* will-change/filter:drop-shadow 대신 text-shadow */
     animation:starburst var(--dur,1s) cubic-bezier(.12,.66,.25,1) forwards;}
   @keyframes starburst{
     0%{transform:translate(-50%,-50%) scale(.15) rotate(0deg); opacity:0;}
@@ -396,8 +404,12 @@
   .reward{position:absolute; left:50%; top:calc(50% + 46px); transform:translate(-50%,-50%) scale(.6); z-index:55;
     background:linear-gradient(180deg,#FFFFFF 0%,#FFF8FF 62%,#F4F9FF 100%); border:3px solid #DDBFF5; border-radius:24px;
     padding:12px 26px 13px; text-align:center; box-shadow:0 10px 24px rgba(126,93,176,.24);
-    opacity:0; pointer-events:none; transition:opacity .2s;}
-  .reward.on{opacity:1; transform:translate(-50%,-50%) scale(1); animation:rewardpop .52s cubic-bezier(.2,1.45,.4,1);}
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .18s ease, visibility 0s linear .18s;}
+  /* 닫을 때는 opacity 뿐 아니라 visibility 까지 확실히 꺼서 아래 레이어를 다시 그리게 해요 */
+  .reward.on{opacity:1; visibility:visible; transform:translate(-50%,-50%) scale(1);
+    transition:opacity .12s ease, visibility 0s linear 0s;
+    animation:rewardpop .52s cubic-bezier(.2,1.45,.4,1);}
   @keyframes rewardpop{0%{transform:translate(-50%,-50%) scale(.4) rotate(-6deg);}
     60%{transform:translate(-50%,-50%) scale(1.12) rotate(2deg);}
     100%{transform:translate(-50%,-50%) scale(1) rotate(0);}}
@@ -434,6 +446,23 @@
   .help-list li{margin-bottom:9px; padding-left:26px; position:relative;}
   .help-list li::before{content:"✦"; position:absolute; left:6px; color:#B79BE6; font-size:15px; top:0;}
   .tiny{font-size:12px; color:var(--plum2); font-weight:700; text-align:center; margin:6px 0 10px; line-height:1.4;}
+
+  /* ---------- 팝업 위치/크기 ----------
+     반드시 위의 기본 규칙(.toast·.reward·.panel) 뒤에 둡니다 — 같은 선택자는 나중 규칙이 이기기 때문이에요.
+     가로 화면에서는 top 만 남기고 bottom 을 auto 로 꺼야, 위·아래가 동시에 늘어나
+     화면을 덮는 거대한 까만 박스(아이패드에서 보이던 증상)가 되지 않습니다. */
+  @media (orientation:landscape){
+    .toast{top:calc(2px + env(safe-area-inset-top)); bottom:auto;}
+    .reward{top:50%;}
+  }
+  /* 태블릿(아이패드) : 팝업 글자·폭 상한 (화면 폭을 따라 커지지 않게) */
+  @media (min-width:700px){
+    .toast{font-size:14px; padding:8px 14px; border-radius:14px;
+      max-width:min(46vw, 320px); line-height:1.3;}
+    .reward{padding:12px 24px 13px;}
+    .reward .txt{font-size:clamp(26px,4.2vh,34px);}
+    .panel{max-width:min(560px, 92vw);}
+  }
   /* 가로 + 아주 낮은 화면 (390 높이 등) */
   @media (orientation:landscape) and (max-height:430px){
     .topbub{--h:76px;}
@@ -1299,6 +1328,7 @@ function show(id){
   $$(".screen").forEach(function(s){ s.classList.remove("on"); });
   $("#"+id).classList.add("on");
   if(id === "scr-home") renderHome();
+  if(id === "scr-game") forceRepaint($("#scr-game .gmain"));
 }
 let toastTimer = null;
 function toast(msg, ms, good){
@@ -1308,6 +1338,32 @@ function toast(msg, ms, good){
   el.classList.add("on");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(function(){ el.classList.remove("on"); }, ms || 1400);
+}
+
+/* =========================================================
+   iPad Safari(WebKit) 화면 멈춤 방지 도우미
+   — 로직·소리는 넘어갔는데 화면만 예전 프레임에 멈춰 있다가
+     앱을 내렸다 올리면 그제서야 바뀌는 현상을 막아요.
+   ========================================================= */
+/* 별 폭죽 DOM 을 완전히 비웁니다 (남은 파티클 레이어가 다음 화면을 가리는 것 방지) */
+function clearFx(){
+  const fx = $("#fx");
+  if(fx && fx.firstChild) fx.innerHTML = "";
+}
+/* 새 DOM 을 그린 뒤 브라우저가 반드시 새 프레임을 그리게 한 번 밀어줍니다 */
+function forceRepaint(el){
+  if(!el) return;
+  try{
+    el.classList.remove("freshen");
+    void el.offsetWidth;               /* 스타일·레이아웃 확정 */
+    el.classList.add("freshen");       /* 짧은 페이드 = 확실한 리페인트 */
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        void el.offsetHeight;
+        setTimeout(function(){ el.classList.remove("freshen"); }, 260);
+      });
+    });
+  }catch(e){}
 }
 
 /* =========================================================
@@ -1648,6 +1704,11 @@ function loadQuestion(){
   const w = item.w;
   const mode = G.mode;
 
+  /* 이전 문제의 폭죽·보상 오버레이가 남아 새 화면을 가리지 않게 먼저 정리 */
+  clearFx();
+  const rwEl = $("#reward");
+  if(rwEl) rwEl.classList.remove("on");
+
   let hiddenIdx;
   if(mode === "fill"){
     const seed = hashStr(dayKey() + "|" + (G.src.type === "day" ? G.src.day : G.src.type) + "|" + w + "|" + G.round);
@@ -1690,6 +1751,9 @@ function loadQuestion(){
   drawSlots();
   drawTiles();
   lock = false;
+  /* iPad Safari(WebKit) : 새 문제 DOM 을 그렸는데도 예전 프레임에 멈춰 있는 경우가 있어
+     레이아웃을 확정하고 강제로 한 프레임 그리게 밀어줍니다 */
+  forceRepaint($("#scr-game .gmain"));
   setTimeout(function(){ speak(w, 0.88); }, 240);
 }
 
@@ -1894,21 +1958,39 @@ function onCorrect(){
   $("#slots").classList.add("good");
   $("#progFill").style.width = ((G.i + 1) / G.total * 100) + "%";
   soundGood();
-  speak(Q.w, 0.88, "Yay!");
   showReward();
-  setTimeout(function(){
-    G.i++;
-    if(G.src.type === "day"){
-      save.pos[G.src.day] = (G.i >= G.total) ? 0 : G.i;
-      persist();
+  /* 소리(speechSynthesis)는 화면 전환과 분리해서 따로 — 목소리 엔진이 시작되는 동안
+     다음 화면 렌더링이 막히지 않게 살짝 뒤로 미뤄요 */
+  if(advTimer){ clearTimeout(advTimer); advTimer = null; }
+  setTimeout(function(){ if(!Q || !Q.done) return; speak(Q.w, 0.88, "Yay!"); }, 90);
+  /* 고정 시간으로 반드시 다음 문제로 넘어가요 (목소리·오디오 상태와 무관) */
+  advTimer = setTimeout(function(){
+    advTimer = null;
+    try{
+      clearFx();                              /* 폭죽 DOM 깔끔히 비우기 */
+      const r = $("#reward");
+      if(r) r.classList.remove("on");        /* 보상 오버레이 확실히 닫기(visibility 까지) */
+      G.i++;
+      if(G.src.type === "day"){
+        save.pos[G.src.day] = (G.i >= G.total) ? 0 : G.i;
+        persist();
+      }
+      if(G.src.type === "final"){
+        save.final.pos = (G.i >= G.total) ? 0 : G.i;
+        persist();
+      }
+      if(G.i >= G.total) endGame();
+      else loadQuestion();
+    }catch(e){
+      /* 어떤 이유로든 예외가 나도 화면이 멈추지 않게 한 번 더 시도 */
+      try{
+        clearFx();
+        const r2 = $("#reward"); if(r2) r2.classList.remove("on");
+        loadQuestion();
+        forceRepaint($("#scr-game .gmain"));
+      }catch(e2){}
     }
-    if(G.src.type === "final"){
-      save.final.pos = (G.i >= G.total) ? 0 : G.i;
-      persist();
-    }
-    if(G.i >= G.total) endGame();
-    else loadQuestion();
-  }, 1750);
+  }, 1700);
 }
 
 function showReward(){
@@ -1920,16 +2002,19 @@ function showReward(){
   void r.offsetWidth;
   r.classList.add("on");
   starBurst();
-  setTimeout(function(){ r.classList.remove("on"); }, 1550);
+  if(rwTimer) clearTimeout(rwTimer);
+  rwTimer = setTimeout(function(){ rwTimer = null; r.classList.remove("on"); }, 1500);
 }
+let advTimer = null, rwTimer = null;
 
 /* ---------- 별 폭죽 ---------- */
 function starBurst(){
   const fx = $("#fx");
   if(!fx) return;
+  clearFx();                       /* 이전 폭죽이 남아 있으면 먼저 비워요 (iPad 레이어 누적 방지) */
   const icons = ["⭐","✨","🌟","💫"];
   const popIcons = ["⭐","🌟","✨","💫","🎉","💖"];
-  const N = 40;
+  const N = 16;                    /* 40 → 16 : GPU 레이어 수를 줄여 iPad Safari 멈춤 방지 */
   for(let i=0;i<N;i++){
     const s = document.createElement("span");
     s.className = "star";
@@ -2070,6 +2155,7 @@ function endGame(){
   else { blankBtn.style.display = "none"; }
 
   $("#result").classList.add("on");
+  forceRepaint($("#result"));
   notes([659, 784, 988, 1319], "sine", 0.1);
 }
 
@@ -2128,6 +2214,7 @@ function relayout(){
   if(JSON.stringify(Q.layout) === prev) return;
   drawSlots();
   drawTiles();
+  forceRepaint($("#scr-game .gmain"));
 }
 function scheduleRelayout(ms){
   clearTimeout(relayoutTimer);
@@ -2135,6 +2222,42 @@ function scheduleRelayout(ms){
 }
 window.addEventListener("resize", function(){ scheduleRelayout(120); });
 window.addEventListener("orientationchange", function(){ scheduleRelayout(280); });
+
+/* 탭을 내렸다 올리거나(사파리 최소화) 앱을 전환했다 돌아오면,
+   현재 문제를 그대로 다시 그려서 화면과 상태가 엇갈리지 않게 해요 */
+function refreshVisibleGame(){
+  if(!Q || Q.done) return;
+  if(!$("#scr-game") || !$("#scr-game").classList.contains("on")) return;
+  try{
+    drawSlots();
+    drawTiles();
+    forceRepaint($("#scr-game .gmain"));
+  }catch(e){}
+}
+document.addEventListener("visibilitychange", function(){
+  if(!document.hidden) setTimeout(refreshVisibleGame, 60);
+});
+window.addEventListener("pageshow", function(e){
+  if(e && e.persisted) setTimeout(refreshVisibleGame, 60);
+});
+
+/* 안전장치 : 화면에 보이는 문제와 실제 상태가 어긋나 있으면 스스로 다시 그려요
+   (iPad 사파이에서 화면만 예전 상태에 멈춘 것처럼 보일 때 자동 복구) */
+setInterval(function(){
+  try{
+    if(!G || !Q || Q.done) return;
+    const scr = $("#scr-game");
+    if(!scr || !scr.classList.contains("on")) return;
+    const gc = $("#gcount"), slots = $("#slots");
+    if(!gc || !slots) return;
+    const want = (G.i + 1) + "/" + G.total;
+    if(gc.textContent !== want || slots.children.length !== Q.w.length){
+      drawSlots();
+      drawTiles();
+      forceRepaint($("#scr-game .gmain"));
+    }
+  }catch(e){}
+}, 1500);
 if(window.matchMedia){
   try{
     const mq = window.matchMedia("(orientation:landscape)");
