@@ -82,21 +82,26 @@
 
   button{font-family:inherit; color:inherit; border:none; background:none; cursor:pointer;}
 
-  /* ---------- 장식 ---------- */
-  .bunting{display:flex; justify-content:center; gap:7px; padding-top:2px;}
-  .bunting i{width:0; height:0; border-left:8px solid transparent; border-right:8px solid transparent; border-top:15px solid #FFB7D5;}
-  .bunting i:nth-child(5n+1){border-top-color:#FFB7D5;}
-  .bunting i:nth-child(5n+2){border-top-color:#FFD9A0;}
-  .bunting i:nth-child(5n+3){border-top-color:#F7C6E3;}
-  .bunting i:nth-child(5n+4){border-top-color:#A9DDF7;}
-  .bunting i:nth-child(5n+5){border-top-color:#CDB8F5;}
+  /* ---------- 장식 : 상단에서 퐁퐁퐁 샘솟는 아주 작은 파스텔 하트 버블 (캐노피·가랜드·무지개 아치 없음) ---------- */
+  .topbub{position:absolute; left:0; right:0; top:0; --h:clamp(92px,13vh,112px); height:var(--h);
+    pointer-events:none; z-index:0; overflow:hidden;}
+  .topbub .hb{position:absolute; left:var(--x,50%); bottom:-3px; width:var(--s,9px); height:var(--s,9px);
+    overflow:visible; opacity:0; will-change:transform,opacity;
+    filter:drop-shadow(0 0 1.2px rgba(255,255,255,1)) drop-shadow(0 1px 2px rgba(160,120,205,.18));
+    animation:heartrise var(--dur,9s) linear infinite; animation-delay:var(--d,0s);}
+  @keyframes heartrise{
+    0%{transform:translate3d(0,6px,0) scale(.55); opacity:0;}
+    9%{opacity:var(--op,.5);}
+    46%{transform:translate3d(var(--dx,4px),calc(var(--h,96px) * var(--rk,.7) * -0.48),0) scale(.86); opacity:var(--op,.5);}
+    80%{opacity:var(--op,.5);}
+    100%{transform:translate3d(calc(var(--dx,4px) * -1),calc(var(--h,96px) * var(--rk,.7) * -1),0) scale(1.03); opacity:0;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .topbub .hb{animation:none; opacity:.26;}
+  }
 
   /* ---------- HOME ---------- */
   .home-top{position:relative; padding:calc(6px + env(safe-area-inset-top)) 16px 4px; text-align:center;}
-  /* 은은한 파스텔 무지개 아치 (로고 뒤) */
-  .arch{position:absolute; left:50%; top:-2px; transform:translateX(-50%); width:178px; height:84px;
-    pointer-events:none; z-index:0; opacity:.9;}
-  .arch svg{display:block; width:100%; height:100%;}
   .crest{position:relative; z-index:1; display:inline-flex; align-items:center; justify-content:center; width:74px; height:74px;
     border-radius:50%; background:radial-gradient(circle at 50% 30%, #FFFDFF 0%, #FFF1FA 34%, #F3E6FF 72%, #DFF1FF 100%);
     border:3px solid #DCC8F7; box-shadow:0 6px 0 rgba(183,155,230,.30), inset 0 0 0 4px #fff;
@@ -294,10 +299,9 @@
   @media (max-height:700px) and (orientation:portrait){
     .crest{width:56px; height:56px;}
     .crest .bee{font-size:26px;}
-    .arch{width:150px; height:70px; top:-4px;}
+    .topbub{--h:84px;}
     h1{font-size:20.5px; margin-top:3px;}
     .sub{font-size:11.5px; padding:2px 10px;}
-    .bunting i{border-top-width:11px; border-left-width:6px; border-right-width:6px;}
     .days{gap:8px 11px; padding:3px 12px 5px; grid-auto-rows:auto; align-content:space-evenly;}
     .daycard{min-height:0; padding:5px 8px 6px; gap:4px;}
     .dnum{font-size:10px; padding:1px 8px;}
@@ -323,7 +327,7 @@
   /* ---------- 가로(landscape) : 위→아래 한 줄 구성 ---------- */
   @media (orientation:landscape){
     #app{max-width:1000px;}
-    .arch{display:none;}
+    .topbub{--h:clamp(64px,20vh,104px);}
     .home-top{padding-top:calc(4px + env(safe-area-inset-top));}
     .days{grid-template-columns:repeat(5,1fr); gap:12px 11px; grid-auto-rows:auto;
       padding:6px 14px 6px; align-content:center;}
@@ -429,7 +433,7 @@
   .tiny{font-size:12px; color:var(--plum2); font-weight:700; text-align:center; margin:6px 0 10px; line-height:1.4;}
   /* 가로 + 아주 낮은 화면 (390 높이 등) */
   @media (orientation:landscape) and (max-height:430px){
-    .bunting{display:none;}
+    .topbub{--h:76px;}
     .home-top{display:flex; align-items:center; justify-content:center; gap:9px; flex-wrap:nowrap;
       padding:calc(3px + env(safe-area-inset-top)) 12px 2px;}
     .crest{width:40px; height:40px; border-width:2px; box-shadow:0 3px 0 rgba(183,155,230,.30), inset 0 0 0 3px #fff;}
@@ -503,8 +507,22 @@
   <!-- ================= HOME ================= -->
   <section id="scr-home" class="screen on">
     <div class="home-top">
-      <div class="bunting"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="arch" aria-hidden="true"><svg viewBox="0 0 178 84" preserveAspectRatio="none"><g fill="none" stroke-linecap="round"><path d="M13 80a76 76 0 0 1 152 0" stroke="#FFB7D5" stroke-width="9" opacity=".55"/><path d="M25 80a64 64 0 0 1 128 0" stroke="#FFD9A0" stroke-width="9" opacity=".55"/><path d="M37 80a52 52 0 0 1 104 0" stroke="#FFF0A8" stroke-width="9" opacity=".6"/><path d="M49 80a40 40 0 0 1 80 0" stroke="#F7C6E3" stroke-width="9" opacity=".6"/><path d="M61 80a28 28 0 0 1 56 0" stroke="#A9DDF7" stroke-width="9" opacity=".65"/><path d="M73 80a16 16 0 0 1 32 0" stroke="#CDB8F5" stroke-width="9" opacity=".7"/></g></svg></div>
+      <div class="topbub" aria-hidden="true">
+        <svg width="0" height="0" focusable="false" style="position:absolute"><symbol id="hbSym" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FFFFFF" fill-opacity=".5" stroke="#FFFFFF" stroke-opacity=".9" stroke-width="3.4" stroke-linejoin="round"/><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" fill-opacity=".95" stroke="#FFFFFF" stroke-opacity=".95" stroke-width="1.5" stroke-linejoin="round"/><circle cx="8.2" cy="7.1" r="2.2" fill="#FFFFFF" fill-opacity=".95"/><circle cx="14.4" cy="6.4" r=".9" fill="#FFFFFF" fill-opacity=".6"/></symbol></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:6%;--s:8px;--dur:9.5s;--d:-0.5s;--dx:4px;--rk:.72;--op:0.73;color:#FF9FC8"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:12%;--s:11px;--dur:11s;--d:-3.4s;--dx:-3px;--rk:.86;--op:0.65;color:#C3A8F2"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:18%;--s:6px;--dur:8s;--d:-6.2s;--dx:3px;--rk:.64;--op:0.77;color:#9BD8F5"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:26%;--s:13px;--dur:12s;--d:-8.5s;--dx:5px;--rk:.92;--op:0.61;color:#FFD98F"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:33%;--s:7px;--dur:7.5s;--d:-2.1s;--dx:-2px;--rk:.58;--op:0.75;color:#FF9FC8"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:41%;--s:9px;--dur:10.5s;--d:-5.5s;--dx:4px;--rk:.78;--op:0.67;color:#9BD8F5"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:50%;--s:12px;--dur:11.5s;--d:-9.2s;--dx:-4px;--rk:.88;--op:0.61;color:#C3A8F2"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:58%;--s:7px;--dur:8.6s;--d:-1.4s;--dx:3px;--rk:.62;--op:0.73;color:#FFD98F"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:66%;--s:10px;--dur:9.8s;--d:-4.7s;--dx:-3px;--rk:.80;--op:0.67;color:#FF9FC8"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:73%;--s:6px;--dur:7.8s;--d:-7.3s;--dx:2px;--rk:.56;--op:0.77;color:#C3A8F2"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:80%;--s:12px;--dur:12.4s;--d:-2.8s;--dx:5px;--rk:.90;--op:0.61;color:#9BD8F5"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:88%;--s:8px;--dur:9.2s;--d:-6.6s;--dx:-4px;--rk:.70;--op:0.71;color:#FF9FC8"><use href="#hbSym"/></svg>
+        <svg class="hb" viewBox="0 0 24 24" style="--x:94%;--s:10px;--dur:10.8s;--d:-3.9s;--dx:-2px;--rk:.82;--op:0.65;color:#FFD98F"><use href="#hbSym"/></svg>
+      </div>
       <div class="crest"><span class="bee" style="display:inline-flex;align-items:center;justify-content:center;"><svg width="48" height="48" viewBox="0 0 128 128" aria-hidden="true"><defs><radialGradient id="beeBody" cx="40%" cy="28%" r="78%"><stop offset="0" stop-color="#FFF4B2"/><stop offset="50%" stop-color="#FFE26A"/><stop offset="100%" stop-color="#FFCF3A"/></radialGradient></defs><ellipse cx="24" cy="58" rx="21" ry="14" transform="rotate(-26 24 58)" fill="#F4EDFF" stroke="#C9B6F0" stroke-width="4"/><ellipse cx="104" cy="58" rx="21" ry="14" transform="rotate(26 104 58)" fill="#F4EDFF" stroke="#C9B6F0" stroke-width="4"/><path d="M54 58 Q48 44 40 39" stroke="#4A2A5A" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="39" cy="37" r="4.5" fill="#4A2A5A"/><path d="M74 58 Q80 44 88 39" stroke="#4A2A5A" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="89" cy="37" r="4.5" fill="#4A2A5A"/><ellipse cx="64" cy="79" rx="32" ry="25" fill="url(#beeBody)" stroke="#4A2A5A" stroke-width="4.5"/><path d="M42 92 Q64 98 86 92" stroke="#4A2A5A" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="39" cy="78" r="6.2" fill="#FF9EC4" opacity=".75"/><circle cx="89" cy="78" r="6.2" fill="#FF9EC4" opacity=".75"/><circle cx="51" cy="67" r="6.2" fill="#FFFFFF"/><circle cx="77" cy="67" r="6.2" fill="#FFFFFF"/><circle cx="52" cy="68" r="4.8" fill="#3E1F4A"/><circle cx="78" cy="68" r="4.8" fill="#3E1F4A"/><circle cx="53.8" cy="66" r="1.8" fill="#FFFFFF"/><circle cx="79.8" cy="66" r="1.8" fill="#FFFFFF"/><path d="M58 76 Q64 81 70 76" stroke="#3E1F4A" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span></div>
       <h1 class="mlp">
         <span class="pw pw-sub" data-t="Spelling Bee Prep for"><i class="spk s1" aria-hidden="true">✦</i><span class="tw">Spelling Bee Prep for</span></span>
