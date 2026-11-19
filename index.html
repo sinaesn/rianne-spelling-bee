@@ -652,12 +652,14 @@ const DAYS = [
    · 자음 : b d f g h j k l m n p r s t v w y z sh ch th th_v zh ks kw ng
    · 묵음 : silent
    규칙 : 한 글자는 그 글자의 기본 소리만 가져요 (예전처럼 i 가 schwa(어) 로 새지 않게).
-          비강세 모음도 a→애, e→에, i→이, o→아, u→어 로 적어 아이가 듣고 글자를 고를 수 있게 했어요.
+          비강세 모음도 a→애, e→에, i→이, u→어 로 적어 아이가 듣고 글자를 고를 수 있게 했어요.
+          단, o 는 실제로 /ə/ 로 약하게 나는 자리(-tion, po-, -o- 등)에서 schwa(어) 로 적어요.
+          (그래야 potato · station 이 "파테이토" "스테이숀아" 처럼 들리지 않아요.)
    표기법 : "글자=소리 글자=소리 ..." (글자를 이어붙이면 단어와 똑같아야 해요) */
 const PHONO = {
   flower:"f=f l=l ow=ow er=er",
   jacket:"j=j a=a_s ck=k e=e_s t=t",
-  potato:"p=p o=o_s t=t a=a_l t=t o=o_l",
+  potato:"p=p o=schwa t=t a=a_l t=t o=o_l",
   thick:"th=th i=i_s ck=k",
   whistle:"wh=w i=i_s s=s t=silent l=l e=silent",
   borrow:"b=b o=o_s rr=r ow=o_l",
@@ -670,11 +672,11 @@ const PHONO = {
   evolve:"e=e_s v=v o=o_s l=l v=v e=silent",
   tornado:"t=t o=or r=r n=n a=a_l d=d o=o_l",
   vaccine:"v=v a=a_s cc=k i=i_s n=n e=silent",
-  station:"s=s t=t a=a_l t=sh i=silent o=o_s n=n",
-  society:"s=s o=o_s c=s i=i_l e=e_s t=t y=e_l",
+  station:"s=s t=t a=a_l t=sh i=silent o=schwa n=n",
+  society:"s=s o=schwa c=s i=i_l e=e_s t=t y=e_l",
   ancient:"a=a_l n=n c=sh i=i_s e=silent n=n t=t",
   balance:"b=b a=a_s l=l a=a_s n=n c=s e=silent",
-  curious:"c=k u=u_l r=r i=i_s o=o_s u=silent s=s",
+  curious:"c=k u=u_l r=r i=i_s o=schwa u=silent s=s",
   measure:"m=m e=e_s a=silent s=zh u=u_s r=r e=silent",
 
   mixture:"m=m i=i_s x=ks t=ch u=u_s r=r e=silent",
@@ -683,87 +685,87 @@ const PHONO = {
   blunder:"b=b l=l u=u_s n=n d=d e=er r=r",
   recycle:"r=r e=e_l c=s y=i_l c=k l=l e=silent",
   heavier:"h=h e=e_s a=silent v=v i=i_s e=e_s r=r",
-  colorful:"c=k o=o_s l=l o=o_s r=r f=f u=u_s l=l",
-  generous:"g=j e=e_s n=n e=e_s r=r o=o_s u=silent s=s",
+  colorful:"c=k o=u_s l=l o=schwa r=r f=f u=u_s l=l",
+  generous:"g=j e=e_s n=n e=e_s r=r o=schwa u=silent s=s",
   kangaroo:"k=k a=a_s n=ng g=g a=a_s r=r oo=u_oo",
-  lemonade:"l=l e=e_s m=m o=o_s n=n a=a_l d=d e=silent",
+  lemonade:"l=l e=e_s m=m o=schwa n=n a=a_l d=d e=silent",
 
-  behavior:"b=b e=e_s h=h a=a_l v=v i=i_s o=o_s r=r",
+  behavior:"b=b e=e_s h=h a=a_l v=v i=i_s o=schwa r=r",
   dissolve:"d=d i=i_s ss=z o=o_s l=l v=v e=silent",
-  enormous:"e=e_s n=n o=or r=r m=m o=o_s u=silent s=s",
+  enormous:"e=e_s n=n o=or r=r m=m o=schwa u=silent s=s",
   pamphlet:"p=p a=a_s m=m p=p h=silent l=l e=e_s t=t",
   relieved:"r=r e=e_s l=l i=i_s e=silent v=v e=silent d=d",
   remember:"r=r e=e_s m=m e=e_s m=m b=b e=er r=r",
   hamburger:"h=h a=a_s m=m b=b u=er r=r g=g e=er r=r",
   vegetable:"v=v e=e_s g=j e=silent t=t a=a_s b=b l=l e=silent",
-  reason:"r=r e=e_l a=silent s=z o=o_s n=n",
+  reason:"r=r e=e_l a=silent s=z o=schwa n=n",
   safety:"s=s a=a_l f=f e=silent t=t y=e_l",
 
   adventure:"a=a_s d=d v=v e=e_s n=n t=ch u=u_s r=r e=silent",
-  astronaut:"a=a_s s=s t=t r=r o=o_s n=n au=aw t=t",
-  attention:"a=a_s tt=t e=e_s n=n t=sh i=silent o=o_s n=n",
+  astronaut:"a=a_s s=s t=t r=r o=schwa n=n au=aw t=t",
+  attention:"a=a_s tt=t e=e_s n=n t=sh i=silent o=schwa n=n",
   confident:"c=k o=o_s n=n f=f i=i_s d=d e=e_s n=n t=t",
   continent:"c=k o=o_s n=n t=t i=i_s n=n e=e_s n=n t=t",
-  discovery:"d=d i=i_s s=s c=k o=o_s v=v e=e_s r=r y=e_l",
-  education:"e=e_s d=d u=u_l c=k a=a_l t=sh i=silent o=o_s n=n",
+  discovery:"d=d i=i_s s=s c=k o=u_s v=v e=e_s r=r y=e_l",
+  education:"e=e_s d=d u=u_l c=k a=a_l t=sh i=silent o=schwa n=n",
   encourage:"e=e_s n=n c=k ou=er r=r a=a_s g=j e=silent",
   excellent:"e=e_s x=ks c=s e=e_s ll=l e=e_s n=n t=t",
   hurricane:"h=h u=er r=r r=r i=i_s c=k a=a_l n=n e=silent",
 
   knowledge:"k=silent n=n o=o_s w=silent l=l e=e_s d=d g=j e=silent",
   landslide:"l=l a=a_s n=n d=d s=s l=l i=i_l d=d e=silent",
-  geologist:"g=j e=e_l o=o_s l=l o=o_s g=j i=i_s s=s t=t",
+  geologist:"g=j e=e_l o=o_s l=l o=schwa g=j i=i_s s=s t=t",
   interrupt:"i=i_s n=n t=t e=e_s rr=r u=u_s p=p t=t",
   telephone:"t=t e=e_s l=l e=e_s p=p h=f o=o_l n=n e=silent",
   volunteer:"v=v o=o_s l=l u=u_s n=n t=t ee=eer r=r",
   appreciate:"a=a_s pp=p r=r e=e_l c=sh i=i_s a=a_l t=t e=silent",
-  convenient:"c=k o=o_s n=n v=v e=e_l n=n i=i_s e=e_s n=n t=t",
+  convenient:"c=k o=schwa n=n v=v e=e_l n=n i=i_s e=e_s n=n t=t",
   earthquake:"ea=er r=r th=th qu=kw a=a_l k=k e=silent",
   especially:"e=e_s s=s p=p e=e_s c=sh i=i_s a=silent ll=l y=e_l",
 
   experience:"e=e_s x=ks p=p e=e_s r=r i=i_s e=e_s n=n c=s e=silent",
   experiment:"e=e_s x=ks p=p e=e_s r=r i=i_s m=m e=e_s n=n t=t",
-  expression:"e=e_s x=ks p=p r=r e=e_s ss=sh i=silent o=o_s n=n",
+  expression:"e=e_s x=ks p=p r=r e=e_s ss=sh i=silent o=schwa n=n",
   impossible:"i=i_s m=m p=p o=o_s ss=s i=i_s b=b l=l e=silent",
-  microscope:"m=m i=i_l c=k r=r o=o_s s=s c=k o=o_l p=p e=silent",
-  mysterious:"m=m y=i_s s=s t=t e=e_l r=r i=i_s o=o_s u=silent s=s",
-  nutritious:"n=n u=u_oo t=t r=r i=i_s t=sh i=silent o=o_s u=silent s=s",
-  permission:"p=p e=er r=r m=m i=i_s ss=sh i=silent o=o_s n=n",
+  microscope:"m=m i=i_l c=k r=r o=schwa s=s c=k o=o_l p=p e=silent",
+  mysterious:"m=m y=i_s s=s t=t e=e_l r=r i=i_s o=schwa u=silent s=s",
+  nutritious:"n=n u=u_oo t=t r=r i=i_s t=sh i=silent o=schwa u=silent s=s",
+  permission:"p=p e=er r=r m=m i=i_s ss=sh i=silent o=schwa n=n",
   properties:"p=p r=r o=o_s p=p e=er r=r t=t i=i_s e=silent s=z",
-  subsection:"s=s u=u_s b=b s=s e=e_s c=k t=sh i=silent o=o_s n=n",
+  subsection:"s=s u=u_s b=b s=s e=e_s c=k t=sh i=silent o=schwa n=n",
 
   definitely:"d=d e=e_s f=f i=i_s n=n i=i_s t=t e=silent l=l y=e_l",
-  apologize:"a=a_s p=p o=o_s l=l o=o_s g=j i=i_l z=z e=silent",
+  apologize:"a=a_s p=p o=schwa l=l o=o_s g=j i=i_l z=z e=silent",
   creative:"c=k r=r e=e_l a=a_l t=t i=i_s v=v e=silent",
   important:"i=i_s m=m p=p o=or r=r t=t a=a_s n=n t=t",
   substantial:"s=s u=u_s b=b s=s t=t a=a_s n=n t=sh i=i_s a=silent l=l",
   temperature:"t=t e=e_s m=m p=p e=e_s r=r a=silent t=ch u=u_s r=r e=silent",
   concentrate:"c=k o=o_s n=n c=s e=e_s n=n t=t r=r a=a_l t=t e=silent",
-  opportunity:"o=o_s pp=p o=o_s r=r t=t u=u_oo n=n i=i_s t=t y=e_l",
+  opportunity:"o=o_s pp=p o=schwa r=r t=t u=u_oo n=n i=i_s t=t y=e_l",
   performance:"p=p e=er r=r f=f o=or r=r m=m a=a_s n=n c=s e=silent",
-  imagination:"i=i_s m=m a=a_s g=j i=i_s n=n a=a_l t=sh i=silent o=o_s n=n",
+  imagination:"i=i_s m=m a=a_s g=j i=i_s n=n a=a_l t=sh i=silent o=schwa n=n",
 
   expertise:"e=e_s x=ks p=p e=er r=r t=t i=i_s s=z e=silent",
-  evaporate:"e=e_s v=v a=a_s p=p o=o_s r=r a=a_l t=t e=silent",
-  pollution:"p=p o=o_s ll=l u=u_oo t=sh i=silent o=o_s n=n",
-  daffodils:"d=d a=a_s ff=f o=o_s d=d i=i_s l=l s=z",
+  evaporate:"e=e_s v=v a=a_s p=p o=schwa r=r a=a_l t=t e=silent",
+  pollution:"p=p o=schwa ll=l u=u_oo t=sh i=silent o=schwa n=n",
+  daffodils:"d=d a=a_s ff=f o=schwa d=d i=i_s l=l s=z",
   immediately:"i=i_s mm=m e=e_l d=d i=i_s a=a_s t=t e=silent l=l y=e_l",
   independent:"i=i_s n=n d=d e=e_s p=p e=e_s n=n d=d e=e_s n=n t=t",
   achievement:"a=a_s ch=ch i=i_s e=silent v=v e=silent m=m e=e_s n=n t=t",
-  celebration:"c=s e=e_s l=l e=e_s b=b r=r a=a_l t=sh i=silent o=o_s n=n",
+  celebration:"c=s e=e_s l=l e=e_s b=b r=r a=a_l t=sh i=silent o=schwa n=n",
   magnificent:"m=m a=a_s g=g n=n i=i_s f=f i=i_s c=s e=e_s n=n t=t",
   picturesque:"p=p i=i_s c=k t=ch u=u_s r=r e=silent s=s qu=k e=silent",
 
   architecture:"a=ar r=r ch=k i=i_s t=t e=e_s c=k t=ch u=u_s r=r e=silent",
   enthusiastic:"e=e_s n=n th=th u=u_oo s=z i=i_s a=a_s s=s t=t i=i_s c=k",
-  civilization:"c=s i=i_s v=v i=i_s l=l i=i_s z=z a=a_l t=sh i=silent o=o_s n=n",
+  civilization:"c=s i=i_s v=v i=i_s l=l i=i_s z=z a=a_l t=sh i=silent o=schwa n=n",
   perseverance:"p=p e=er r=r s=s e=e_s v=v e=e_s r=r a=a_s n=n c=s e=silent",
-  communication:"c=k o=o_s mm=m u=u_l n=n i=i_s c=k a=a_l t=sh i=silent o=o_s n=n",
-  investigation:"i=i_s n=n v=v e=e_s s=s t=t i=i_s g=g a=a_l t=sh i=silent o=o_s n=n",
-  pronunciation:"p=p r=r o=o_s n=n u=u_s n=n c=s i=i_s a=a_l t=sh i=silent o=o_s n=n",
-  unforgettable:"u=u_s n=n f=f o=o_s r=r g=g e=e_s tt=t a=a_s b=b l=l e=silent",
+  communication:"c=k o=schwa mm=m u=u_l n=n i=i_s c=k a=a_l t=sh i=silent o=schwa n=n",
+  investigation:"i=i_s n=n v=v e=e_s s=s t=t i=i_s g=g a=a_l t=sh i=silent o=schwa n=n",
+  pronunciation:"p=p r=r o=schwa n=n u=u_s n=n c=s i=i_s a=a_l t=sh i=silent o=schwa n=n",
+  unforgettable:"u=u_s n=n f=f o=schwa r=r g=g e=e_s tt=t a=a_s b=b l=l e=silent",
   responsibility:"r=r e=e_s s=s p=p o=o_s n=n s=s i=i_s b=b i=i_s l=l i=i_s t=t y=e_l",
-  transportation:"t=t r=r a=a_s n=n s=s p=p o=o_s r=r t=t a=a_l t=sh i=silent o=o_s n=n"
+  transportation:"t=t r=r a=a_s n=n s=s p=p o=o_s r=r t=t a=a_l t=sh i=silent o=schwa n=n"
 };
 
 /* 소리 목록 : k = 소리 종류, ipa = 국제음성기호 (실제로 들려줄 말은 아래 PH_TTS) */
@@ -1011,68 +1013,67 @@ function soundSoft(){
 /* =========================================================
    소리 힌트 발음 (사람 목소리 TTS)
    ========================================================= */
-/* PH 의 소리 하나하나를 '그 소리만' 나도록 적은 TTS 음절.
-   · 영어(en-US) TTS 는 "ih", "eh", "uh", "ks" 같은 짧은 음절을 "아", "케이에스"처럼
-     엉뚱하게 읽어 버려서, 단모음·대부분의 자음은 한국어(ko-KR) TTS 로 또박또박 읽어요.
-       예) i_s → "이", l → "르", ks → "크스"
-   · f/v/th/th_v/z 처럼 한국어에 없는 소리만 영어 TTS("fuh", "vuh", "thuh", "zuh") 를 써요.
-   · alt = 한국어 음성이 없는 기기에서 대신 쓸 영어 표기 (그 기기에서는 en-US 로 읽어요). */
+/* PH 의 소리 하나하나를 '그 소리만' 나도록 적은 영어(en-US) TTS 표기.
+   · 44개 전부 미국 영어(en-US) 목소리로 읽어요. 한국어(ko-KR) 음성은 하나도 쓰지 않아요.
+   · 알파벳 이름이 아니라 음가가 나도록 적었어요.
+       예) l → "luh" ("엘" 아님), ay → "ay", ks → "kuhs"
+   · 짧은 모음은 짧은 영어 낱말로 넣었어요. (TTS 가 "a"·"eh"를 "에이", "ih"를 "아",
+     "ihh"·"ehh"를 "아이에이치"처럼 글자 이름으로 읽어 버려서)
+       a_s(/æ/) → "at" · e_s(/ɛ/) → "egg" · i_s(/ɪ/) → "it"
+   · o_s(/ɑ/)는 "ah", 비강세 schwa(/ə/)는 "uh" 로 o_s 와 구분해요. */
 const PH_TTS = {
-  /* --- 모음 --- */
-  a_s:{t:"애",  lang:"ko-KR", alt:"ah"},
-  a_l:{t:"에이", lang:"ko-KR", alt:"ay"},
-  e_s:{t:"에.",  lang:"ko-KR", alt:"eh"},
-  e_l:{t:"이이", lang:"ko-KR", alt:"ee"},
-  i_s:{t:"이",  lang:"ko-KR", alt:"ih"},
-  i_l:{t:"아이", lang:"ko-KR", alt:"eye"},
-  o_s:{t:"아",  lang:"ko-KR", alt:"aw"},
-  o_l:{t:"오우", lang:"ko-KR", alt:"oh"},
-  u_s:{t:"어",  lang:"ko-KR", alt:"uh"},
-  u_l:{t:"유",  lang:"ko-KR", alt:"you"},
-  u_oo:{t:"우", lang:"ko-KR", alt:"oo"},
-  schwa:{t:"어", lang:"ko-KR", alt:"uh"},
-  er:{t:"urr", lang:"en-US"},
-  ar:{t:"are", lang:"en-US"},
-  or:{t:"or", lang:"en-US"},
-  eer:{t:"ear", lang:"en-US"},
-  aw:{t:"어",  lang:"ko-KR", alt:"aw"},
-  ow:{t:"아우", lang:"ko-KR", alt:"ow"},
-  /* --- 자음 (한국어로 정확히 나는 소리) --- */
-  b:{t:"브",  lang:"ko-KR", alt:"buh"},
-  d:{t:"드",  lang:"ko-KR", alt:"duh"},
-  g:{t:"그",  lang:"ko-KR", alt:"guh"},
-  k:{t:"크",  lang:"ko-KR", alt:"kuh"},
-  p:{t:"프",  lang:"ko-KR", alt:"puh"},
-  t:{t:"트",  lang:"ko-KR", alt:"tuh"},
-  s:{t:"쓰",  lang:"ko-KR", alt:"ss"},
-  sh:{t:"쉬", lang:"ko-KR", alt:"shh"},
-  zh:{t:"즈", lang:"ko-KR", alt:"zhuh"},
-  h:{t:"흐",  lang:"ko-KR", alt:"huh"},
-  m:{t:"음",  lang:"ko-KR", alt:"muh"},
-  n:{t:"은",  lang:"ko-KR", alt:"nuh"},
-  ng:{t:"응", lang:"ko-KR", alt:"ung"},
-  l:{t:"르",  lang:"ko-KR", alt:"luh"},
-  r:{t:"러",  lang:"ko-KR", alt:"ruh"},
-  w:{t:"워",  lang:"ko-KR", alt:"wuh"},
-  y:{t:"여",  lang:"ko-KR", alt:"yuh"},
-  j:{t:"쥐",  lang:"ko-KR", alt:"juh"},
-  ch:{t:"취", lang:"ko-KR", alt:"chuh"},
-  ks:{t:"크스", lang:"ko-KR", alt:"ks"},
-  kw:{t:"쿼", lang:"ko-KR", alt:"kwuh"},
-  /* --- 한국어에 없는 소리만 영어 TTS --- */
-  f:{t:"fuh", lang:"en-US"},
-  v:{t:"vuh", lang:"en-US"},
-  th:{t:"thuh", lang:"en-US"},
-  th_v:{t:"thuh", lang:"en-US"},
-  z:{t:"zuh", lang:"en-US"}
+  /* --- 모음 (en-US) --- */
+  a_s:{t:"at"},
+  a_l:{t:"ay"},
+  e_s:{t:"egg"},
+  e_l:{t:"ee"},
+  i_s:{t:"it"},
+  i_l:{t:"eye"},
+  o_s:{t:"ah"},
+  o_l:{t:"oh"},
+  u_s:{t:"uh"},
+  u_l:{t:"you"},
+  u_oo:{t:"oo"},
+  schwa:{t:"uh"},
+  er:{t:"urr"},
+  ar:{t:"are"},
+  or:{t:"or"},
+  eer:{t:"ear"},
+  aw:{t:"aw"},
+  ow:{t:"ow"},
+  /* --- 자음 (en-US) --- */
+  b:{t:"buh"},
+  d:{t:"duh"},
+  g:{t:"guh"},
+  k:{t:"kuh"},
+  p:{t:"puh"},
+  t:{t:"tuh"},
+  s:{t:"suh"},
+  sh:{t:"shuh"},
+  zh:{t:"zhuh"},
+  h:{t:"huh"},
+  m:{t:"mmm"},
+  n:{t:"nnn"},
+  ng:{t:"ung"},
+  l:{t:"luh"},
+  r:{t:"ruh"},
+  w:{t:"wuh"},
+  y:{t:"yuh"},
+  j:{t:"juh"},
+  ch:{t:"chuh"},
+  ks:{t:"kuhs"},
+  kw:{t:"kwah"},
+  f:{t:"fuh"},
+  v:{t:"vuh"},
+  th:{t:"thuh"},
+  th_v:{t:"thuh"},
+  z:{t:"zuh"}
 };
-/* 소리 하나 → 실제로 읽을 말과 언어 (그 언어 목소리가 없으면 alt 로 대신) */
+/* 소리 하나 → 실제로 읽을 말 (항상 미국 영어 en-US) */
 function ttsFor(id){
   const e = PH_TTS[id];
   if(!e || !e.t) return null;
-  const lang = e.lang || "en-US";
-  if(lang !== "en-US" && e.alt && !pickVoice(lang)) return {text:e.alt, lang:"en-US"};
-  return {text:e.t, lang:lang};
+  return {text:e.t, lang:"en-US"};
 }
 let lastHintAt = 0;
 /* 소리 힌트 : 사람 목소리로 파닉스 소리를 또박또박 '한 번만' */
@@ -1088,8 +1089,8 @@ function playPhoneme(id){
   if(!snd) return false;
   try{
     speechSynthesis.cancel();
-    const rate = snd.lang === "ko-KR" ? 0.92 : 0.78;
-    speechSynthesis.speak(makeUtter(snd.text, rate, 1.05, snd.lang));
+    /* 소리 하나만 깔끔하게 1회 : rate 0.78 · pitch 1.05 */
+    speechSynthesis.speak(makeUtter(snd.text, 0.78, 1.05, snd.lang));
   }catch(e){ speechNotice(); return false; }
   return true;
 }
@@ -1771,7 +1772,8 @@ $("#btnSlow").addEventListener("click", function(){
   if(!hasTTS){ toast("이 브라우저에서는 소리가 안 나와요 🙏", 2200); return; }
   if(!save.sound){ save.sound = true; persist(); updateSoundButtons(); }
   toast("🐢 천천히 다시 들려줄게요", 900);
-  speak(Q.w, 0.5);
+  /* 선생님이 아이에게 한 음절씩 또박또박 말해 주듯 아주 느리게 */
+  speak(Q.w, 0.42);
 });
 $("#btnMeanSpeak").addEventListener("click", function(){
   if(!Q) return;
