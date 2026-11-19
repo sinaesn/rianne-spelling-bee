@@ -32,7 +32,7 @@
     --sky-d:#8FD0F0;
     --butter:#FFF5CC;        /* 버터크림 */
     --butter-d:#E9C96A;
-    --mint-l:#D9FAEC;        /* 민트 */
+    --blush-l:#FFE9F5;       /* 블러시 핑크(연한 배경) */
     --cream:#FFFBF4;         /* 크림 카드 */
     --cream2:#FFF4E4;
     --gold:#F0CE72;          /* 골드 */
@@ -40,7 +40,7 @@
     --mint:#7FD3A0;
     --shadow:0 6px 0 #E7D5F3;
     --shadow-gold:0 6px 0 #E4C069;
-    --rainbow:linear-gradient(90deg,#FFB7D5 0%,#FFD9A0 22%,#FFF0A8 42%,#B7EFD2 62%,#A9DDF7 82%,#CDB8F5 100%);
+    --rainbow:linear-gradient(90deg,#FFB7D5 0%,#FFD9A0 22%,#FFF0A8 42%,#F7C6E3 62%,#A9DDF7 82%,#CDB8F5 100%);
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{height:100%; margin:0;}
@@ -51,7 +51,7 @@
       radial-gradient(150% 56% at 50% -14%, #FFD9EC 0%, rgba(255,217,236,.55) 44%, rgba(255,217,236,0) 74%),
       radial-gradient(72% 60% at 6% -8%, #E9D8FD 0%, rgba(233,216,253,0) 72%),
       radial-gradient(72% 60% at 94% -8%, #D6F0FF 0%, rgba(214,240,255,0) 72%),
-      radial-gradient(90% 50% at 50% 108%, #D9FAEC 0%, rgba(217,250,236,0) 72%),
+      radial-gradient(90% 50% at 50% 108%, #FBE3F4 0%, rgba(251,227,244,0) 72%),
       linear-gradient(178deg,#FFF9FC 0%,#FFF2F9 38%,#FBF2FF 70%,#FFF8EC 100%);
     overflow:hidden; user-select:none; -webkit-user-select:none;
     touch-action:manipulation;
@@ -87,7 +87,7 @@
   .bunting i{width:0; height:0; border-left:8px solid transparent; border-right:8px solid transparent; border-top:15px solid #FFB7D5;}
   .bunting i:nth-child(5n+1){border-top-color:#FFB7D5;}
   .bunting i:nth-child(5n+2){border-top-color:#FFD9A0;}
-  .bunting i:nth-child(5n+3){border-top-color:#B7EFD2;}
+  .bunting i:nth-child(5n+3){border-top-color:#F7C6E3;}
   .bunting i:nth-child(5n+4){border-top-color:#A9DDF7;}
   .bunting i:nth-child(5n+5){border-top-color:#CDB8F5;}
 
@@ -116,12 +116,12 @@
   @supports ((-webkit-background-clip:text) or (background-clip:text)){
     h1 .tw{-webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;}
     h1 .pw-sub .tw{background-image:linear-gradient(97deg,#7E5BD6 0%,#4FA6DD 32%,#7C57CF 64%,#B87BE2 100%);}
-    h1 .pw-name .tw{background-image:linear-gradient(97deg,#F81B76 0%,#FF4E9B 40%,#FF74AE 66%,#FFA94D 92%,#FFC24D 100%);
+    h1 .pw-name .tw{background-image:linear-gradient(97deg,#F76FB8 0%,#FF8DCB 36%,#FFACDC 60%,#E884F2 86%,#C48CF5 100%);
       background-size:132% 100%; background-position:0% 50%; animation:mlpShine 7s ease-in-out infinite;}
   }
   /* 리안 이름만 살짝 크게 + 캔디핑크 글로우 */
   h1 .pw-name{font-size:1.12em; font-weight:700; margin-left:.14em;
-    filter:drop-shadow(0 .09em .13em rgba(255,64,140,.40));}
+    filter:drop-shadow(0 .09em .13em rgba(255,140,196,.42));}
   @keyframes mlpShine{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
   /* 글자 주위 반짝이 별 */
   h1 .spk{position:absolute; z-index:2; font-style:normal; line-height:1; pointer-events:none;
@@ -142,32 +142,32 @@
 
   /* 단계 카드 = 단계 번호 + 글자 수만. 카드끼리 위아래 간격을 넉넉히 둬 배지가 절대 붙지 않게 */
   .days{flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
-    display:grid; grid-template-columns:1fr 1fr; gap:14px 12px; padding:12px 14px 10px;
-    grid-auto-rows:minmax(clamp(76px,8.6vh,90px),1fr); align-content:stretch;}
+    display:grid; grid-template-columns:1fr 1fr; gap:13px 12px; padding:6px 14px 8px;
+    grid-auto-rows:auto; align-content:space-evenly;}
   .daycard{
     position:relative; text-align:center; background:linear-gradient(180deg,#FFFFFF 0%,#FFFCFE 58%,#FFF6FC 100%);
-    border:3px solid #F2D9F0; border-radius:20px;
-    box-shadow:0 6px 0 #EBD7F3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px;
-    min-height:clamp(76px,8.6vh,90px); padding:12px 10px; transition:transform .08s;
+    border:3px solid #F2D9F0; border-radius:17px;
+    box-shadow:0 4px 0 #EBD7F3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    min-height:0; padding:7px 10px 8px; transition:transform .08s;
   }
-  .daycard:active{transform:translateY(4px); box-shadow:0 2px 0 #EBD7F3;}
-  /* 완료한 단계 = 파스텔 민트/라벤더 테두리 + 은은한 반짝이 (왕관 없음) */
-  .daycard.done{border-color:#9FE3C4; background:linear-gradient(180deg,#FFFFFF 0%,#F4FFF9 55%,#F6F1FF 100%);
-    box-shadow:0 6px 0 #C3EBD6;}
+  .daycard:active{transform:translateY(3px); box-shadow:0 1px 0 #EBD7F3;}
+  /* 완료한 단계 = 소프트 로즈핑크 테두리 + 블러시 배경 + 은은한 반짝이 (왕관 없음) */
+  .daycard.done{border-color:#F4A7D0; background:linear-gradient(180deg,#FFFFFF 0%,#FFEFF8 52%,#FBEDFF 100%);
+    box-shadow:0 4px 0 #F5D3E7, inset 0 0 0 1.5px rgba(221,168,242,.42);}
   .daycard.done::after{content:"✨"; position:absolute; right:9px; top:7px; font-size:12px; opacity:.8; line-height:1;
     filter:drop-shadow(0 1px 0 rgba(183,155,230,.35));}
   .dnum{font-size:12px; font-weight:900; color:#A4447A; letter-spacing:.2px; line-height:1.25;
     background:linear-gradient(135deg,#FFE1EF,#FFF0F8); border-radius:999px; padding:2px 10px; flex:0 0 auto;}
   .daycard:nth-child(4n+2) .dnum{color:#6B4C9B; background:linear-gradient(135deg,#EFE4FF,#F8F2FF);}
   .daycard:nth-child(4n+3) .dnum{color:#2F6E92; background:linear-gradient(135deg,#DFF2FF,#F0FAFF);}
-  .daycard:nth-child(4n+4) .dnum{color:#2C7C5A; background:linear-gradient(135deg,#DDFBEC,#F1FEF8);}
+  .daycard:nth-child(4n+4) .dnum{color:#8E6A32; background:linear-gradient(135deg,#FFF1CD,#FFFAE8);}
   .drange{font-size:clamp(19px,4.7vw,23px); font-weight:900; line-height:1.05; color:var(--plum);
     letter-spacing:-.4px; white-space:nowrap;}
   .dbar{width:100%; max-width:98px; height:5px; border-radius:99px; background:#F5E7F6; overflow:hidden; flex:0 0 auto;}
   .dbar.off{visibility:hidden;}
   .dbar i{display:block; height:100%; background:linear-gradient(90deg,#FFB7D5,#CDB8F5,#A9DDF7); border-radius:99px;}
 
-  /* 하단 2열 : 파이널 리뷰 · 틀린 단어 / 소리 · 사용법 — 파이널 리뷰가 한 줄을 다 차지하지 않게 */
+  /* 하단 2열 : 최종 보스 · 틀린 단어 / 소리 · 사용법 — 최종 보스 버튼이 한 줄을 다 차지하지 않게 */
   .homefoot{display:grid; grid-template-columns:1fr 1fr; gap:10px;
     padding:2px 14px calc(10px + env(safe-area-inset-bottom));}
   .minibtn{position:relative; display:flex; align-items:center; justify-content:center; gap:6px; min-height:40px;
@@ -179,7 +179,7 @@
   .minibtn .mt{font-size:12.5px; font-weight:900; color:var(--plum); line-height:1.15; white-space:nowrap;}
   .minibtn .ms{font-size:10.5px; font-weight:800; color:var(--plum2); line-height:1.15; white-space:nowrap;}
 
-  /* 파이널 리뷰 · 틀린 단어 = 크고 볼드한 카드 */
+  /* 최종 보스 · 틀린 단어 = 크고 볼드한 카드 */
   .minibtn.big{min-height:58px; border-width:3px; border-radius:22px; padding:10px 12px 8px; gap:9px;
     box-shadow:0 5px 0 #E7D9F6;}
   .minibtn.big .mi{font-size:22px;}
@@ -188,7 +188,7 @@
   .minibtn.big:active{transform:translateY(3px); box-shadow:0 1px 0 #E7D9F6;}
   .minibtn.final{border:3px solid transparent; box-shadow:0 5px 0 #D9C6F4; padding-bottom:15px;
     background:linear-gradient(135deg,#FFF9DE 0%,#FFEAF7 46%,#EEE4FF 100%) padding-box,
-               linear-gradient(120deg,#FFB7D5 0%,#FFD9A0 26%,#FFF0A8 46%,#B7EFD2 66%,#A9DDF7 84%,#CDB8F5 100%) border-box;}
+               linear-gradient(120deg,#FFB7D5 0%,#FFD9A0 26%,#FFF0A8 46%,#F7C6E3 66%,#A9DDF7 84%,#CDB8F5 100%) border-box;}
   .minibtn.final:active{transform:translateY(3px); box-shadow:0 1px 0 #D9C6F4;}
   .minibtn.final .mt{font-size:16px;}
   .minibtn.final .fbar{position:absolute; left:18px; right:18px; bottom:6px; height:4px; border-radius:99px; background:rgba(183,155,230,.22);}
@@ -231,7 +231,7 @@
     border:2.5px solid var(--gold); border-radius:999px; padding:6px 15px; font-weight:900;
     font-size:clamp(13px,1.9vh,16px); box-shadow:0 4px 0 #E4C069; color:var(--plum); white-space:nowrap;}
   .speak:active{transform:translateY(3px); box-shadow:none;}
-  .speak.slow{background:linear-gradient(180deg,#EAFBF2,#CFEFE0); border-color:#8FD6B2; box-shadow:0 4px 0 #86C9A6; color:#1F6B4C;}
+  .speak.slow{background:linear-gradient(180deg,#EAF7FF,#CFEFFC); border-color:#8FD0F0; box-shadow:0 4px 0 #86C4DB; color:#1F5B7A;}
   .speak.slow:active{box-shadow:none;}
 
   /* 가운데 : 단어 전체 한 줄 */
@@ -285,8 +285,8 @@
     h1{font-size:20.5px; margin-top:3px;}
     .sub{font-size:11.5px; padding:2px 10px;}
     .bunting i{border-top-width:11px; border-left-width:6px; border-right-width:6px;}
-    .days{gap:11px; padding:8px 12px 8px; grid-auto-rows:minmax(58px,1fr);}
-    .daycard{min-height:60px; padding:8px; gap:4px;}
+    .days{gap:10px 11px; padding:4px 12px 6px; grid-auto-rows:auto; align-content:space-evenly;}
+    .daycard{min-height:0; padding:6px 8px 7px; gap:4px;}
     .dnum{font-size:10.5px; padding:1px 8px;}
     .drange{font-size:18px;}
     .homefoot{gap:8px; padding-bottom:calc(8px + env(safe-area-inset-bottom));}
@@ -311,9 +311,9 @@
     #app{max-width:1000px;}
     .arch{display:none;}
     .home-top{padding-top:calc(4px + env(safe-area-inset-top));}
-    .days{grid-template-columns:repeat(5,1fr); gap:12px; grid-auto-rows:auto;
-      padding:10px 14px 8px; align-content:center;}
-    .daycard{min-height:clamp(84px,17vh,112px);}
+    .days{grid-template-columns:repeat(5,1fr); gap:12px 11px; grid-auto-rows:auto;
+      padding:6px 14px 6px; align-content:center;}
+    .daycard{min-height:clamp(66px,16vh,86px); padding:7px 9px 8px; gap:4px;}
     .drange{font-size:clamp(18px,3.2vh,26px);}
     .homefoot{grid-template-columns:1.35fr 1.15fr .8fr .8fr; gap:10px; align-items:center;
       padding-bottom:calc(8px + env(safe-area-inset-bottom));}
@@ -392,7 +392,7 @@
     padding:18px 18px calc(18px + env(safe-area-inset-bottom)); box-shadow:0 -8px 26px rgba(126,93,176,.18);
     animation:up .25s ease-out; max-height:93%; overflow-y:auto;}
   .panel::before{content:""; position:absolute; left:0; right:0; top:0; height:6px;
-    background:linear-gradient(90deg,#FFB7D5,#FFD9A0,#FFF0A8,#B7EFD2,#A9DDF7,#CDB8F5); opacity:.85; pointer-events:none;}
+    background:linear-gradient(90deg,#FFB7D5,#FFD9A0,#FFF0A8,#F7C6E3,#A9DDF7,#CDB8F5); opacity:.85; pointer-events:none;}
   @keyframes up{from{transform:translateY(30px); opacity:.4;} to{transform:translateY(0); opacity:1;}}
   #rEmoji{text-align:center; font-size:34px; line-height:1.1; margin-bottom:2px;}
   .panel h2{margin:0 0 2px; font-size:22px; text-align:center; color:var(--plum);}
@@ -420,8 +420,8 @@
     h1{font-size:28px; margin:0; letter-spacing:0; white-space:nowrap; line-height:1.1;}
     h1 .spk.s1{display:none;}  /* 로고와 붙어 보이지 않게 가로 한 줄 배치에선 숨김 */
     .sub{margin:0; font-size:10.5px; padding:2px 9px; white-space:nowrap;}
-    .days{gap:11px; padding:8px 12px 6px;}
-    .daycard{padding:10px 8px; min-height:0; gap:6px;}
+    .days{gap:9px 11px; padding:2px 12px 4px;}
+    .daycard{padding:6px 8px 7px; min-height:0; gap:4px;}
     .dnum{font-size:10.5px; padding:1px 8px;}
     .drange{font-size:clamp(17px,4.6vh,21px);}
     .dbar{height:4px; max-width:80px;}
@@ -465,7 +465,9 @@
     #rEmoji{font-size:26px; line-height:1;}
   }
 
-
+  /* 최종 보스 버튼 : 이름이 길어져 어떤 화면 크기에서도 한 줄에 들어가게 */
+  .minibtn.final .mt.final-t{font-size:clamp(11.9px,3.55vw,14px); letter-spacing:-.35px; line-height:1.25; white-space:nowrap;}
+  .minibtn.final .final-t .boss-n{color:#C4568C; font-weight:900;}
 </style>
 </head>
 <body>
@@ -483,7 +485,7 @@
   <section id="scr-home" class="screen on">
     <div class="home-top">
       <div class="bunting"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="arch" aria-hidden="true"><svg viewBox="0 0 178 84" preserveAspectRatio="none"><g fill="none" stroke-linecap="round"><path d="M13 80a76 76 0 0 1 152 0" stroke="#FFB7D5" stroke-width="9" opacity=".55"/><path d="M25 80a64 64 0 0 1 128 0" stroke="#FFD9A0" stroke-width="9" opacity=".55"/><path d="M37 80a52 52 0 0 1 104 0" stroke="#FFF0A8" stroke-width="9" opacity=".6"/><path d="M49 80a40 40 0 0 1 80 0" stroke="#B7EFD2" stroke-width="9" opacity=".6"/><path d="M61 80a28 28 0 0 1 56 0" stroke="#A9DDF7" stroke-width="9" opacity=".65"/><path d="M73 80a16 16 0 0 1 32 0" stroke="#CDB8F5" stroke-width="9" opacity=".7"/></g></svg></div>
+      <div class="arch" aria-hidden="true"><svg viewBox="0 0 178 84" preserveAspectRatio="none"><g fill="none" stroke-linecap="round"><path d="M13 80a76 76 0 0 1 152 0" stroke="#FFB7D5" stroke-width="9" opacity=".55"/><path d="M25 80a64 64 0 0 1 128 0" stroke="#FFD9A0" stroke-width="9" opacity=".55"/><path d="M37 80a52 52 0 0 1 104 0" stroke="#FFF0A8" stroke-width="9" opacity=".6"/><path d="M49 80a40 40 0 0 1 80 0" stroke="#F7C6E3" stroke-width="9" opacity=".6"/><path d="M61 80a28 28 0 0 1 56 0" stroke="#A9DDF7" stroke-width="9" opacity=".65"/><path d="M73 80a16 16 0 0 1 32 0" stroke="#CDB8F5" stroke-width="9" opacity=".7"/></g></svg></div>
       <div class="crest"><span class="bee" style="display:inline-flex;align-items:center;justify-content:center;"><svg width="48" height="48" viewBox="0 0 128 128" aria-hidden="true"><defs><radialGradient id="beeBody" cx="40%" cy="28%" r="78%"><stop offset="0" stop-color="#FFF4B2"/><stop offset="50%" stop-color="#FFE26A"/><stop offset="100%" stop-color="#FFCF3A"/></radialGradient></defs><ellipse cx="24" cy="58" rx="21" ry="14" transform="rotate(-26 24 58)" fill="#F4EDFF" stroke="#C9B6F0" stroke-width="4"/><ellipse cx="104" cy="58" rx="21" ry="14" transform="rotate(26 104 58)" fill="#F4EDFF" stroke="#C9B6F0" stroke-width="4"/><path d="M54 58 Q48 44 40 39" stroke="#4A2A5A" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="39" cy="37" r="4.5" fill="#4A2A5A"/><path d="M74 58 Q80 44 88 39" stroke="#4A2A5A" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="89" cy="37" r="4.5" fill="#4A2A5A"/><ellipse cx="64" cy="79" rx="32" ry="25" fill="url(#beeBody)" stroke="#4A2A5A" stroke-width="4.5"/><path d="M42 92 Q64 98 86 92" stroke="#4A2A5A" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="39" cy="78" r="6.2" fill="#FF9EC4" opacity=".75"/><circle cx="89" cy="78" r="6.2" fill="#FF9EC4" opacity=".75"/><circle cx="51" cy="67" r="6.2" fill="#FFFFFF"/><circle cx="77" cy="67" r="6.2" fill="#FFFFFF"/><circle cx="52" cy="68" r="4.8" fill="#3E1F4A"/><circle cx="78" cy="68" r="4.8" fill="#3E1F4A"/><circle cx="53.8" cy="66" r="1.8" fill="#FFFFFF"/><circle cx="79.8" cy="66" r="1.8" fill="#FFFFFF"/><path d="M58 76 Q64 81 70 76" stroke="#3E1F4A" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span></div>
       <h1 class="mlp">
         <span class="pw pw-sub" data-t="Spelling Bee Prep for"><i class="spk s1" aria-hidden="true">✦</i><span class="tw">Spelling Bee Prep for</span></span>
@@ -495,7 +497,7 @@
     <div class="homefoot">
       <button class="minibtn big final" id="btnFinal">
         <span class="mi">🦄</span>
-        <span class="mlab"><span class="mt">파이널 리뷰</span><span class="ms" id="finalSub">100단어</span></span>
+        <span class="mlab"><span class="mt final-t">최종 보스! <span class="boss-n">100단어</span></span><span class="ms" id="finalSub">1~10단계 총복습</span></span>
         <span class="fbar" id="finalBar" style="display:none"><i></i></span>
       </button>
       <button class="minibtn big wrong" id="btnWrong"><span class="mi">💛</span><span class="mlab"><span class="mt">틀린 단어 <span id="wrongCnt">0</span></span><span class="ms">다시 풀기</span></span></button>
@@ -564,7 +566,7 @@
         <span class="ico">🔔</span>
         <span><span class="t">실전연습! 골든벨</span><br><span class="s">소리만 듣고 A~Z 전체 타일에서 골라요</span></span>
       </button>
-      <button class="modebtn" id="btnResume" style="display:none; border-color:#9AD9B6; box-shadow:0 5px 0 #7CBE9B;">
+      <button class="modebtn" id="btnResume" style="display:none; border-color:#F4A7D0; box-shadow:0 5px 0 #F0C9DF;">
         <span class="ico">▶️</span>
         <span><span class="t" id="resumeT">이어서 하기</span><br><span class="s">지난번에 하던 곳부터 계속해요</span></span>
       </button>
@@ -602,7 +604,7 @@
         <li><b>영어 뜻</b> — 그림 아래 짧은 영어 설명이 나와요. 뜻 옆 <b>🔊</b>를 누르면 뜻을 읽어줘요.</li>
         <li><b>💡 소리 힌트</b> — 다음 빈칸에 들어갈 글자의 <b>소리만</b> 사람 목소리로 또박또박 들려줘요. 글자는 알려주지 않아요! a=애, e=에, i=이, o=아처럼 <b>그 글자의 소리</b>로 들려줘요.</li>
         <li><b>💛 틀린 단어</b> — 틀렸던 단어만 모아서 다시 풀 수 있어요.</li>
-        <li><b>🦄 파이널 리뷰</b> — 100개 단어 전체를 랜덤 순서로. 중간에 멈춰도 이어서 할 수 있어요.</li>
+        <li><b>🦄 최종 보스! 100단어</b> — 1~10단계 100개 단어 전체를 랜덤 순서로. 중간에 멈춰도 이어서 할 수 있어요.</li>
       </ul>
       <p class="tiny">소리가 안 나오면 기기 볼륨을 올리고 화면을 한 번 눌러 주세요.<br>홈 화면에 추가하면 앱처럼 쓸 수 있어요.</p>
       <button class="btn primary" id="helpClose" style="width:100%">알겠어요</button>
@@ -1033,7 +1035,8 @@ function speak(text, rate, after){
     speechSynthesis.cancel();
     speechSynthesis.speak(makeUtter(text, rate));
     if(after){
-      const y = makeUtter(after, 1.02, 1.55);
+      /* "Yay!" 는 짧고 신나게 한 방에 — 조금 빠르고 밝은 톤 */
+      const y = makeUtter(after, 1.22, 1.38);
       speechSynthesis.speak(y);
     }
   }catch(e){ speechNotice(); }
@@ -1041,7 +1044,7 @@ function speak(text, rate, after){
 // 정답 축하 인사만 따로 (앞의 단어 소리를 끊지 않게 cancel 하지 않아요)
 function speakCheer(){
   if(!save.sound || !hasTTS) return;
-  try{ speechSynthesis.speak(makeUtter("Yay!", 1.02, 1.55)); }catch(e){}
+  try{ speechSynthesis.speak(makeUtter("Yay!", 1.22, 1.38)); }catch(e){}
 }
 
 let AC = null;
@@ -1084,29 +1087,73 @@ function tone(c, freq, type, at, dur, vol, glideTo){
     o.start(at); o.stop(at + dur + 0.03);
   }catch(e){}
 }
-/* 정답 : 밝은 팡파레 + 별 반짝임 */
+/* 정답 : 짧고 신나는 통통 튀는 팡파레 — 0.35초 안에 딲 끝나요 */
 function soundGood(){
   if(!save.sound) return;
   const c = ac(); if(!c) return;
-  const t0 = c.currentTime + 0.01;
-  [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach(function(f, i){
-    tone(c, f, "sine", t0 + i*0.075, 0.36, 0.13);
-    tone(c, f*2, "triangle", t0 + i*0.075, 0.18, 0.028);
+  const t0 = c.currentTime + 0.005;
+  /* C5 → E5 → G5 → C6 반짝 상승 아르페지오 */
+  [523.25, 659.25, 783.99, 1046.5].forEach(function(f, i){
+    tone(c, f, "triangle", t0 + i*0.052, 0.15, 0.14);
+    tone(c, f*2, "sine", t0 + i*0.052, 0.085, 0.03);
   });
-  [1046.5, 1318.5, 1567.98].forEach(function(f){
-    tone(c, f, "sine", t0 + 0.44, 0.62, 0.075);
-  });
-  [2093, 2637, 3136, 3520].forEach(function(f, i){
-    tone(c, f, "sine", t0 + 0.52 + i*0.055, 0.22, 0.032);
-  });
+  /* 마지막 반짝 두 방 — 아주 짧게 톡톡 */
+  tone(c, 1568.0, "sine", t0 + 0.175, 0.1, 0.05);
+  tone(c, 2093.0, "sine", t0 + 0.215, 0.08, 0.035);
 }
-/* 오답 : 놀라지 않는 부드러운 하강 2음 */
+/* 오답 : 아기처럼 귀엽게 "뿌~엥~" (Web Audio 합성 · 단어 소리 TTS 는 건드리지 않아요) */
 function soundSoft(){
   if(!save.sound) return;
   const c = ac(); if(!c) return;
   const t0 = c.currentTime + 0.01;
-  tone(c, 392.0, "sine", t0, 0.3, 0.1, 350);
-  tone(c, 311.1, "triangle", t0 + 0.18, 0.34, 0.075, 285);
+  try{
+    /* 1) "뿌" — 살짝 튀어오르는 짧은 어택 */
+    const a = c.createOscillator(), ag = c.createGain();
+    a.type = "triangle";
+    a.frequency.setValueAtTime(320, t0);
+    a.frequency.exponentialRampToValueAtTime(392, t0 + 0.07);
+    ag.gain.setValueAtTime(0.0001, t0);
+    ag.gain.exponentialRampToValueAtTime(0.07, t0 + 0.012);
+    ag.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.1);
+    a.connect(ag); ag.connect(c.destination);
+    a.start(t0); a.stop(t0 + 0.12);
+
+    /* 2) "에엥~" — 480 → 240Hz 로 부드럽게 내려가는 아기 투정 소리 (로우패스 + 비브라토) */
+    const lp = c.createBiquadFilter(), g = c.createGain();
+    lp.type = "lowpass"; lp.Q.value = 0.9;
+    lp.frequency.setValueAtTime(1150, t0 + 0.07);
+    lp.frequency.exponentialRampToValueAtTime(620, t0 + 0.4);
+    g.gain.setValueAtTime(0.0001, t0 + 0.07);
+    g.gain.exponentialRampToValueAtTime(0.085, t0 + 0.115);
+    g.gain.setValueAtTime(0.085, t0 + 0.28);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.41);
+    lp.connect(g); g.connect(c.destination);
+
+    const o = c.createOscillator();
+    o.type = "triangle";
+    o.frequency.setValueAtTime(480, t0 + 0.07);
+    o.frequency.exponentialRampToValueAtTime(240, t0 + 0.42);
+    const o2 = c.createOscillator();
+    o2.type = "sawtooth";
+    o2.frequency.setValueAtTime(481, t0 + 0.07);
+    o2.frequency.exponentialRampToValueAtTime(241, t0 + 0.42);
+    const g2 = c.createGain();
+    g2.gain.setValueAtTime(0.22, t0);       /* 살짝 목소리 느낌만 더하기 */
+    o2.connect(g2); g2.connect(lp);
+    o.connect(lp);
+
+    /* 살짝 떨리는 비브라토 */
+    const lfo = c.createOscillator(), lg = c.createGain();
+    lfo.type = "sine"; lfo.frequency.value = 6.2;
+    lg.gain.setValueAtTime(0, t0 + 0.07);
+    lg.gain.linearRampToValueAtTime(8, t0 + 0.16);
+    lg.gain.linearRampToValueAtTime(3, t0 + 0.42);
+    lfo.connect(lg); lg.connect(o.frequency); lg.connect(o2.frequency);
+
+    o.start(t0 + 0.07); o.stop(t0 + 0.44);
+    o2.start(t0 + 0.07); o2.stop(t0 + 0.44);
+    lfo.start(t0 + 0.07); lfo.stop(t0 + 0.44);
+  }catch(e){}
 }
 
 /* =========================================================
@@ -1249,7 +1296,7 @@ function renderHome(){
     $("#finalSub").textContent = "최고 " + save.final.best + "/100";
     $("#finalBar").style.display = "none";
   } else {
-    $("#finalSub").textContent = "100단어";
+    $("#finalSub").textContent = "1~10단계 총복습";
     $("#finalBar").style.display = "none";
   }
   $("#wrongCnt").textContent = save.wrong.length;
@@ -1291,8 +1338,8 @@ function openSheet(src){
       $("#resumeT").textContent = "이어서 하기 (" + (pos+1) + "번째 단어부터)";
     } else { resume.style.display = "none"; }
   } else if(src.type === "final"){
-    title = "🦄 파이널 리뷰";
-    sub = "100개 단어 전체 · 한 번에 다 못 해도 괜찮아요";
+    title = "🦄 최종 보스! 100단어";
+    sub = "1~10단계 100개 단어 랜덤 · 한 번에 다 못 해도 괜찮아요";
     const fp = save.final.pos || 0;
     if(fp > 0 && fp < 100){
       $("#btnResume").style.display = "";
@@ -1904,7 +1951,7 @@ function endGame(){
   } else if(G.src.type === "final"){
     const scored = G.firstTry, totalN = G.total;
     rE.textContent = "🦄";
-    rT.textContent = "파이널 리뷰 완료!";
+    rT.textContent = "최종 보스! 100단어 완료!";
     if(scored > (save.final.best || 0)){ save.final.best = scored; persist(); }
     rSub.innerHTML = "<b>" + totalN + "개 중 " + scored + "개</b>를 한 번에 맞혔어요!" +
       (save.final.best ? "<br><span style='font-size:13px'>지금까지 최고 " + save.final.best + "/" + totalN + "</span>" : "");
