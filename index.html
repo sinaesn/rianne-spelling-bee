@@ -277,15 +277,10 @@
     62%{opacity:1;}
     100%{transform:translate(calc(-50% + var(--tx,0px)), calc(-50% + var(--ty,0px))) scale(1.35) rotate(var(--rot,180deg)); opacity:0;}
   }
-  .ring{position:absolute; left:50%; top:44%; width:46px; height:46px; margin:-23px 0 0 -23px; border-radius:50%;
-    border:7px solid rgba(255,214,110,.95); animation:ringout .85s ease-out forwards;}
-  @keyframes ringout{0%{transform:scale(.25); opacity:.95;} 100%{transform:scale(7); opacity:0;}}
-  .flash{position:absolute; inset:0; animation:flashout .45s ease-out forwards;
-    background:radial-gradient(circle at 50% 44%, rgba(255,255,255,.98), rgba(255,238,180,.55) 34%, rgba(255,255,255,0) 68%);}
-  @keyframes flashout{0%{opacity:0;} 26%{opacity:.95;} 100%{opacity:0;}}
+  /* 정답 박스는 딱 1개 — 테두리 1겹 + 부드러운 그림자 1개만 (이중 박스/링/번짐 없음) */
   .reward{position:absolute; left:50%; top:calc(50% + 46px); transform:translate(-50%,-50%) scale(.6); z-index:55;
-    background:linear-gradient(180deg,#FFFFFF,#FFF2F8); border:4px solid var(--gold); border-radius:28px;
-    padding:12px 26px 13px; text-align:center; box-shadow:0 10px 0 rgba(226,177,150,.45), 0 0 0 6px rgba(255,255,255,.6);
+    background:#FFFDF9; border:3px solid var(--gold); border-radius:24px;
+    padding:12px 26px 13px; text-align:center; box-shadow:0 10px 24px rgba(62,31,74,.22);
     opacity:0; pointer-events:none; transition:opacity .2s;}
   .reward.on{opacity:1; transform:translate(-50%,-50%) scale(1); animation:rewardpop .52s cubic-bezier(.2,1.45,.4,1);}
   @keyframes rewardpop{0%{transform:translate(-50%,-50%) scale(.4) rotate(-6deg);}
@@ -365,7 +360,7 @@
     .modebtn{padding:7px 12px; margin-bottom:6px; border-radius:15px; gap:10px;}
     .modebtn .ico{font-size:22px;}
     .modebtn .t{font-size:15px;}
-    .modebtn .s{display:none;}
+    .modebtn .s{font-size:11.5px; line-height:1.12; margin-top:1px;}
     .panel .psub{margin-bottom:7px;}
     .help-list{font-size:12.5px;}
     .result-btns{flex-direction:row; flex-wrap:wrap; gap:8px; margin-top:8px;}
@@ -455,15 +450,15 @@
       <p class="psub" id="sheetSub">어떻게 연습할까요?</p>
       <button class="modebtn" data-mode="fill">
         <span class="ico">👀</span>
-        <span><span class="t">빈칸 채우기</span><br><span class="s" id="fillDesc">보이는 글자를 보고 빈칸만 채워요 (제일 쉬워요)</span></span>
+        <span><span class="t">빈칸 채우기</span><br><span class="s" id="fillDesc">보이는 글자를 보고 빈칸만 채워요</span></span>
       </button>
       <button class="modebtn" data-mode="spell">
-        <span class="ico">🐝</span>
-        <span><span class="t">스펠링 쓰기</span><br><span class="s">글자 타일을 골라 단어를 완성해요</span></span>
+        <span class="ico">🧩</span>
+        <span><span class="t">전체 빈칸 채우기</span><br><span class="s">글자 타일에서 골라 단어를 완성해요</span></span>
       </button>
       <button class="modebtn gold" data-mode="dictate">
-        <span class="ico">🎧</span>
-        <span><span class="t">듣고 쓰기 · 실전</span><br><span class="s">철자는 안 보여요! 소리만 듣고 A~Z로 써요</span></span>
+        <span class="ico">🔔</span>
+        <span><span class="t">실전연습! 골든벨</span><br><span class="s">소리만 듣고 A~Z 전체 타일에서 골라요</span></span>
       </button>
       <button class="modebtn" id="btnResume" style="display:none; border-color:#9AD9B6; box-shadow:0 5px 0 #7CBE9B;">
         <span class="ico">▶️</span>
@@ -497,8 +492,8 @@
         <li><b>👀 빈칸 채우기</b> — 빈칸에 들어갈 글자를 순서대로 눌러요. 보기 6개 중에서 골라요. 빈칸 위치는 <b>날짜마다</b> 바뀌어요.</li>
         <li><b>🟩 맞은 글자는 초록, 🟥 틀린 글자는 빨강</b> — 고르는 순간 바로 색이 바뀌어요. 빨간 글자는 지우고 다시 골라요.</li>
         <li><b>🧽 지우기</b> — 누를 때마다 마지막에 고른 글자 <b>한 칸씩</b> 뒤로 지워요. 보기 타일도 다시 살아나요.</li>
-        <li><b>🐝 스펠링 쓰기</b> — 글자 타일을 골라 단어 전체를 만들어요.</li>
-        <li><b>🎧 듣고 쓰기(실전)</b> — 철자가 안 보여요. 소리를 듣고 A~Z 키로 직접 써요. 선생님이 읽어주는 시험 연습!</li>
+        <li><b>🧩 전체 빈칸 채우기</b> — 글자 타일에서 골라 단어 전체를 완성해요.</li>
+        <li><b>🔔 실전연습! 골든벨</b> — 철자는 안 보여요. 소리만 듣고 A~Z 전체 타일에서 골라요. 선생님이 읽어주는 시험 연습!</li>
         <li><b>🔊 듣기</b> — 단어를 다시 들려줘요. <b>🐢 천천히</b>는 아주 천천히 들려줘요.</li>
         <li><b>영어 뜻</b> — 그림 아래 짧은 영어 설명이 나와요. 뜻 옆 <b>🔊</b>를 누르면 뜻을 읽어줘요.</li>
         <li><b>💡 소리 힌트</b> — 다음 빈칸에 들어갈 글자의 <b>소리만</b> 사람 목소리로 또박또박 들려줘요. 글자는 알려주지 않아요! a=애, e=에, i=이, o=아처럼 <b>그 글자의 소리</b>로 들려줘요.</li>
@@ -1185,8 +1180,6 @@ function openSheet(src){
     const d = DAYS[src.day-1];
     title = src.day + "단계";
     sub = lenRange(d.words) + " · 어떻게 연습할까요?";
-    const kind = (dayOfYear() + (save.round[src.day] || 0)) % 3;
-    $("#fillDesc").textContent = "오늘은 " + KIND_NAME[kind] + "! 빈칸 위치가 날마다 바뀌어요";
     const pos = save.pos[src.day] || 0;
     const resume = $("#btnResume");
     if(pos > 0 && pos < d.words.length){
@@ -1196,7 +1189,6 @@ function openSheet(src){
   } else if(src.type === "final"){
     title = "👑 파이널 리뷰";
     sub = "100개 단어 전체 · 한 번에 다 못 해도 괜찮아요";
-    $("#fillDesc").textContent = "오늘은 " + KIND_NAME[dayOfYear() % 3] + "! 빈칸 위치가 날마다 바뀌어요";
     const fp = save.final.pos || 0;
     if(fp > 0 && fp < 100){
       $("#btnResume").style.display = "";
@@ -1205,7 +1197,6 @@ function openSheet(src){
   } else {
     title = "💛 틀린 단어";
     sub = save.wrong.length + "개 단어만 다시 풀어요";
-    $("#fillDesc").textContent = "빈칸 위치가 날마다 바뀌어요";
     $("#btnResume").style.display = "none";
   }
   $("#sheetTitle").textContent = title;
@@ -1476,7 +1467,7 @@ function loadQuestion(){
   $("#tip").textContent =
     mode === "fill" ? ("👇 빈칸을 채워요 · 오늘은 " + KIND_NAME[G.kind]) :
     mode === "spell" ? "👇 글자를 순서대로 눌러 단어를 만들어요" :
-    "🎧 잘 듣고 A~Z 글자로 써 봐요";
+    "🔔 잘 듣고 A~Z 전체 타일에서 골라 봐요";
 
   Q.layout = computeLayout();
   drawSlots();
@@ -1719,14 +1710,6 @@ function starBurst(){
     fx.appendChild(b);
     setTimeout(function(){ b.remove(); }, 2100);
   }
-  const ring = document.createElement("span");
-  ring.className = "ring";
-  fx.appendChild(ring);
-  setTimeout(function(){ ring.remove(); }, 950);
-  const flash = document.createElement("span");
-  flash.className = "flash";
-  fx.appendChild(flash);
-  setTimeout(function(){ flash.remove(); }, 520);
 }
 
 /* ---------- 버튼 ---------- */
