@@ -1,13 +1,13 @@
 {
   "name": "Rianne's Spelling Bee",
   "short_name": "Rianne Bee",
-  "description": "👑 Rianne's Spelling Bee — 핑크 왕관 꿀벌 스펠링 게임",
+  "description": "🦄 Rianne's Spelling Bee — 파스텔 유니콘 · 노랑 꿀벌 스펠링 게임",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#FFE4F0",
-  "theme_color": "#FFD9EC",
+  "background_color": "#FFF1F9",
+  "theme_color": "#FFF1F9",
   "lang": "ko",
   "icons": [
     {
