@@ -268,6 +268,9 @@
   .slot.blank.filled.ng{background:#FFEAEC; border-color:#E4535F; color:#AE1F2C; box-shadow:0 3px 0 #F6BEC3;}
   .slot.blank.filled.ok.pop{animation:slotpop .22s ease;}
   .slot.blank.filled.ng.pop{animation:slotwrong .24s ease;}
+  /* 채운 칸은 직접 눌러 그 칸만 지울 수 있어요 */
+  .slot.blank.filled.erasable{cursor:pointer; touch-action:manipulation; -webkit-tap-highlight-color:transparent;}
+  .slot.blank.filled.erasable:active{transform:scale(.92);}
   @keyframes slotpop{0%{transform:scale(.86);}60%{transform:scale(1.06);}100%{transform:scale(1);}}
   @keyframes slotwrong{0%,100%{transform:translateX(0);}30%{transform:translateX(-3px);}65%{transform:translateX(3px);}}
   .slots.shake{animation:shake .4s;}
@@ -1023,7 +1026,10 @@ function phCheck(){
   });
   const extra = Object.keys(PHONO).filter(function(k){ return !seen[k]; });
   /* 소리 목록(PH) ↔ 실제로 들려줄 말(PH_TTS) 이 하나도 빠짐없이 이어졌는지 */
-  const ttsMissing = Object.keys(PH).filter(function(k){ return !PH_TTS[k] || !PH_TTS[k].t; });
+  const ttsMissing = Object.keys(PH).filter(function(k){
+    const e = PH_TTS[k];
+    return !e || (!e.t && !(e.parts && e.parts.length));
+  });
   const ttsExtra = Object.keys(PH_TTS).filter(function(k){ return !PH[k]; });
   return {ok:!bad.length && !missing.length && !unknown.length && !extra.length &&
              !ttsMissing.length && !ttsExtra.length,
@@ -1197,9 +1203,12 @@ function soundSoft(){
    소리 힌트 발음 (사람 목소리 TTS)
    ========================================================= */
 /* PH 의 소리 하나하나를 '그 소리만' 나도록 적은 영어(en-US) TTS 표기.
-   · 44개 전부 미국 영어(en-US) 목소리로 읽어요. 한국어(ko-KR) 음성은 하나도 쓰지 않아요.
+   · 기본은 44개 전부 미국 영어(en-US) 목소리로 읽어요.
    · 알파벳 이름이 아니라 음가가 나도록 적었어요.
-       예) l → "luh" ("엘" 아님), ay → "ay", ks → "kuhs"
+       예) l → "luh" ("엘" 아님), ay → "ay", ks → "kuh" + "suh" (parts 로 두 번)
+   · 영어 음성 엔진이 모르는 철자 뭉치("kuhs", "vuh")를 글자 이름(K-U-H-S)으로
+     읽어 버리는 일이 있어서, 소리 두 개가 이어지는 ks 는 parts 로 나눠 읽고,
+     v 는 한국어 음성의 "브" 로 확실하게 읽어요.
    · 짧은 모음은 짧은 영어 낱말로 넣었어요. (TTS 가 "a"·"eh"를 "에이", "ih"를 "아",
      "ihh"·"ehh"를 "아이에이치"처럼 글자 이름으로 읽어 버려서)
        a_s(/æ/) → "at" · e_s(/ɛ/) → "egg" · i_s(/ɪ/) → "it"
@@ -1244,19 +1253,21 @@ const PH_TTS = {
   y:{t:"yuh"},
   j:{t:"juh"},
   ch:{t:"chuh"},
-  ks:{t:"kuhs"},
+  ks:{parts:["kuh", "suh"]},   /* /ks/ : "kuhs" 로 적으면 K-U-H-S 로 읽혀서 두 번으로 나눠요 */
   kw:{t:"kwah"},
   f:{t:"fuh"},
-  v:{t:"vuh"},
+  v:{t:"브", l:"ko-KR", r:0.95},   /* "vuh" 가 엉뚱하게 들려서 한국어 음성 "브" 로 (시내님 요청) */
   th:{t:"thuh"},
   th_v:{t:"thuh"},
   z:{t:"zuh"}
 };
-/* 소리 하나 → 실제로 읽을 말 (항상 미국 영어 en-US) */
+/* 소리 하나 → 실제로 읽을 말 (기본은 미국 영어 en-US, 예외만 e.l 로 언어 지정) */
 function ttsFor(id){
   const e = PH_TTS[id];
-  if(!e || !e.t) return null;
-  return {text:e.t, lang:"en-US"};
+  if(!e) return null;
+  const parts = (e.parts && e.parts.length) ? e.parts.slice() : (e.t ? [e.t] : []);
+  if(!parts.length) return null;
+  return {text:parts.join(" "), parts:parts, lang:e.l || "en-US", rate:e.r || 0.78};
 }
 let lastHintAt = 0;
 /* 소리 힌트 : 사람 목소리로 파닉스 소리를 또박또박 '한 번만' */
@@ -1272,8 +1283,11 @@ function playPhoneme(id){
   if(!snd) return false;
   try{
     speechSynthesis.cancel();
-    /* 소리 하나만 깔끔하게 1회 : rate 0.78 · pitch 1.05 */
-    speechSynthesis.speak(makeUtter(snd.text, 0.78, 1.05, snd.lang));
+    /* 소리 하나만 깔끔하게 1회 : rate 0.78 · pitch 1.05
+       parts 가 두 개(예: ks = "kuh" + "suh")면 줄서서 두 번 읽어요 */
+    snd.parts.forEach(function(p){
+      speechSynthesis.speak(makeUtter(p, snd.rate, 1.05, snd.lang));
+    });
   }catch(e){ speechNotice(); return false; }
   return true;
 }
@@ -1701,6 +1715,13 @@ function drawSlots(){
       d.classList.add(String(val).toLowerCase() === String(Q.w[i]).toLowerCase() ? "ok" : "ng");
     }
     d.textContent = val ? String(val).toUpperCase() : "";
+    if(isHidden && val){            /* 내가 채운 칸 : 눌러서 그 칸만 지우기 */
+      d.classList.add("erasable");
+      d.setAttribute("role", "button");
+      d.setAttribute("aria-label", String(val).toUpperCase() + " 지우기");
+      d.title = "눌러서 이 글자만 지우기";
+      d.addEventListener("click", function(){ clearSlot(i); });
+    }
     if(isHidden && !val && nextEmpty === i) d.classList.add("on");
     box.appendChild(d);
   }
@@ -1769,12 +1790,12 @@ function tapTile(id){
   if(lock || Q.done) return;
   const t = Q.tiles.filter(function(x){ return x.id === id; })[0];
   if(!t || t.used) return;
-  const slot = Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
+  const slot = nextSlot();
   if(slot === undefined) return;
   t.used = true;
   Q.fill[slot] = t.ch;
   Q.entry.push({slot:slot, tile:t.id});
-  Q.cursor = Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
+  Q.cursor = nextSlot();
   if(Q.cursor === undefined) Q.cursor = null;
   soundTap();
   drawSlots();
@@ -1784,16 +1805,41 @@ function tapTile(id){
 }
 function tapKey(ch){
   if(lock || Q.done) return;
-  const slot = Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
+  const slot = nextSlot();
   if(slot === undefined) return;
   Q.fill[slot] = String(ch).toLowerCase();
   Q.entry.push({slot:slot, tile:null});
-  Q.cursor = Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
+  Q.cursor = nextSlot();
   if(Q.cursor === undefined) Q.cursor = null;
   soundTap();
   drawSlots();
   popSlot(slot);
   afterFill();
+}
+/* 다음에 글자가 들어갈 칸 : 방금 지운(가리킨) 칸이 비어 있으면 거기, 아니면 첫 빈칸 */
+function nextSlot(){
+  if(Q.cursor !== null && Q.cursor !== undefined && Q.fill[Q.cursor] === null) return Q.cursor;
+  return Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
+}
+/* 칸을 직접 눌러 그 칸만 지우기 : 맞은 칸도 지울 수 있지만, 누른 칸만 지워져요 */
+function clearSlot(i){
+  if(!Q || Q.done || lock) return false;
+  if(!Q.hidden[i] || Q.fill[i] === null) return false;
+  let idx = -1;
+  for(let k=Q.entry.length-1;k>=0;k--){ if(Q.entry[k].slot === i){ idx = k; break; } }
+  if(idx >= 0){
+    const e = Q.entry.splice(idx, 1)[0];
+    if(e.tile){                     /* 보기 타일도 다시 살아나요 */
+      const t = Q.tiles.filter(function(x){ return x.id === e.tile; })[0];
+      if(t) t.used = false;
+    }
+  }
+  Q.fill[i] = null;
+  Q.cursor = i;                     /* 커서도 방금 지운 칸으로 */
+  soundTap();
+  drawSlots();
+  drawTiles();
+  return true;
 }
 /* 🧽 지우기 : 마지막에 채운 칸 하나만 뒤로 지워요 (한 번 더 누르면 그 전 칸도) */
 function eraseOne(){
@@ -1828,10 +1874,10 @@ function onWrong(){
   soundSoft();
   const sl = $("#slots");
   sl.classList.add("shake");
-  toast("빨간 글자는 🧽 지우기로 지우고 다시 골라 봐 🙂", 1900);
+  toast("빨간 글자를 콕 눌러 지우고 다시 골라 봐 🙂", 1900);
   setTimeout(function(){
     sl.classList.remove("shake");
-    /* 채운 글자는 그대로 둬요 : 맞은 칸은 초록, 틀린 칸만 빨강 → 지우기로 고쳐요 */
+    /* 채운 글자는 그대로 둬요 : 맞은 칸은 초록, 틀린 칸만 빨강 → 칸을 눌러 그 칸만 지워요 */
     lock = false;
     speak(Q.w, 0.64);
   }, 640);
@@ -1921,8 +1967,8 @@ $("#btnHint").addEventListener("click", function(){
   if(!Q || Q.done || lock) return;
   if(Date.now() - lastHintAt < 650) return;
   lastHintAt = Date.now();
-  const slot = Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
-  if(slot === undefined){ toast("빈칸이 다 찼어요! 빨간 글자를 🧽 지우기로 지우고 다시 해봐요", 1800); return; }
+  const slot = nextSlot();
+  if(slot === undefined){ toast("빈칸이 다 찼어요! 빨간 글자를 콕 눌러 지우고 다시 해봐요", 1800); return; }
   const pid = Q.ph[slot] || "";
   Q.hints++;
   ac();
@@ -2100,7 +2146,7 @@ if(window.matchMedia){
 window.PHONICS_DEBUG = {
   PH:PH, PHONO:PHONO, map:phMap, units:phUnits, check:phCheck,
   play:playPhoneme, tts:PH_TTS, ttsFor:ttsFor, utterance:makeUtter,
-  erase:eraseOne, tapTile:tapTile, tapKey:tapKey,
+  erase:eraseOne, clear:clearSlot, tapTile:tapTile, tapKey:tapKey,
   layout:function(){ return Q ? Q.layout : null; },
   state:function(){ return Q; }, G:function(){ return G; }, load:function(){ loadQuestion(); }
 };
