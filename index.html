@@ -1021,7 +1021,7 @@ const PH_TTS = {
   /* --- 모음 --- */
   a_s:{t:"애",  lang:"ko-KR", alt:"ah"},
   a_l:{t:"에이", lang:"ko-KR", alt:"ay"},
-  e_s:{t:"에",  lang:"ko-KR", alt:"eh"},
+  e_s:{t:"에.",  lang:"ko-KR", alt:"eh"},
   e_l:{t:"이이", lang:"ko-KR", alt:"ee"},
   i_s:{t:"이",  lang:"ko-KR", alt:"ih"},
   i_l:{t:"아이", lang:"ko-KR", alt:"eye"},
@@ -1088,7 +1088,8 @@ function playPhoneme(id){
   if(!snd) return false;
   try{
     speechSynthesis.cancel();
-    speechSynthesis.speak(makeUtter(snd.text, 0.72, 1.05, snd.lang));
+    const rate = snd.lang === "ko-KR" ? 0.92 : 0.78;
+    speechSynthesis.speak(makeUtter(snd.text, rate, 1.05, snd.lang));
   }catch(e){ speechNotice(); return false; }
   return true;
 }
