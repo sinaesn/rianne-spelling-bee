@@ -142,13 +142,13 @@
 
   /* 단계 카드 = 단계 번호 + 글자 수만. 카드끼리 위아래 간격을 넉넉히 둬 배지가 절대 붙지 않게 */
   .days{flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
-    display:grid; grid-template-columns:1fr 1fr; gap:13px 12px; padding:6px 14px 8px;
+    display:grid; grid-template-columns:1fr 1fr; gap:clamp(7px,1.5vh,13px) 12px; padding:6px 14px 8px;
     grid-auto-rows:auto; align-content:space-evenly;}
   .daycard{
     position:relative; text-align:center; background:linear-gradient(180deg,#FFFFFF 0%,#FFFCFE 58%,#FFF6FC 100%);
     border:3px solid #F2D9F0; border-radius:17px;
-    box-shadow:0 4px 0 #EBD7F3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
-    min-height:0; padding:7px 10px 8px; transition:transform .08s;
+    box-shadow:0 4px 0 #EBD7F3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(3px,.55vh,5px);
+    min-height:0; padding:clamp(4px,.8vh,7px) 10px clamp(4px,.9vh,8px); transition:transform .08s;
   }
   .daycard:active{transform:translateY(3px); box-shadow:0 1px 0 #EBD7F3;}
   /* 완료한 단계 = 소프트 로즈핑크 테두리 + 블러시 배경 + 은은한 반짝이 (왕관 없음) */
@@ -179,21 +179,22 @@
   .minibtn .mt{font-size:12.5px; font-weight:900; color:var(--plum); line-height:1.15; white-space:nowrap;}
   .minibtn .ms{font-size:10.5px; font-weight:800; color:var(--plum2); line-height:1.15; white-space:nowrap;}
 
-  /* 최종 보스 · 틀린 단어 = 크고 볼드한 카드 */
-  .minibtn.big{min-height:58px; border-width:3px; border-radius:22px; padding:10px 12px 8px; gap:9px;
-    box-shadow:0 5px 0 #E7D9F6;}
-  .minibtn.big .mi{font-size:22px;}
-  .minibtn.big .mt{font-size:16px; letter-spacing:-.3px;}
-  .minibtn.big .ms{font-size:11px;}
+  /* 최종 보스 · 틀린 단어 = 크고 볼드한 카드 (아이콘 위 / 글씨 아래 = 한눈에 하단 메인 버튼) */
+  .minibtn.big{min-height:88px; border-width:3px; border-radius:24px; padding:9px 10px 11px; gap:2px;
+    flex-direction:column; box-shadow:0 6px 0 #E7D9F6;}
+  .minibtn.big .mlab{align-items:center; gap:2px;}
+  .minibtn.big .mi{font-size:32px; line-height:1; margin-bottom:2px;}
+  .minibtn.big .mt{font-size:18.5px; letter-spacing:-.4px; line-height:1.2;}
+  .minibtn.big .ms{font-size:11.5px;}
   .minibtn.big:active{transform:translateY(3px); box-shadow:0 1px 0 #E7D9F6;}
-  .minibtn.final{border:3px solid transparent; box-shadow:0 5px 0 #D9C6F4; padding-bottom:15px;
+  .minibtn.final{border:3px solid transparent; box-shadow:0 6px 0 #D9C6F4; padding-bottom:16px;
     background:linear-gradient(135deg,#FFF9DE 0%,#FFEAF7 46%,#EEE4FF 100%) padding-box,
                linear-gradient(120deg,#FFB7D5 0%,#FFD9A0 26%,#FFF0A8 46%,#F7C6E3 66%,#A9DDF7 84%,#CDB8F5 100%) border-box;}
   .minibtn.final:active{transform:translateY(3px); box-shadow:0 1px 0 #D9C6F4;}
-  .minibtn.final .mt{font-size:16px;}
-  .minibtn.final .fbar{position:absolute; left:18px; right:18px; bottom:6px; height:4px; border-radius:99px; background:rgba(183,155,230,.22);}
+  .minibtn.final .mt{font-size:18.5px;}
+  .minibtn.final .fbar{position:absolute; left:18px; right:18px; bottom:7px; height:5px; border-radius:99px; background:rgba(183,155,230,.22);}
   .minibtn.final .fbar i{display:block; height:100%; background:linear-gradient(90deg,#FFB7D5,#B79BE6);}
-  .minibtn.wrong{border-color:#EBCB6E; box-shadow:0 5px 0 #F0E0A4;
+  .minibtn.wrong{border-color:#EBCB6E; box-shadow:0 6px 0 #F0E0A4;
     background:linear-gradient(135deg,#FFFDF4 0%,#FFF7DA 58%,#FFF1E6 100%);}
   .minibtn.wrong:active{box-shadow:0 1px 0 #F0E0A4;}
   .btn{background:#fff; border:3px solid var(--rose); border-radius:18px; font-weight:900;
@@ -285,18 +286,19 @@
     h1{font-size:20.5px; margin-top:3px;}
     .sub{font-size:11.5px; padding:2px 10px;}
     .bunting i{border-top-width:11px; border-left-width:6px; border-right-width:6px;}
-    .days{gap:10px 11px; padding:4px 12px 6px; grid-auto-rows:auto; align-content:space-evenly;}
-    .daycard{min-height:0; padding:6px 8px 7px; gap:4px;}
-    .dnum{font-size:10.5px; padding:1px 8px;}
-    .drange{font-size:18px;}
+    .days{gap:8px 11px; padding:3px 12px 5px; grid-auto-rows:auto; align-content:space-evenly;}
+    .daycard{min-height:0; padding:5px 8px 6px; gap:4px;}
+    .dnum{font-size:10px; padding:1px 8px;}
+    .drange{font-size:17px;}
     .homefoot{gap:8px; padding-bottom:calc(8px + env(safe-area-inset-bottom));}
-    .minibtn{min-height:38px; font-size:11.5px;}
+    .minibtn{min-height:36px; font-size:11.5px; padding:5px 8px;}
     .minibtn .mt{font-size:11.5px;}
-    .minibtn.final .mt{font-size:13px;}
-    .minibtn.final{padding-bottom:12px;}
-    .minibtn.big{min-height:52px; padding:7px 10px; gap:8px;}
-    .minibtn.big .mt, .minibtn.final .mt{font-size:14.5px;}
-    .minibtn.big .mi{font-size:19px;}
+    .minibtn.final .mt{font-size:16px;}
+    .minibtn.final{padding-bottom:13px;}
+    .minibtn.big{min-height:78px; padding:7px 8px 9px; gap:2px;}
+    .minibtn.big .mt, .minibtn.final .mt{font-size:16px;}
+    .minibtn.big .ms{font-size:10.5px;}
+    .minibtn.big .mi{font-size:24px; margin-bottom:0;}
     .wemoji{font-size:28px;}
     .wmtxt{font-size:18px;}
     .msay{width:34px; height:34px; font-size:15px;}
@@ -318,10 +320,12 @@
     .homefoot{grid-template-columns:1.35fr 1.15fr .8fr .8fr; gap:10px; align-items:center;
       padding-bottom:calc(8px + env(safe-area-inset-bottom));}
     .minibtn{min-height:44px;}
-    .minibtn.big{min-height:56px; padding:7px 12px;}
-    .minibtn.big .mt, .minibtn.final .mt{font-size:15.5px;}
-    .minibtn.big .mi{font-size:20px;}
-    .minibtn.final{padding-bottom:13px;}
+    .minibtn.big{min-height:clamp(80px,19vh,96px); padding:8px 12px; gap:9px; flex-direction:row; border-radius:24px;}
+    .minibtn.big .mlab{align-items:flex-start; gap:1px;}
+    .minibtn.big .mt, .minibtn.final .mt{font-size:18px;}
+    .minibtn.big .ms{font-size:11.5px;}
+    .minibtn.big .mi{font-size:26px; margin-bottom:0;}
+    .minibtn.final{padding-bottom:15px;}
     h1{font-size:clamp(26px,4.0vw,38px); margin-top:4px;}
 
     .gbar{gap:10px; padding:calc(5px + env(safe-area-inset-top)) 12px 0;}
@@ -426,15 +430,15 @@
     .drange{font-size:clamp(17px,4.6vh,21px);}
     .dbar{height:4px; max-width:80px;}
     .daycard.done::after{font-size:10px; right:7px; top:5px;}
-    .homefoot{gap:8px; align-items:center; padding:0 12px calc(6px + env(safe-area-inset-bottom));}
-    .minibtn{min-height:42px; font-size:11.5px; padding:5px 8px; gap:5px;}
-    .minibtn .mt{font-size:12px;}
+    .homefoot{gap:8px; align-items:center; padding:0 12px calc(10px + env(safe-area-inset-bottom));}
+    .minibtn{min-height:38px; font-size:11px; padding:4px 7px; gap:5px;}
+    .minibtn .mt{font-size:11.5px;}
     .minibtn .ms{font-size:10px;}
-    .minibtn.final{padding-bottom:13px;}
+    .minibtn.final{padding-bottom:15px;}
     .minibtn .mi{font-size:14px;}
-    .minibtn.big{min-height:58px; padding:7px 10px; gap:8px;}
-    .minibtn.big .mt, .minibtn.final .mt{font-size:14px;}
-    .minibtn.big .mi{font-size:18px;}
+    .minibtn.big{min-height:clamp(78px,19vh,84px); padding:7px 12px; gap:9px;}
+    .minibtn.big .mt, .minibtn.final .mt{font-size:17px;}
+    .minibtn.big .mi{font-size:25px;}
 
     .stack{gap:3px;}
     .wemoji{font-size:clamp(24px,8vh,34px);}
@@ -466,7 +470,7 @@
   }
 
   /* 최종 보스 버튼 : 이름이 길어져 어떤 화면 크기에서도 한 줄에 들어가게 */
-  .minibtn.final .mt.final-t{font-size:clamp(11.9px,3.55vw,14px); letter-spacing:-.35px; line-height:1.25; white-space:nowrap;}
+  .minibtn.final .mt.final-t{font-size:clamp(14px,4.55vw,18.5px); letter-spacing:-.5px; line-height:1.22; white-space:nowrap;}
   .minibtn.final .final-t .boss-n{color:#C4568C; font-weight:900;}
 </style>
 </head>
