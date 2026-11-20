@@ -678,7 +678,7 @@
         <li><b>🦄 최종 보스! 100단어</b> — 1~10단계 100개 단어 전체를 랜덤 순서로. 중간에 멈춰도 이어서 할 수 있어요.</li>
       </ul>
       <p class="tiny">소리가 안 나오면 기기 볼륨을 올리고 화면을 한 번 눌러 주세요.<br>홈 화면에 추가하면 앱처럼 쓸 수 있어요.</p>
-      <p class="tiny" id="verLine" style="opacity:.55;letter-spacing:.2px">v20 · 2026-11-20</p>
+      <p class="tiny" id="verLine" style="opacity:.55;letter-spacing:.2px">v21 · 2026-11-20</p>
       <button class="btn primary" id="helpClose" style="width:100%">알겠어요</button>
     </div>
   </div>
@@ -2251,7 +2251,7 @@ $("#btnSlow").addEventListener("click", function(){
   if(!save.sound){ save.sound = true; persist(); updateSoundButtons(); }
   toast("🐢 천천히 다시 들려줄게요", 900);
   /* 선생님이 아이에게 한 음절씩 또박또박 말해 주듯 아주 느리게 */
-  speak(Q.w, 0.42);
+  speak(Q.w, 0.22);
 });
 $("#btnMeanSpeak").addEventListener("click", function(){
   if(!Q) return;
