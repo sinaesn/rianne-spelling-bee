@@ -575,6 +575,24 @@
   /* 최종 보스 버튼 : 이름이 길어져 어떤 화면 크기에서도 한 줄에 들어가게 */
   .minibtn.final .mt.final-t{font-size:clamp(14px,4.55vw,18.5px); letter-spacing:-.5px; line-height:1.22; white-space:nowrap;}
   .minibtn.final .final-t .boss-n{color:#C4568C; font-weight:900;}
+
+  /* ---------- 카카오톡 인앱 브라우저 안내 (카톡에서 열었을 때만 보여요) ---------- */
+  .kakao-tip{display:none; flex-direction:column; gap:6px; margin:2px 14px 9px; padding:8px 11px;
+    border-radius:16px; background:linear-gradient(180deg,#FFF7FC,#F4EEFF); border:2px solid #E7D8FA;
+    box-shadow:0 3px 0 rgba(183,155,230,.22);}
+  .kakao-tip.on{display:flex;}
+  .kakao-tip .kt-t{font-size:12px; font-weight:800; color:var(--plum2); line-height:1.35; text-align:center;}
+  .kakao-tip .kt-btn{min-height:34px; border-radius:12px; background:#fff; border:2px solid #F5B9D6;
+    color:var(--rose-d); font-weight:900; font-size:12.5px; padding:4px 10px; box-shadow:0 3px 0 #F7D3E5;}
+  .kakao-tip .kt-btn:active{transform:translateY(2px); box-shadow:0 1px 0 #F7D3E5;}
+  .kakao-tip .kt-msg{display:none; font-size:11.5px; font-weight:800; color:var(--lav-dd); line-height:1.45; text-align:center;}
+  .kakao-tip .kt-msg.on{display:block;}
+  @media (orientation:landscape){
+    .kakao-tip{flex-direction:row; align-items:center; gap:10px; margin:0 12px 6px; padding:5px 9px;}
+    .kakao-tip .kt-t{flex:1; text-align:left; font-size:11.5px;}
+    .kakao-tip .kt-btn{min-height:30px; font-size:11.5px; white-space:nowrap;}
+    .kakao-tip .kt-msg{flex:0 0 100%; font-size:11px;}
+  }
 </style>
 </head>
 <body>
@@ -615,6 +633,11 @@
       <div class="sub" id="ddayChip">📅 2026 Spelling Bee Contest · 예선 12/14 · 본선 12/18</div>
     </div>
     <div class="days" id="dayGrid"></div>
+    <div class="kakao-tip" id="kakaoTip">
+      <div class="kt-t">💬 카톡에선 일부 기기 소리가 작거나 끊길 수 있어요</div>
+      <button class="kt-btn" id="btnOpenExternal">🌐 크롬/사파리로 열기</button>
+      <div class="kt-msg" id="kakaoMsg"></div>
+    </div>
     <div class="homefoot">
       <button class="minibtn big final" id="btnFinal">
         <span class="mi">🦄</span>
@@ -731,7 +754,7 @@
         <li><b>🔄 초기화</b> — 홈 아래 <b>초기화</b>를 누르면 한 번 더 물어봐요. 확인하면 진도·완료 표시·틀린 단어가 모두 지워지고, <b>소리 켜짐/꺼짐만</b> 그대로 남아요.</li>
       </ul>
       <p class="tiny">소리가 안 나오면 기기 볼륨을 올리고 화면을 한 번 눌러 주세요.<br>홈 화면에 추가하면 앱처럼 쓸 수 있어요.</p>
-      <p class="tiny" id="verLine" style="opacity:.55;letter-spacing:.2px">v27 · 2026-11-24</p>
+      <p class="tiny" id="verLine" style="opacity:.55;letter-spacing:.2px">v28 · 2026-11-24</p>
       <button class="btn primary" id="helpClose" style="width:100%">알겠어요</button>
     </div>
   </div>
@@ -1176,6 +1199,96 @@ function speechNotice(){
   warnedSpeech = true;
   toast("이 기기에선 영어 소리가 안 나올 수 있어요. 부모님이 확인해 주세요 🙏", 2600);
 }
+/* =========================================================
+   카카오톡 인앱 브라우저 대비 : 소리 파일(MP3) 폴백
+   =========================================================
+   카톡 안에서 열면(안드로이드 WebView · iOS WKWebView) speechSynthesis 가 목소리 목록이
+   비어 있거나, 목소리는 있는데 무음으로 끝나는 경우가 많아요.
+   그런 브라우저에서도 HTML5 <audio> 는 잘 나기 때문에 단어를 MP3 로 받아 재생해요. */
+const IS_KAKAO = /KAKAOTALK/i.test(navigator.userAgent || "");
+const IS_ANDROID = /Android/i.test(navigator.userAgent || "");
+const IS_IOS = /iPhone|iPad|iPod/i.test(navigator.userAgent || "");
+/* 1순위 유다오 사전 음성(미국식 · 단어는 거의 다 있음), 2순위 구글 번역 음성(긴 문장도 됨) */
+const VOICE_SRC = [
+  function(t){ return "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(t) + "&type=2"; },
+  function(t){ return "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=" + encodeURIComponent(t); }
+];
+/* 브라우저 <audio> 가 낼 수 있는 속도 안에서 자연스럽고 또박또박하게 */
+function audioRate(rate){
+  const r = Number(rate) || 0.88;
+  if(r >= 0.8) return 0.95;
+  if(r >= 0.4) return 0.55;
+  return 0.35;
+}
+const SILENT_WAV = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+let fbEl = null, fbToken = 0, fbWarm = false;
+function fbElement(){
+  if(!fbEl){
+    try{
+      fbEl = new Audio();
+      fbEl.setAttribute("playsinline", "");
+      fbEl.setAttribute("webkit-playsinline", "");
+      fbEl.preload = "auto";
+    }catch(e){ fbEl = null; }
+  }
+  return fbEl;
+}
+/* 첫 터치에서 오디오를 미리 열어 둬요 (iOS 는 터치 안에서 시작한 오디오만 다음에도 재생돼요) */
+function warmAudio(){
+  if(!(IS_KAKAO || !hasTTS || !voices.length)) return;
+  try{
+    const a = fbElement();
+    if(!a || fbWarm) return;
+    fbWarm = true;
+    a.src = SILENT_WAV; a.volume = 0;
+    const p = a.play();
+    if(p && p.catch) p.catch(function(){});
+    setTimeout(function(){ try{ a.pause(); a.volume = 1; a.currentTime = 0; }catch(e){} }, 120);
+  }catch(e){}
+}
+function speakAudioFallback(text, rate, after){
+  if(!save.sound) return false;
+  const s = String(text == null ? "" : text).trim();
+  if(!s) return false;
+  const a = fbElement();
+  if(!a) return false;
+  const token = ++fbToken;
+  let curIdx = -1;
+  function playFrom(idx){
+    if(token !== fbToken) return;
+    if(idx >= VOICE_SRC.length) return;
+    const my = idx;
+    curIdx = idx;
+    const next = function(){
+      if(token !== fbToken || curIdx !== my) return;
+      playFrom(idx + 1);
+    };
+    try{ a.pause(); }catch(e){}
+    a.onerror = next;
+    a.onended = function(){
+      if(token !== fbToken) return;
+      a.onended = null;
+      if(after){
+        setTimeout(function(){ if(token === fbToken) speakAudioFallback(after, 1.22); }, 90);
+      }
+    };
+    try{
+      a.src = VOICE_SRC[idx](s);
+      a.currentTime = 0;
+      a.playbackRate = audioRate(rate);
+      a.defaultPlaybackRate = audioRate(rate);
+    }catch(e){ next(); return; }
+    /* 매번 새로 불러올 때도 속도가 유지되게 */
+    a.addEventListener("loadedmetadata", function once(){
+      a.removeEventListener("loadedmetadata", once);
+      try{ a.playbackRate = audioRate(rate); }catch(e){}
+    });
+    const p = a.play();
+    if(p && p.catch) p.catch(next);
+  }
+  playFrom(0);
+  return true;
+}
 /* lang 에 맞는 목소리 고르기 (없으면 null → 브라우저 기본 목소리) */
 function pickVoice(lang){
   if(!voices.length) loadVoices();
@@ -1191,22 +1304,36 @@ function makeUtter(text, rate, pitch, lang){
   if(v) u.voice = v;
   return u;
 }
+let speakSeq = 0;
 /* after : 단어 소리가 끝난 뒤 이어서 읽어 줄 (예: "Yay!") — 겹치지 않고 줄서서 재생돼요 */
 function speak(text, rate, after){
-  if(!save.sound || !hasTTS) return;
+  if(!save.sound) return;
+  /* 카톡 인앱 브라우저이거나, 아예 목소리가 없으면 처음부터 소리 파일로 */
+  if(IS_KAKAO || !hasTTS || !voices.length){ speakAudioFallback(text, rate, after); return; }
+  const seq = ++speakSeq;
   try{
     speechSynthesis.cancel();
-    speechSynthesis.speak(makeUtter(text, rate));
+    const u = makeUtter(text, rate);
+    let started = false;
+    u.onstart = function(){ started = true; };
+    speechSynthesis.speak(u);
     if(after){
       /* "Yay!" 는 짧고 신나게 한 방에 — 조금 빠르고 밝은 톤 */
       const y = makeUtter(after, 1.22, 1.38);
       speechSynthesis.speak(y);
     }
-  }catch(e){ speechNotice(); }
+    /* 목소리가 400ms 안에 시작하지 않으면 = 무음 실패 → 소리 파일로 대신 재생 */
+    setTimeout(function(){
+      if(seq !== speakSeq || started) return;
+      try{ speechSynthesis.cancel(); }catch(e){}
+      speakAudioFallback(text, rate, after);
+    }, 400);
+  }catch(e){ speechNotice(); speakAudioFallback(text, rate, after); }
 }
 // 정답 축하 인사만 따로 (앞의 단어 소리를 끊지 않게 cancel 하지 않아요)
 function speakCheer(){
-  if(!save.sound || !hasTTS) return;
+  if(!save.sound) return;
+  if(IS_KAKAO || !hasTTS || !voices.length){ speakAudioFallback("Yay!", 1.22); return; }
   try{ speechSynthesis.speak(makeUtter("Yay!", 1.22, 1.38)); }catch(e){}
 }
 
@@ -1547,7 +1674,7 @@ function playPhoneme(id){
 
 /* 첫 터치에서 오디오를 열고 44개 소리를 미리 풀어 둬요 */
 try{
-  document.addEventListener("pointerdown", function(){ ac(); warmPhonemes(); }, {once:true, passive:true});
+  document.addEventListener("pointerdown", function(){ ac(); warmPhonemes(); warmAudio(); }, {once:true, passive:true});
 }catch(e){}
 
 
@@ -2346,14 +2473,12 @@ $("#btnClear").addEventListener("click", function(){
 $("#btnSpeak").addEventListener("click", function(){
   if(!Q) return;
   ac();
-  if(!hasTTS){ toast("이 브라우저에서는 소리가 안 나와요 🙏", 2200); return; }
   if(!save.sound){ save.sound = true; persist(); updateSoundButtons(); }
   speak(Q.w, 0.88);
 });
 $("#btnSlow").addEventListener("click", function(){
   if(!Q) return;
   ac();
-  if(!hasTTS){ toast("이 브라우저에서는 소리가 안 나와요 🙏", 2200); return; }
   if(!save.sound){ save.sound = true; persist(); updateSoundButtons(); }
   toast("🐢 천천히 다시 들려줄게요", 900);
   speak(Q.w, 0.48);
@@ -2361,7 +2486,6 @@ $("#btnSlow").addEventListener("click", function(){
 $("#btnSlower").addEventListener("click", function(){
   if(!Q) return;
   ac();
-  if(!hasTTS){ toast("이 브라우저에서는 소리가 안 나와요 🙏", 2200); return; }
   if(!save.sound){ save.sound = true; persist(); updateSoundButtons(); }
   toast("🐌 아주 천천히 들려줄게요", 900);
   /* 브라우저가 낼 수 있는 가장 느린 속도(0.1)로 또박또박 */
@@ -2370,7 +2494,6 @@ $("#btnSlower").addEventListener("click", function(){
 $("#btnMeanSpeak").addEventListener("click", function(){
   if(!Q) return;
   ac();
-  if(!hasTTS){ toast("이 브라우저에서는 소리가 안 나와요 🙏", 2200); return; }
   if(!save.sound){ save.sound = true; persist(); updateSoundButtons(); }
   speak(Q.item.m || Q.item.x, 0.8);
 });
@@ -2470,6 +2593,44 @@ $("#btnSoundHome").addEventListener("click", function(){
   if(save.sound) notes([880], "sine", 0.1);
 });
 $("#btnHelp").addEventListener("click", function(){ $("#help").classList.add("on"); });
+
+/* ---------- 카카오톡 인앱 브라우저 : 외부 브라우저로 열기 안내 ---------- */
+(function(){
+  const tip = $("#kakaoTip");
+  if(!tip || !IS_KAKAO) return;      /* 크롬·사파리에서는 이 배너가 아예 나오지 않아요 */
+  tip.classList.add("on");
+  const msg = $("#kakaoMsg");
+  const btn = $("#btnOpenExternal");
+  function showMsg(t){ if(!msg) return; msg.textContent = t; msg.classList.add("on"); }
+  btn.addEventListener("click", function(){
+    ac(); warmAudio();
+    const url = location.href;
+    if(IS_ANDROID){
+      try{ location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(url); }
+      catch(e){ showMsg("오른쪽 위 ⋯ → 다른 브라우저로 열기를 눌러 주세요"); }
+      return;
+    }
+    /* iOS : 카톡에서 바로 사파리를 열 수 없어서 주소를 복사해 주고 안내해요 */
+    function copied(){ showMsg("주소를 복사했어요! 오른쪽 위 ⋯ → Safari로 열기를 눌러 주세요"); }
+    function copyFallback(){
+      try{
+        const ta = document.createElement("textarea");
+        ta.value = url;
+        ta.style.position = "fixed"; ta.style.top = "0"; ta.style.left = "0"; ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        copied();
+      }catch(e){ showMsg("오른쪽 위 ⋯ → Safari로 열기를 눌러 주세요"); }
+    }
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(copied).catch(copyFallback);
+      }else copyFallback();
+    }catch(e){ copyFallback(); }
+  });
+})();
 /* 🔄 초기화 : 한 번 눌러 실수로 날리지 않게 앱 안 확인 창을 먼저 띄워요 */
 $("#btnReset").addEventListener("click", function(){ $("#resetAsk").classList.add("on"); });
 $("#resetNo").addEventListener("click", function(){ $("#resetAsk").classList.remove("on"); });
