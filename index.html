@@ -313,7 +313,13 @@
   .tile:active{transform:translateY(4px); box-shadow:0 1px 0 #C8CEDC;}
   .tile.key{background:#E7EAF2; border-color:#C4CADA; box-shadow:0 5px 0 #B8BFD0;}
   .tile.key:active{background:#DBE0EB; transform:translateY(4px); box-shadow:0 1px 0 #B8BFD0;}
+  .tile.vc-on.vc-v:active{transform:translateY(4px); box-shadow:0 1px 0 #DF9F35;}
+  .tile.vc-on.vc-c:active{transform:translateY(4px); box-shadow:0 1px 0 #6AAFD9;}
   .tile.used{background:#F6F7FA; border:3px dashed #CBD1DB; box-shadow:none; color:transparent; pointer-events:none;}
+  /* 💡 힌트 : 지금 필요한 글자 종류(모음/자음)만 파스텔 톤으로 또렷하게, 나머지는 살짝 눌러줘요 */
+  .tile.vc-on.vc-v{background:linear-gradient(180deg,#FFF3C8,#FFE2A8); border-color:#F2B749; box-shadow:0 5px 0 #DF9F35;}
+  .tile.vc-on.vc-c{background:linear-gradient(180deg,#EAF6FF,#D2ECFF); border-color:#7CC2EC; box-shadow:0 5px 0 #6AAFD9;}
+  .tile.vc-dim:not(.used){opacity:.42;}
 
   .gfoot{display:flex; gap:10px; padding:2px 4px calc(8px + env(safe-area-inset-bottom)); flex:0 0 auto;}
   .toolbtn{flex:1; min-height:52px; border-radius:18px; background:#fff; border:3px solid #DCC8F7;
@@ -415,7 +421,8 @@
     font-size:15px; padding:9px 16px; border-radius:16px; opacity:0; pointer-events:none;
     transition:opacity .2s, transform .2s;
     width:max-content; height:auto; min-width:0; max-width:min(86vw, 320px); box-sizing:border-box;
-    text-align:center; line-height:1.32; word-break:keep-all; overflow-wrap:break-word;}
+    text-align:center; line-height:1.32; word-break:keep-all; overflow-wrap:break-word;
+    white-space:pre-line;}
   .toast.on{opacity:1; transform:translate(-50%,-50%) scale(1);}
   .toast.good{background:rgba(37,113,74,.95);}
 
@@ -656,6 +663,7 @@
      </div>
 
       <div class="gfoot">
+        <button class="toolbtn twoline" id="btnHint"><span class="t1">💡 힌트</span><span class="t2">(모음·자음 알려줘요)</span></button>
         <button class="toolbtn twoline" id="btnClear"><span class="t1">🧽 지우기</span><span class="t2">(글자 칸을 눌러도 지워요)</span></button>
       </div>
     </div>
@@ -713,6 +721,7 @@
         <li><b>👀 빈칸 채우기</b> — 빈칸에 들어갈 글자를 순서대로 눌러요. 보기 6개 중에서 골라요. 빈칸 위치는 <b>날짜마다</b> 바뀌어요.</li>
         <li><b>🟩 맞은 글자는 초록, 🟥 틀린 글자는 빨강</b> — 고르는 순간 바로 색이 바뀌어요. 빨간 글자를 <b>콕 누르면 그 칸만</b> 지워져요.</li>
         <li><b>🧽 지우기</b> — 누를 때마다 마지막에 고른 글자 <b>한 칸씩</b> 뒤로 지워요. 보기 타일도 다시 살아나요. <b>내가 채운 칸을 직접 눌러도</b> 그 칸만 지워지고, <b>비어 있는 칸을 눌러도</b> 그 칸으로 커서가 옮겨가 바로 글자를 넣을 수 있어요.</li>
+        <li><b>💡 힌트</b> — 틀렸거나 막힌 칸에서 누르면 그 칸에 <b>모음</b>이 필요한지 <b>자음</b>이 필요한지 아래 글자 타일에 표시해 줘요.</li>
         <li><b>🧩 전체 빈칸 채우기</b> — 글자 타일에서 골라 단어 전체를 완성해요.</li>
         <li><b>🔔 실전연습! 골든벨</b> — 철자는 안 보여요. 소리만 듣고 A~Z 전체 타일에서 골라요. 선생님이 읽어주는 시험 연습!</li>
         <li><b>🔊 듣기</b> — 단어를 다시 들려줘요. <b>🐢 천천히</b>는 아주 천천히, <b>🐌 더 천천히</b>는 한 글자씩 또박또박 들려줘요.</li>
@@ -722,7 +731,7 @@
         <li><b>🔄 초기화</b> — 홈 아래 <b>초기화</b>를 누르면 한 번 더 물어봐요. 확인하면 진도·완료 표시·틀린 단어가 모두 지워지고, <b>소리 켜짐/꺼짐만</b> 그대로 남아요.</li>
       </ul>
       <p class="tiny">소리가 안 나오면 기기 볼륨을 올리고 화면을 한 번 눌러 주세요.<br>홈 화면에 추가하면 앱처럼 쓸 수 있어요.</p>
-      <p class="tiny" id="verLine" style="opacity:.55;letter-spacing:.2px">v26 · 2026-11-24</p>
+      <p class="tiny" id="verLine" style="opacity:.55;letter-spacing:.2px">v27 · 2026-11-24</p>
       <button class="btn primary" id="helpClose" style="width:100%">알겠어요</button>
     </div>
   </div>
@@ -1955,6 +1964,7 @@ function loadQuestion(){
        order:hiddenIdx.slice().sort(function(a,b){ return a-b; }),
        fill:new Array(w.length).fill(null), tiles:tiles,
        entry:[], cursor:null,          /* entry : 채운 순서(지우기는 뒤에서부터 한 칸씩) */
+       hintKind:null, hintSlot:null,   /* 💡 힌트로 알려준 글자 종류(모음/자음)와 그 칸 */
        ph:phMap(w),
        mistakes:0, hints:0, done:false};
 
@@ -2026,6 +2036,16 @@ function drawTiles(){
   const box = $("#tiles");
   box.innerHTML = "";
   const L = Q.layout;
+  /* 💡 힌트 : 힌트 칸에 정답 글자가 들어오면 강조를 스스로 꺼요 */
+  if(Q.hintKind && Q.hintSlot !== null && Q.hintSlot !== undefined){
+    const hv = Q.fill[Q.hintSlot];
+    if(hv !== null && hv !== undefined &&
+       String(hv).toLowerCase() === String(Q.w[Q.hintSlot]).toLowerCase()){
+      Q.hintKind = null; Q.hintSlot = null;
+    }
+  }
+  const hint = Q.hintKind;
+  const isVowelCh = function(ch){ return VOWELS.indexOf(String(ch).toLowerCase()) >= 0; };
   box.style.setProperty("--tg", L.tg + "px");
   box.style.gridTemplateColumns = "repeat(" + L.per + ", " + L.tw + "px)";
   const h = L.th + "px";
@@ -2036,6 +2056,10 @@ function drawTiles(){
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(function(ch){
       const b = document.createElement("button");
       b.className = "tile key";
+      if(hint){
+        const v = isVowelCh(ch);
+        b.className += ((hint === "vowel") === v) ? (v ? " vc-on vc-v" : " vc-on vc-c") : " vc-dim";
+      }
       b.textContent = ch;
       b.style.height = h;
       b.style.fontSize = fs + "px";
@@ -2047,6 +2071,10 @@ function drawTiles(){
     Q.tiles.forEach(function(t){
       const b = document.createElement("button");
       b.className = "tile" + (t.used ? " used" : "");
+      if(hint && !t.used){
+        const v = isVowelCh(t.ch);
+        b.className += ((hint === "vowel") === v) ? (v ? " vc-on vc-v" : " vc-on vc-c") : " vc-dim";
+      }
       b.textContent = String(t.ch).toUpperCase();
       b.style.height = h;
       b.style.fontSize = fs + "px";
@@ -2108,6 +2136,7 @@ function tapKey(ch){
   if(Q.cursor === undefined) Q.cursor = null;
   soundTap();
   drawSlots();
+  drawTiles();
   popSlot(slot);
   afterFill();
 }
@@ -2115,6 +2144,16 @@ function tapKey(ch){
 function nextSlot(){
   if(Q.cursor !== null && Q.cursor !== undefined && Q.fill[Q.cursor] === null) return Q.cursor;
   return Q.order.filter(function(i){ return Q.fill[i] === null; })[0];
+}
+/* 💡 힌트 대상 칸 : 빨간 글자가 있는 첫 칸 → 없으면 커서가 가리키는 빈칸 */
+function hintTargetSlot(){
+  if(!Q) return null;
+  for(let k=0;k<Q.order.length;k++){
+    const i = Q.order[k];
+    if(Q.fill[i] !== null && String(Q.fill[i]).toLowerCase() !== String(Q.w[i]).toLowerCase()) return i;
+  }
+  const s = nextSlot();
+  return (s === undefined || s === null) ? null : s;
 }
 /* 비어 있는 칸을 눌러 커서만 그 칸으로 옮기기 */
 function setCursor(i){
@@ -2289,6 +2328,17 @@ function starBurst(){
 }
 
 /* ---------- 버튼 ---------- */
+$("#btnHint").addEventListener("click", function(){
+  if(!Q || Q.done) return;
+  const slot = hintTargetSlot();
+  if(slot === null){ toast("지금 채울 칸이 없어요 🙂", 1000); return; }
+  const v = VOWELS.indexOf(String(Q.w[slot]).toLowerCase()) >= 0;
+  Q.hintKind = v ? "vowel" : "consonant";
+  Q.hintSlot = slot;
+  soundTap();
+  drawTiles();
+  toast(v ? "모음이 필요해요\nNeed a vowel" : "자음이 필요해요\nNeed a consonant", 1800);
+});
 $("#btnClear").addEventListener("click", function(){
   if(!Q || Q.done) return;
   eraseOne();
