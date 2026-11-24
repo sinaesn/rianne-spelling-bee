@@ -722,7 +722,7 @@
         <li><b>🔄 초기화</b> — 홈 아래 <b>초기화</b>를 누르면 한 번 더 물어봐요. 확인하면 진도·완료 표시·틀린 단어가 모두 지워지고, <b>소리 켜짐/꺼짐만</b> 그대로 남아요.</li>
       </ul>
       <p class="tiny">소리가 안 나오면 기기 볼륨을 올리고 화면을 한 번 눌러 주세요.<br>홈 화면에 추가하면 앱처럼 쓸 수 있어요.</p>
-      <p class="tiny" id="verLine" style="opacity:.55;letter-spacing:.2px">v25 · 2026-11-24</p>
+      <p class="tiny" id="verLine" style="opacity:.55;letter-spacing:.2px">v26 · 2026-11-24</p>
       <button class="btn primary" id="helpClose" style="width:100%">알겠어요</button>
     </div>
   </div>
@@ -2314,8 +2314,8 @@ $("#btnSlower").addEventListener("click", function(){
   if(!hasTTS){ toast("이 브라우저에서는 소리가 안 나와요 🙏", 2200); return; }
   if(!save.sound){ save.sound = true; persist(); updateSoundButtons(); }
   toast("🐌 아주 천천히 들려줄게요", 900);
-  /* 선생님이 아이에게 한 음절씩 또박또박 말해 주듯 아주 느리게 */
-  speak(Q.w, 0.22);
+  /* 브라우저가 낼 수 있는 가장 느린 속도(0.1)로 또박또박 */
+  speak(Q.w, 0.1);
 });
 $("#btnMeanSpeak").addEventListener("click", function(){
   if(!Q) return;
