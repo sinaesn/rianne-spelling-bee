@@ -1244,7 +1244,7 @@ function warmAudio(){
     a.src = SILENT_WAV; a.volume = 0;
     const p = a.play();
     if(p && p.catch) p.catch(function(){});
-    setTimeout(function(){ try{ a.pause(); a.volume = 1; a.currentTime = 0; }catch(e){} }, 120);
+    setTimeout(function(){ try{ if(a.src === SILENT_WAV){ a.pause(); a.currentTime = 0; } a.volume = 1; }catch(e){} }, 120);
   }catch(e){}
 }
 function speakAudioFallback(text, rate, after){
