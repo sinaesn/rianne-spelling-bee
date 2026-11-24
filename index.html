@@ -1208,7 +1208,8 @@ function speechNotice(){
 const IS_KAKAO = /KAKAOTALK/i.test(navigator.userAgent || "");
 const IS_ANDROID = /Android/i.test(navigator.userAgent || "");
 const IS_IOS = /iPhone|iPad|iPod/i.test(navigator.userAgent || "");
-/* 1순위 유다오 사전 음성(미국식 · 단어는 거의 다 있음), 2순위 구글 번역 음성(긴 문장도 됨) */
+/* 1순위 유다오 사전 음성(미국식 · 단어는 거의 다 있음), 2순위 구글 번역 음성(긴 문장도 됨)
+   ※ 둘 다 실패하면(카톡·일부 브라우저) 단어 하나씩 이어 읽는 방식으로 대신해요 */
 const VOICE_SRC = [
   function(t){ return "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(t) + "&type=2"; },
   function(t){ return "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=" + encodeURIComponent(t); }
@@ -1253,42 +1254,52 @@ function speakAudioFallback(text, rate, after){
   const a = fbElement();
   if(!a) return false;
   const token = ++fbToken;
-  let curIdx = -1;
-  function playFrom(idx){
+  const parts = s.split(/\s+/).filter(function(w){ return w; });
+  const multi = parts.length > 1;          /* 여러 단어 = 뜻·예문 같은 문장 */
+  let attempt = 0;                         /* 지금 살아 있는 재생 시도 번호 */
+  function clear(){ a.onended = null; a.onerror = null; a.onloadedmetadata = null; }
+  function done(){
     if(token !== fbToken) return;
-    if(idx >= VOICE_SRC.length) return;
-    const my = idx;
-    curIdx = idx;
-    const next = function(){
-      if(token !== fbToken || curIdx !== my) return;
-      playFrom(idx + 1);
-    };
-    try{ a.pause(); }catch(e){}
-    a.onerror = next;
-    a.onended = function(){
-      if(token !== fbToken) return;
-      a.onended = null;
-      if(after){
-        setTimeout(function(){ if(token === fbToken) speakAudioFallback(after, 1.22); }, 90);
-      }
-    };
+    clear();
+    if(after) setTimeout(function(){ if(token === fbToken) speakAudioFallback(after, 1.22); }, 90);
+  }
+  /* 소리 한 개 재생 : 끝나면 onResult(true), 못 냈으면 onResult(false) */
+  function playUrl(url, onResult){
+    if(token !== fbToken) return;
+    const my = ++attempt;
+    a.onloadedmetadata = function(){ try{ a.playbackRate = audioRate(rate); }catch(e){} };
+    a.onended = function(){ if(attempt === my) onResult(true); };
+    a.onerror = function(){ if(attempt === my) onResult(false); };
     try{
-      a.src = VOICE_SRC[idx](s);
-      a.currentTime = 0;
+      a.src = url;
       a.playbackRate = audioRate(rate);
       a.defaultPlaybackRate = audioRate(rate);
-    }catch(e){ next(); return; }
-    /* 매번 새로 불러올 때도 속도가 유지되게 */
-    a.addEventListener("loadedmetadata", function once(){
-      a.removeEventListener("loadedmetadata", once);
-      try{ a.playbackRate = audioRate(rate); }catch(e){}
-    });
+    }catch(e){ if(attempt === my) onResult(false); return; }
     const p = a.play();
-    if(p && p.catch) p.catch(next);
+    if(p && p.catch) p.catch(function(){ if(attempt === my) onResult(false); });
   }
-  playFrom(0);
+  /* 목록을 차례로. stopOnSuccess=true 면 하나 성공하는 순간 멈춰요(음성 출처 고르기) */
+  function runList(urls, i, stopOnSuccess, onEnd){
+    if(token !== fbToken) return;
+    if(i >= urls.length){ onEnd(false); return; }
+    playUrl(urls[i], function(ok){
+      if(token !== fbToken) return;
+      if(ok && stopOnSuccess){ onEnd(true); return; }
+      runList(urls, i + 1, stopOnSuccess, onEnd);
+    });
+  }
+  const sentenceUrls = VOICE_SRC.map(function(f){ return f(s); });
+  runList(sentenceUrls, 0, true, function(ok){
+    if(token !== fbToken) return;
+    if(ok){ done(); return; }
+    /* 문장 음성을 못 받아 왔을 때 : 단어 하나씩 또박또박 이어 읽어요 */
+    if(!multi){ clear(); return; }
+    const wordUrls = parts.slice(0, 16).map(function(w){ return VOICE_SRC[0](w); });
+    runList(wordUrls, 0, false, function(){ done(); });
+  });
   return true;
 }
+
 /* lang 에 맞는 목소리 고르기 (없으면 null → 브라우저 기본 목소리) */
 function pickVoice(lang){
   if(!voices.length) loadVoices();
